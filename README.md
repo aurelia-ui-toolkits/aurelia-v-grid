@@ -1,5 +1,5 @@
 # v-grid
-Official version of Vegar Rindal's grid (https://github.com/vegarringdal/vGrid)
+Official version of Vegar Ringdal's grid (https://github.com/vegarringdal/vGrid)
 
 <br><br><br>
 
