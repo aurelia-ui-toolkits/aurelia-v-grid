@@ -41,6 +41,7 @@ System.config({
     "css": "github:systemjs/plugin-css@0.1.20",
     "font-awesome": "npm:font-awesome@4.5.0",
     "json": "github:systemjs/plugin-json@0.1.0",
+    "purecss": "npm:purecss@0.6.0",
     "text": "github:systemjs/plugin-text@0.0.4",
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.3.0"
@@ -202,6 +203,9 @@ System.config({
     },
     "npm:process@0.11.2": {
       "assert": "github:jspm/nodelibs-assert@0.1.0"
+    },
+    "npm:purecss@0.6.0": {
+      "css": "github:systemjs/plugin-css@0.1.20"
     },
     "npm:util@0.10.3": {
       "inherits": "npm:inherits@2.0.1",
