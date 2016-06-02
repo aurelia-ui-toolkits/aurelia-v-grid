@@ -1,0 +1,9 @@
+<template bindable="router">
+  <require from="./nav-bar.css"></require>
+  <div>
+    <span>${router.title}</span>
+    <span repeat.for="row of router.navigation">
+      <a href.bind="row.href" class="${row.isActive ? 'active' : ''}">${row.title}</a>
+    </span>
+  </div>
+</template>
