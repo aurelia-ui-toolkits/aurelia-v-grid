@@ -6,13 +6,13 @@ export class Registry {
 
       let map = [];
 
-      Object.keys(registry.samples).forEach(_sample => {
+      for (let _sample of Object.keys(registry.samples)) {
         let sample = registry.samples[_sample];
 
         sample.path = `samples/${control}/${_sample}`;
         sample.route = sample.route || _sample;
         sample.title = sample.title || this.getTitleFromRoute(_sample);
-        sample.moduleId = sample.moduleId || 'shared/sample-runner';
+        sample.moduleId = sample.moduleId || 'sample-runner';
         sample.nav = sample.nav || true;
         sample.files = sample.files || ['html', 'js'];
         sample.files.forEach(extension => {
@@ -35,7 +35,7 @@ export class Registry {
           route: sample.route,
           sample: sample
         });
-      });
+      }
 
       config.map(map);
     });

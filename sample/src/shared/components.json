@@ -1,5 +1,5 @@
 {
-  "Basic Use": {
-    "Basic grid": { "moduleId": "basic-use", "status": "wip" }
+  "Most popular": {
+    "Click counter": { "status": "done", "moduleId": "click-counter" }
   }
 }

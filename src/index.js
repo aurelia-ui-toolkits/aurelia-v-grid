@@ -8,7 +8,5 @@ export function configure(aurelia: Aurelia, configCallback?: (builder: ConfigBui
     configCallback(builder);
   }
 
-  if (builder.useGlobalResources) {
-    aurelia.globalResources(builder.globalResources);
-  }
+  aurelia.globalResources(builder.globalResources);
 }

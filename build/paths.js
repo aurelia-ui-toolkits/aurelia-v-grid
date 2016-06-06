@@ -13,7 +13,7 @@ module.exports = {
   releaseOutput: 'dist/',
   sample: 'sample',
   sampleSrc: './sample/src/**/*.js',
-  sampleStyle: './sample/src/**/*.css',
+  sampleStyle: './sample/styles/**/*.css',
   sampleHtml: './sample/src/**/*.html',
   doc:'./doc',
   tests: 'test/unit/**/*.js',
