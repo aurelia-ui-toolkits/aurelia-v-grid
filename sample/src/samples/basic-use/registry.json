@@ -1,9 +1,0 @@
-{
-  "title": "Basic use",
-  "samples": {
-    "basic-use": {
-      "route": ["", "basic-use"],
-      "files": ["html"]
-    }
-  }
-}

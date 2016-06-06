@@ -1,0 +1,15 @@
+{
+  "title": "<v-grid>",
+  "samples": {
+    "basic-use": {
+      "default" : true,
+      "files": ["html", "js"]
+    },
+    "sorting-and-filters": {
+      "files": ["html", "js", "md"]
+    },
+    "click-counter": {
+      "files": ["html", "js"]
+    }
+  }
+}

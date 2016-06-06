@@ -1,9 +1,0 @@
-{
-  "title": "Click counter",
-  "samples": {
-    "basic-use": {
-      "default" : true,
-      "files": ["html", "js"]
-    }
-  }
-}

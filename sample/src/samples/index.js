@@ -1,14 +1,14 @@
-import {inject} from 'aurelia-framework';
-import {Registry} from 'shared/registry';
-import { ComponentService } from '../shared/component-service';
+// import {inject} from 'aurelia-framework';
+// import {Registry} from 'shared/registry';
+// import { ComponentService } from '../shared/component-service';
 
-@inject(Registry, ComponentService)
+// @inject(Registry, ComponentService)
 export class Index {
 
-  constructor(registry, componentService) {
-    this.registry = registry;
-    this.componentService = componentService;
-    this.routerConfig = componentService.getRouterConfig(true);
+  constructor(/*registry, componentService*/) {
+    // this.registry = registry;
+    // this.componentService = componentService;
+    // this.routerConfig = componentService.getRouterConfig(true);
   }
   configureRouter(config, router) {
     config.title = 'Samples';
@@ -22,8 +22,12 @@ export class Index {
     //   { name: 'collapse', route: 'collapse', moduleId: './collapse/index', title: 'Collapse' },
     //   { name: 'panel', route: 'panel', moduleId: './panel/index', title: 'Panel' }
     // ]);
-    this.routerConfig.unshift({ name: 'default', route: '', redirect: 'click-counter' });
-    config.map(this.routerConfig);
+    // this.routerConfig.unshift({ name: 'default', route: '', redirect: 'v-grid' });
+    // config.map(this.routerConfig);
+    config.map([
+      { name: 'v-grid', route: 'v-grid', moduleId: './v-grid/index', title: 'v-grid' },
+      { name: 'default', route: '', redirect: 'v-grid' }
+    ]);
     this.router = router;
   }
 }

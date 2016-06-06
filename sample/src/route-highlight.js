@@ -43,10 +43,12 @@ export class RouteHighlight {
 
     highlight() {
       //jQuery(this.element).addClass('active');
+      this.element.classList.add('active');
     }
 
     unhighlight() {
       //jQuery(this.element).removeClass('active');
+      this.element.classList.remove('active');
     }
 
     detached() {
