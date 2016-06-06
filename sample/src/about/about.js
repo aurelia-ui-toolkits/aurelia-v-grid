@@ -1,1 +1,1 @@
-export class About { }
+export class About {}

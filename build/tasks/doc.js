@@ -4,7 +4,7 @@ var typedoc = require('gulp-typedoc');
 var typedocExtractor = require('gulp-typedoc-extractor');
 var runSequence = require('run-sequence');
 
-gulp.task('doc-generate', function(){
+gulp.task('doc-generate', function() {
   return gulp.src([paths.output + '*.d.ts', paths.doc + '/core-js.d.ts', './jspm_packages/npm/*/*.d.ts'])
     .pipe(typedoc({
       target: 'es6',
@@ -24,7 +24,7 @@ gulp.task('doc-extract', function(){
     .pipe(gulp.dest(paths.doc));
 });
 
-gulp.task('doc', function(callback){
+gulp.task('doc', function(callback) {
   return runSequence(
     'doc-generate',
     'doc-extract',

@@ -1,0 +1,14 @@
+<template>
+  <div class="btn-group" role="group">
+    <div repeat.for="category of categories" class="btn-group">
+      <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        ${category.title}<span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu">
+        <li repeat.for="ctrl of category.controls">
+          <a href.bind="ctrl.link">${ ctrl.title }</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</template>

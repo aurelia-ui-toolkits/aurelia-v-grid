@@ -1,8 +1,7 @@
 <!doctype html>
 <html>
   <head>
-    <title>Aurelia Plugin Builder</title>
-    <link rel="stylesheet" href="jspm_packages/npm/font-awesome@4.5.0/css/font-awesome.min.css">
+    <title>Skeleton Bridge App</title>
     <link rel="stylesheet" href="styles/styles.css">
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,14 +9,14 @@
 
   <body aurelia-app="main">
     <div class="splash">
-      <div class="message">Aurelia Plugin Builder</div>
+      <div class="message">Skeleton Bridge App</div>
       <i class="fa fa-spinner fa-spin"></i>
     </div>
 
     <script src="jspm_packages/system.js"></script>
     <script src="config.js"></script>
     <script>
-      System.import('purecss/build/pure.css!')
+      System.import('font-awesome/css/font-awesome.css!')
       System.import('aurelia-bootstrapper');
 
       // Load the package.json from the root to get the package name
@@ -34,6 +33,7 @@
 
         System.config(cfg);
       });
+
     </script>
   </body>
 </html>
