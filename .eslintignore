@@ -3,6 +3,7 @@ dist
 doc
 jspm_packages
 node_modules
+config.js
 sample/jspm_packages
 sample/node_modules
 sample/styles
