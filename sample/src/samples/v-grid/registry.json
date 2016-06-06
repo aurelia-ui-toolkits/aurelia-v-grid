@@ -3,7 +3,8 @@
   "samples": {
     "basic-use": {
       "default" : true,
-      "files": ["html", "js"]
+      "files": ["html", "js"],
+      "supportsVariations": true
     },
     "sorting-and-filters": {
       "files": ["html", "js", "md"]

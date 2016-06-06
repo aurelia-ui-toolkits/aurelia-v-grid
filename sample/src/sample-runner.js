@@ -32,14 +32,15 @@ export class SampleRunner {
   }
 
   enhanceSample(sample) {
-    let style = this.sampleStateService.getStyle().key;
-    sample._path = `${sample.path}-${style}`;
-
+    if (sample.supportsVariations) {
+      let style = this.sampleStateService.getStyle().key;
+      sample._path = `${sample.path}-${style}`;
+    } else {
+      sample._path = sample.path;
+    }
     sample.files.forEach(extension => {
-      sample[`_${extension}`] = `${sample._path}.${extension}`;
+        sample[`_${extension}`] = `${sample._path}.${extension}`;
     });
-    
-    console.log('loading sample path:', sample._path);
     
     return sample;
   }
