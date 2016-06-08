@@ -6,6 +6,7 @@ export class dummyDataGenerator {
 totalGenerated = 0;
 
 constructor(){
+  // transform json object to an array
   this.internalDataArray = Object.keys(internalDataArray).map(function(k) { return internalDataArray[k] });
 
   this.index = [];
