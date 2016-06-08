@@ -9,7 +9,7 @@ export class Registry {
       for (let _sample of Object.keys(registry.samples)) {
         let sample = registry.samples[_sample];
 
-        sample.path = `samples/${control}/${_sample}/${_sample}`;
+        sample.path = `samples/${control}/${_sample}`;
         sample.route = sample.route || _sample;
         sample.title = sample.title || this.getTitleFromRoute(_sample);
         sample.moduleId = sample.moduleId || 'sample-runner';
