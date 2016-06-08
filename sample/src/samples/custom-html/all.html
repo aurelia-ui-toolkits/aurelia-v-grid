@@ -1,0 +1,124 @@
+<template>
+<div class="row">
+
+    <v-grid
+       class="col-md-6"
+       style="height:350px"
+       v-row-height="25"
+       v-attibutes-observe="name,country,number,date,color"
+       v-header-height="50"
+       v-resizable-headers="true"
+       v-sortable-headers="true"
+       v-multi-select="true"
+       v-current-entity.bind=myCurrentEntity
+       v-collection.bind=myCollection
+       v-grid-context.bind=myGrid>
+       <v-grid-col width="90">
+         <v-header-template>
+           <input v-header-menu="index" class="vgrid-header-input-top" v-filter="index|>"  value.bind="tempRef.index">
+           <p class="vgrid-label-bottom vGrid-vGridDragHandle" v-sort="index">Index</p>
+         </v-header-template>
+         <v-row-template>
+           <input v-row-menu="index" class="vgrid-row-input" value.bind="tempRef.index">
+         </v-row-template>
+       </v-grid-col>
+
+
+       <v-grid-col width="100">
+         <v-header-template>
+           <input v-header-menu="name" class="vgrid-header-input-top" v-filter="name|*" value.bind="tempRef.name">
+           <p class="vgrid-label-bottom vGrid-vGridDragHandle" v-sort="name">Name</p>
+         </v-header-template>
+         <v-row-template>
+           <input v-row-menu="name" class="vgrid-row-input" value.bind="rowRef.name">
+         </v-row-template>
+       </v-grid-col>
+
+
+       <v-grid-col width="100">
+         <v-header-template>
+           <input v-header-menu="number" class="vgrid-header-input-top" v-filter="number|>=" value.bind="tempRef.number">
+           <p class="vgrid-label-bottom vGrid-vGridDragHandle" v-sort="number">Number</p>
+         </v-header-template>
+         <v-row-template>
+           <input v-row-menu="number" class="vgrid-row-input" value.bind="rowRef.number"
+                  css="color:${tempRef.numberColor};font-weight:${tempRef.numberFont}">
+         </v-row-template>
+       </v-grid-col>
+
+
+       <v-grid-col width="90">
+         <v-header-template>
+           <div style="height:50%"></div>
+           <p  class=" vgrid-label-bottom vGrid-vGridDragHandle">Image</p>
+         </v-header-template>
+         <v-row-template>
+           <image class="vgrid-image-round" v-image-fix v-row-menu="image" src.bind="rowRef.images"></image>
+         </v-row-template>
+       </v-grid-col>
+
+
+       <v-grid-col width="70">
+         <v-header-template>
+           <input class="vgrid-row-checkbox-50" v-header-menu="bool" type="checkbox" v-filter="bool|=">
+           <p class="vgrid-label-bottom vGrid-vGridDragHandle" v-sort="bool">Bool</p>
+         </v-header-template>
+         <v-row-template>
+           <input class="vgrid-row-checkbox-100" v-row-menu="bool" type="checkbox" checked.bind="rowRef.bool">
+         </v-row-template>
+       </v-grid-col>
+
+
+
+
+       <v-grid-col width="180">
+         <v-header-template>
+           <input v-header-menu="date" class="vgrid-header-input-top" v-filter="date | enter | >=| ">
+           <p class="vgrid-label-bottom" v-sort="date">Date</p>
+         </v-header-template>
+         <v-row-template>
+           <input v-row-menu="date" class="vgrid-row-input" value.bind="rowRef.date">
+         </v-row-template>
+       </v-grid-col>
+
+
+
+       <v-grid-col width="160">
+         <v-header-template>
+           <input v-header-menu="color" class="vgrid-header-input-top" v-filter="bool|enter|*">
+           <p class="vgrid-label-bottom" v-sort="color">Color</p>
+         </v-header-template>
+         <v-row-template>
+           <input v-row-menu="color" class="vgrid-row-input" value.bind="rowRef.color">
+         </v-row-template>
+       </v-grid-col>
+    </v-grid>
+
+    <!-- Form to the right -->
+
+
+    <form  class="col-md-6">
+      <div style="height:350px" class="well well-sm ">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input class="form-control" id="name" value.bind="myCurrentEntity.name" disabled.bind="!myCurrentEntity.__vGridKey">
+        </div>
+        <div class="form-group">
+          <label for="Number">Number</label>
+          <input  class="form-control" id="Number" value.bind="myCurrentEntity.number" disabled.bind="!myCurrentEntity.__vGridKey">
+        </div>
+        <div class="form-group">
+          <label for="Date">Date</label>
+          <input  class="form-control" id="Date" value.bind="myCurrentEntity.date" disabled.bind="!myCurrentEntity.__vGridKey">
+        </div>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" checked.bind="myCurrentEntity.bool" disabled.bind="!myCurrentEntity.__vGridKey"> Bool
+          </label>
+      </div>
+      <img src.bind="myCurrentEntity.images" alt="images" class="img-circle">
+      </div>
+    </form>
+
+</div>
+</template>

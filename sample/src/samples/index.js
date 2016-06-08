@@ -1,32 +1,13 @@
-// import {inject} from 'aurelia-framework';
-// import {Registry} from 'shared/registry';
-// import { ComponentService } from '../shared/component-service';
-
-// @inject(Registry, ComponentService)
-export class Index {
-
-  constructor(/*registry, componentService*/) {
-    // this.registry = registry;
-    // this.componentService = componentService;
-    // this.routerConfig = componentService.getRouterConfig(true);
-  }
+export class MainIndex {
   configureRouter(config, router) {
     config.title = 'Samples';
-
-    // config.map([
-    //   { name: 'default', route: '', redirect: 'click-counter' },
-    //   { name: 'click-counter', route: 'click-counter', moduleId: './click-counter/index', title: 'Click-counter' },
-    //   { name: 'navbar', route: 'navbar', moduleId: './navbar/index', title: 'Navbar' },
-    //   { name: 'navs', route: 'navs', moduleId: './navs/index', title: 'Navs' },
-    //   { name: 'button', route: 'button', moduleId: './button/index', title: 'Button' },
-    //   { name: 'collapse', route: 'collapse', moduleId: './collapse/index', title: 'Collapse' },
-    //   { name: 'panel', route: 'panel', moduleId: './panel/index', title: 'Panel' }
-    // ]);
-    // this.routerConfig.unshift({ name: 'default', route: '', redirect: 'v-grid' });
-    // config.map(this.routerConfig);
     config.map([
-      { name: 'v-grid', route: 'v-grid', moduleId: './v-grid/index', title: 'v-grid' },
-      { name: 'default', route: '', redirect: 'v-grid' }
+      { name: 'simple-html-col', route: 'simple-html-col', moduleId: './simple-html-col/index', nav: true, title: 'Column config-> Simple Html' },
+      { name: 'column-bind', route: 'column-bind', moduleId: './column-bind/index', nav: true, title: 'Column config-> "column.bind"' },
+      { name: 'custom-html', route: 'custom-html', moduleId: './custom-html/index', nav: true, title: 'Column config-> Custom Html' },
+      { name: 'row-repeat', route: 'row-repeat', moduleId: './row-repeat/index', nav: true, title: 'no column -> row repeat' },
+      { name: 'other', route: 'other', moduleId: './other/index', nav: true, title: 'other' },
+      { name: 'default', route: '', redirect: 'simple-html-col' }
     ]);
     this.router = router;
   }
