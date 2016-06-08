@@ -46,6 +46,8 @@ System.config({
     "jquery": "npm:jquery@2.2.3",
     "jquery.min": "github:components/jquery@2.2.4",
     "json": "github:systemjs/plugin-json@0.1.2",
+    "moment": "npm:moment@2.13.0",
+    "numeral": "npm:numeral@1.5.3",
     "prism": "github:PrismJS/prism@1.3.0",
     "showdown": "github:showdownjs/showdown@1.3.0",
     "showdown-prettify": "npm:showdown-prettify@1.3.0",
@@ -233,6 +235,9 @@ System.config({
     "npm:lcid@1.0.0": {
       "invert-kv": "npm:invert-kv@1.0.0",
       "systemjs-json": "github:systemjs/plugin-json@0.1.2"
+    },
+    "npm:numeral@1.5.3": {
+      "fs": "github:jspm/nodelibs-fs@0.1.2"
     },
     "npm:os-locale@1.4.0": {
       "child_process": "github:jspm/nodelibs-child_process@0.1.0",

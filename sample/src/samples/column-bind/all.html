@@ -1,4 +1,5 @@
 <template>
+<require from="shared/valueConverters"></require>
 <div class="row">
 
     <v-grid
@@ -6,12 +7,12 @@
        style="height:350px"
        v-row-height="25"
        v-header-height="50"
-       v-resizable-headers="true"
-       v-sortable-headers="true"
        v-multi-select="true"
+       v-row-onclick.delegate="singleClick($event.detail)"
+       v-row-ondblclick.delegate="singleDblClick($event.detail)"
        v-current-entity.bind=myCurrentEntity
+       v-row-on-draw.call="onRowDraw($event)"
        v-collection.bind=myCollection
-       v-grid-context.bind=myGrid
        v-columns.bind=columnSetup>
     </v-grid>
 

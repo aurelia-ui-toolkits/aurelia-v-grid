@@ -11,64 +11,100 @@ export class BasicUse {
   //collection to display
   myCollection = [];
 
+
+  onRowDraw(data) {
+    if (data) {
+      if (data.tempRef) {
+        if (data.tempRef.number > 100) {
+          data.tempRef.numberColor = "green";
+          data.tempRef.numberFont = "normal";
+        } else {
+          data.tempRef.numberColor = "red";
+          data.tempRef.numberFont = "bold";
+        }
+      }
+    }
+  }
+
+  singleClick(e) {
+    console.log("click")
+  }
+
+
+  singleDblClick(e) {
+    console.log("dblClick")
+  }
+
   columnSetup = [
     {
       attribute: "index",
-      filter: true,
-      filterOperator:">",
-      filterTop: true,
+      width:80,
+      header:"Record",
+      filter: "index|>=",
+      filterOperator: ">",
+      filterTop: "index",
       sort: true,
-      contextmenuRow: true,
-      contextmenuHeader: true
+      attributeFilter: "v-header-menu='index'",
+      attributeRow: "v-row-menu='index' v-key-move"
     }, {
       attribute: "name",
-      filterTop: true,
-      filter: true,
-      filterOperator:"*",
-      sort: true,
-      contextmenuRow: true,
-      contextmenuHeader: true
-    }, {
-      attribute: "number",
-      filter: true,
+      width:120,
+      header:"Full Name",
       filterTop: false,
-      sort: true,
-      contextmenuRow: true,
-      contextmenuHeader: true
+      filter: "name|*|onKeyDown",
+      sort: "name",
+      attributeFilter: "v-header-menu='name'",
+      attributeRow: "v-row-menu='name' v-key-move"
     }, {
-        attribute: "date",
-        filter: false,
-        filterTop: false,
-        sort: true,
-        contextmenuRow: true,
-        contextmenuHeader: true
+      attribute: "number | numberFormat & updateTrigger:'blur':'paste'",
+      width:100,
+      header:"Salery",
+      filter: "number|>=",
+      filterTop: true,
+      sort: "number",
+      attributeFilter: "v-header-menu='number'",
+      attributeRow: "v-row-menu='number' v-key-move",
+      css:"color:${tempRef.numberColor};font-weight:${tempRef.numberFont}"
+    }, {
+      attribute: "date | dateFormat & updateTrigger:'blur':'paste'",
+      width:100,
+      header:"Created",
+      filter: "date|>|dateFormat",
+      filterTop: true,
+      sort: "date",
+      attributeFilter: "v-header-menu='date'",
+      attributeRow: "v-row-menu='date' v-key-move"
     }, {
       attribute: "bool",
-      filter: true,
-      filterTop: false,
-      sort: true,
-      type:"checkbox",
-      contextmenuRow: true,
-      contextmenuHeader: true
+      width:105,
+      header:"Booked",
+      filter: "bool",
+      filterTop: true,
+      sort: "bool",
+      type: "checkbox",
+      attributeFilter: "v-header-menu='bool'",
+      attributeRow: "v-row-menu='bool' v-key-move"
     }, {
       attribute: "images",
-      type:"image",
-      contextmenuRow: true
+      width:107,
+      header:"Profil img",
+      type: "image",
+      attributeFilter: "v-header-menu='images'",
+      attributeRow: "v-row-menu='images' v-key-move tabindex='0'"
     }
 
-  ]
+  ];
 
 
   //helper for dummy data
   constructor(dummyDataGenerator) {
-      //get this element
-      this.dummyDataGenerator = dummyDataGenerator;
-      this.dummyDataGenerator.generateData(10000, (data) => {
-        this.myCollection = data;
-      });
+    //get this element
+    this.dummyDataGenerator = dummyDataGenerator;
+    this.dummyDataGenerator.generateData(10000, (data) => {
+      this.myCollection = data;
+    })
 
-    }
-
+  }
 
 
 }
