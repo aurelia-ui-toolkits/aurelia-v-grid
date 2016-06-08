@@ -11,7 +11,6 @@ export class Index {
 
   configureRouter(config, router) {
     this.router = router;
-
-    return this.registry.load(config, 'click-counter');
+    return this.registry.load(config, 'other');
   }
 }
