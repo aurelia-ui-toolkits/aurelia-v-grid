@@ -1,39 +1,73 @@
 /*****************************************************************************************************************
- *    vGridSortable
- *    replacement code for sortable.js just made for the headers, if you need sortable use sortable.js, see link below
- *    Created by vegar ringdal witt the help of sortablejs and https://github.com/RubaXa/Sortable/wiki/Sorting-with-the-help-of-HTML5-Drag'n'Drop-API
- *    Big thanks to Lebedev Konstantin RubaXa and his awsome sortable.js
- *    TODO clean up
+ *    Drag drop columns for the grid
+ *    can not be used with row-repeat... yet
+ *    Created by vegar ringdal
  *
  ****************************************************************************************************************/
-
-export class VGridSortable {
-
-  dragEl;
-  nextEl;
-  oldIndex;
-  newIndex;
-  timer = null;
-  canMove = false;
-  sortable = false;
+import {inject, customAttribute} from 'aurelia-framework';
+import {VGrid} from './v-grid';
 
 
+@customAttribute('v-drag-drop-col')
+@inject(Element, VGrid)
+export class vGridDragDropCol {
 
-  constructor(vGrid) {
+
+  constructor(element, vGrid) {
     this.vGrid = vGrid;
+    this.element = element;
     this.drophelper = [];
+    this.dragEl;
+    this.nextEl;
+    this.oldIndex;
+    this.newIndex;
+    this.timer = null;
+    this.canMove = false;
+    this.sortable = false;
   }
 
 
-  setDragHandles() {
-    //we haveto control dragging only to headers with draghandle
-    var dragHandles = this.vGrid.vGridGenerator.gridElement.getElementsByClassName('vGrid-vGridDragHandle');
-    [].slice.call(dragHandles).forEach((itemEl, index) => {
 
-      let mainCol = itemEl;
+  bind(bindingContext, overrideContext) {
+    this.bindingContext = bindingContext;
+    this.overrideContext = overrideContext;
+
+  }
+
+  attached(){
+    this.setDragHandles();
+
+    //need to be better, will change when I rebuild header into custom element
+    this.rootEl = this.vGrid.vGridGenerator.headerScrollElement; //this is BAD!
+
+    //add eventlistnes for dragable
+    this.mainCol.addEventListener('dragstart', this.onDragStart.bind(this), false);
+
+    //event listner for when starting to drag
+    this.vGrid.element.addEventListener("vGridDragStart",()=>{
+      this.drophelper.style["z-index"] = "100";
+    });
+
+    //event listner when stopped dragging
+    this.vGrid.element.addEventListener("vGridDragStop",()=>{
+      this.drophelper.style["z-index"] = "-100";
+    })
+
+
+
+  }
+
+
+
+  setDragHandles() {
+
+      this.element.classList.add("vGrid-vGridDragHandle");
+      let mainCol = this.element;
       while(mainCol.nodeName !== 'V-GRID-HEADER-COL'){
         mainCol = mainCol.offsetParent;
       }
+
+      this.mainCol = mainCol;
 
       //simple drophelper
       var drophelper = document.createElement("v-grid-drop");
@@ -41,39 +75,26 @@ export class VGridSortable {
       drophelper.style.bottom  = 0;
       drophelper.style.top = 0;
       drophelper.style.left = "50%";
-      drophelper.setAttribute("column-no", index);
       //drophelper.style["background-color"] = "blue"; enable to see them
       drophelper.style["z-index"] = "-100";
       drophelper.style.position = "absolute";
       mainCol.appendChild(drophelper);
-      this.drophelper.push(drophelper);
+      this.drophelper = drophelper;
 
-      itemEl.onmouseenter = () => {
+      this.element.onmouseenter = () => {
         this.canMove = true;
         //add draggable to elements
         this.setDraggable(true);
       };
-      itemEl.onmouseleave = () => {
+      this.element.onmouseleave = () => {
         this.canMove = false;
         //remove draggable to elements
         this.setDraggable(false);
-      }
+      };
 
-    });
+
   }
 
-
-  init(rootEl, onUpdate, onStart, onCancel, canMove) {
-    //add drag/can move event to label
-    this.setDragHandles();
-
-    //need to be better, will change when I rebuild header into custom element
-    this.rootEl = this.vGrid.vGridGenerator.headerScrollElement; //this is BAD!
-
-    //add eventlistnes for dragable
-    this.rootEl.addEventListener('dragstart', this.onDragStart.bind(this), false);
-
-  }
 
   onStart() {
     this.sortable = true
@@ -90,7 +111,6 @@ export class VGridSortable {
 
 
   onUpdateAlt(oldIndex, newIndex) {
-    var children = this.vGrid.vGridGenerator.headerScrollElement.children;
 
     var x;
 
@@ -98,8 +118,6 @@ export class VGridSortable {
     this.vGrid.vGridConfig.colConfig.splice(oldIndex, 1);
     this.vGrid.vGridConfig.colConfig.splice(newIndex, 0, x);
 
-
-    var that = this;
     this.vGrid.vGridGenerator.rowTemplate = null; //reset template and fill data
 
     var dragHandles = this.vGrid.vGridGenerator.gridElement.getElementsByTagName('v-grid-header-col');
@@ -115,21 +133,25 @@ export class VGridSortable {
 
   //sets the elements draggable attribute
   setDraggable(newStatus) {
-    [].slice.call(this.rootEl.children).forEach(function (itemEl) {
-      itemEl.draggable = newStatus;
-    });
+      this.mainCol.draggable = newStatus;
   }
 
 
   //triggered on drag start
   onDragStart(evt) {
     this.dragEl = evt.target;
-    console.log(evt)
+
+    //get column index
     this.oldIndex = evt.target.getAttribute("column-no");
 
-    this.drophelper.forEach((item)=>{
-      item.style["z-index"] = "100";
+    let event = new CustomEvent("vGridDragStart", {
+      detail: "",
+      bubbles: true
     });
+
+    //dispatch event so all sortable column put the zindex up
+    this.vGrid.element.dispatchEvent(event);
+
 
     if (this.isDragHandle()) {
       this.onStart();
@@ -184,7 +206,6 @@ export class VGridSortable {
           //get the rect of what we are moving to
           var rect = target.getBoundingClientRect();
           var width = rect.right - rect.left;
-          var height = rect.bottom - rect.top;
 
           var isLong = (target.offsetHeight > this.dragEl.offsetHeight);
           var halfway = ((evt.clientX - rect.left) / width) > 0.5;
@@ -214,9 +235,13 @@ export class VGridSortable {
   onDragEnd(evt) {
 
     evt.preventDefault();
-    this.drophelper.forEach((item)=>{
-      item.style["z-index"] = "-100";
+    //trigger
+    let event = new CustomEvent("vGridDragStop", {
+      detail: "",
+      bubbles: true
     });
+    this.vGrid.element.dispatchEvent(event);
+
     this.dragEl.classList.remove('ghost');
     this.rootEl.removeEventListener('dragover)', this.onDragOver, false);
     this.rootEl.removeEventListener('dragend', this.onDragEnd, false);
