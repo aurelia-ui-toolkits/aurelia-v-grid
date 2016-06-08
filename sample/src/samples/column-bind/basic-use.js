@@ -15,10 +15,12 @@ export class BasicUse {
   columnSetup = [
     {
       attribute: "index"
-      }, {
+    }, {
       attribute: "name"
     }, {
       attribute: "number"
+    }, {
+      attribute: "date"
     }, {
       attribute: "bool"
     }, {
@@ -30,14 +32,13 @@ export class BasicUse {
 
   //helper for dummy data
   constructor(dummyDataGenerator) {
-      //get this element
-      this.dummyDataGenerator = dummyDataGenerator;
-      this.dummyDataGenerator.generateData(10000, (data) => {
-        this.myCollection = data;
-      });
+    //get this element
+    this.dummyDataGenerator = dummyDataGenerator;
+    this.dummyDataGenerator.generateData(10000, (data) => {
+      this.myCollection = data;
+    })
 
-    }
-
+  }
 
 
 }
