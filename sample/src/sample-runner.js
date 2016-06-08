@@ -2,54 +2,27 @@ import {inject} from 'aurelia-framework';
 import {activationStrategy} from 'aurelia-router';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {TaskQueue} from 'aurelia-framework';
-import {developmentStyle, SampleStateService} from './shared/sample-state-service';
 
-@inject(EventAggregator, TaskQueue, SampleStateService)
+@inject(EventAggregator, TaskQueue)
 export class SampleRunner {
 
-  constructor(ea, taskQueue, sampleStateService) {
-    this.sampleStateService = sampleStateService;
+  constructor(ea, taskQueue) {
     this.taskQueue = taskQueue;
     this.ea = ea;
-    this.subscriptions = [];
-  }
-
-  attached() {
-    this.subscriptions.push(this.ea.subscribe('sample-state-service:style-changed', this.restart.bind(this)));
-  }
-  
-  detached() {
-    this.subscriptions.forEach(sub => sub.dispose());
   }
 
   activate(params, route) {
     let sample = route.navModel.config.sample;
-    sample = this.enhanceSample(sample);
 
     if (!sample) throw new Error('Route does not contain a \'sample\' property');
 
     this.sample = sample;
   }
 
-  enhanceSample(sample) {
-    if (sample.supportsVariations) {
-      let style = this.sampleStateService.getStyle().key;
-      sample._path = `${sample.path}-${style}`;
-    } else {
-      sample._path = sample.path;
-    }
-    sample.files.forEach(extension => {
-        sample[`_${extension}`] = `${sample._path}.${extension}`;
-    });
-    
-    return sample;
-  }
-
   restart() {
     let old = this.sample;
     this.sample = undefined;
     this.taskQueue.queueTask(() => {
-      this.sample = this.enhanceSample(old);
       this.sample = old;
     });
   }
