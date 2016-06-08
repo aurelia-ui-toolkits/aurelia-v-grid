@@ -1,7 +1,7 @@
 import {bindable} from 'aurelia-framework';
 
 export class CollapsePanel {
-  @bindable title;
+  @bindable panelTitle;
   @bindable footer;
   @bindable allowCollapse = false;
   @bindable collapsed = false;

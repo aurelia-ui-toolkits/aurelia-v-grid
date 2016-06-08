@@ -95,30 +95,7 @@
     </v-grid>
 
     <!-- Form to the right -->
-
-
-    <form  class="col-md-6">
-      <div style="height:350px" class="well well-sm ">
-        <div class="form-group">
-          <label for="name">Name</label>
-          <input class="form-control" id="name" value.bind="myCurrentEntity.name" disabled.bind="!myCurrentEntity.__vGridKey">
-        </div>
-        <div class="form-group">
-          <label for="Number">Number</label>
-          <input  class="form-control" id="Number" value.bind="myCurrentEntity.number" disabled.bind="!myCurrentEntity.__vGridKey">
-        </div>
-        <div class="form-group">
-          <label for="Date">Date</label>
-          <input  class="form-control" id="Date" value.bind="myCurrentEntity.date" disabled.bind="!myCurrentEntity.__vGridKey">
-        </div>
-        <div class="checkbox">
-          <label>
-            <input type="checkbox" checked.bind="myCurrentEntity.bool" disabled.bind="!myCurrentEntity.__vGridKey"> Bool
-          </label>
-      </div>
-      <img src.bind="myCurrentEntity.images" alt="images" class="img-circle">
-      </div>
-    </form>
+    <v-grid-control-form entity.bind="myCurrentEntity"></v-grid-control-form>
 
 </div>
 </template>

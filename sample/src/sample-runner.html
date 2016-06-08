@@ -1,15 +1,15 @@
 <template>
     <section>
 
-        <collapse-panel title.bind="sample.title">
+        <collapse-panel panel-title.bind="sample.title">
             <div id="exampleWrap">
                 <compose view-model.bind="sample.path"></compose>
             </div>
         </collapse-panel>
-        <collapse-panel title="Code Preview">
+        <collapse-panel panel-title="Code Preview">
 
             <ul class="nav nav-tabs">
-                <li class="active" show.bind="sample.html"><a data-toggle="tab" href="#html">HTML</a></li>
+                <li class="active" show.bind="sample._html"><a data-toggle="tab" href="#html">HTML</a></li>
                 <li show.bind="sample.js"><a data-toggle="tab" href="#javascript">Javascript</a></li>
                 <li show.bind="sample.css"><a data-toggle="tab" href="#css">CSS</a></li>
                 <li show.bind="sample.json"><a data-toggle="tab" href="#json">JSON</a></li>
