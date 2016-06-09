@@ -6,11 +6,11 @@
       class="col-md-6"
       style="height:350px"
       v-row-height="25"
-      v-attibutes-observe="index,name,number,date,bool"
       v-header-height="50"
       v-row-onclick.delegate="singleClick($event.detail)"
       v-row-ondblclick.delegate="singleDblClick($event.detail)"
       v-current-entity.bind=myCurrentEntity
+      v-multi-select="true"
       v-row-on-draw.call="onRowDraw($event)"
       v-collection.bind=myCollection
       v-grid-context.bind=myGrid>
@@ -22,7 +22,7 @@
           <p class="vgrid-label-bottom" v-sort="index" v-resize-col v-drag-drop-col>Record</p>
         </v-header-template>
         <v-row-template>
-          <input v-row-menu="index" v-key-move class="vgrid-row-input" v-update-current-entity-on="keyup" value.bind="tempRef.index">
+          <input v-row-menu="index" v-key-move class="vgrid-row-input" v-observe-field="index" value.bind="rowRef.index">
         </v-row-template>
       </v-grid-col>
 
@@ -33,7 +33,7 @@
           <input v-header-menu="name" class="vgrid-header-input-top" v-filter="name|*|onKeyDown" v-resize-col v-drag-drop-col>
         </v-header-template>
         <v-row-template>
-          <input v-row-menu="name" v-key-move class="vgrid-row-input" v-update-current-entity-on="keyup" value.bind="rowRef.name">
+          <input v-row-menu="name" v-key-move class="vgrid-row-input" v-observe-field="name" value.bind="rowRef.name">
         </v-row-template>
       </v-grid-col>
 
@@ -44,7 +44,7 @@
           <p class="vgrid-label-bottom" v-sort="number" v-resize-col v-drag-drop-col>Salery</p>
         </v-header-template>
         <v-row-template>
-          <input v-row-menu="number" v-key-move class="vgrid-row-input" value.bind="rowRef.number | numberFormat & updateTrigger:'blur':'paste'" css="color:${tempRef.numberColor};font-weight:${tempRef.numberFont}">
+          <input v-row-menu="number" v-key-move class="vgrid-row-input" v-observe-field="number" value.bind="rowRef.number | numberFormat & updateTrigger:'blur':'paste'" css="color:${tempRef.numberColor};font-weight:${tempRef.numberFont}">
         </v-row-template>
       </v-grid-col>
 
@@ -55,7 +55,7 @@
           <p class="vgrid-label-bottom" v-sort="date" v-resize-col v-drag-drop-col>Created</p>
         </v-header-template>
         <v-row-template>
-          <input v-row-menu="date" v-key-move class="vgrid-row-input" value.bind="rowRef.date | dateFormat & updateTrigger:'blur':'paste'">
+          <input v-row-menu="date" v-key-move class="vgrid-row-input" v-observe-field="date" value.bind="rowRef.date | dateFormat & updateTrigger:'blur':'paste'">
         </v-row-template>
       </v-grid-col>
 
@@ -66,7 +66,7 @@
           <p class="vgrid-label-bottom" v-resize-col v-sort="bool"  v-resize-col v-drag-drop-col>Booked</p>
         </v-header-template>
         <v-row-template>
-          <input class="vgrid-row-checkbox-100" v-key-move v-update-current-entity-on="click" v-row-menu="bool" type="checkbox" checked.bind="rowRef.bool">
+          <input class="vgrid-row-checkbox-100" v-key-move v-observe-field="bool" v-row-menu="bool" type="checkbox" checked.bind="rowRef.bool">
         </v-row-template>
       </v-grid-col>
 
@@ -77,7 +77,7 @@
           <p class="vgrid-label-bottom" v-resize-col v-drag-drop-col>Profile Img</p>
         </v-header-template>
         <v-row-template>
-          <image class="vgrid-image-round" v-key-move v-image-fix v-row-menu="image" src.bind="rowRef.images"></image>
+          <image class="vgrid-image-round" v-key-move v-image-fix v-observe-field="bool" v-row-menu="images" src.bind="rowRef.images"></image>
         </v-row-template>
       </v-grid-col>
 

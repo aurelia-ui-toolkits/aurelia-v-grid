@@ -14,7 +14,7 @@ export class ConfigBuilder {
     './vGrid/v-grid-attributes-image',
     './vGrid/v-grid-attributes-key-move',
     './vGrid/v-grid-attributes-contextmenu',
-    './vGrid/v-grid-attributes-update-current-entity-on',
+    './vGrid/v-grid-attributes-observe-field',
     './vGrid/v-grid-attributes-dragDropCol',
     './vGrid/v-grid-attributes-resize-col'
   ];

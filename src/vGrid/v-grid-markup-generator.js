@@ -50,10 +50,6 @@ export class VGridMarkupGenerator {
       }
 
 
-      //we want by default to observe attributes if we can
-      this.addToObserverArray(this.getAttribute(col.colField, false));
-
-
       //set default, some can be missing
       col.colType = col.colType || "text";
       col.colFilterTop = col.colFilterTop || false;
@@ -143,18 +139,6 @@ export class VGridMarkupGenerator {
   }
 
 
-  addToObserverArray(value) {
-    //get array
-    var attAttributeObserve = this.vGrid.vGridConfig.attAttributeObserve;
-    let attribute = this.getAttribute(value);
-    //if not allready added, then lets add them
-    if (attAttributeObserve.indexOf(attribute) === -1 && attribute) {
-      attAttributeObserve.push(attribute);
-    }
-
-  }
-
-
   createImageRowMarkup(col) {
     //get the values/settings
     let classNames = 'class="vgrid-image-round"';
@@ -184,9 +168,9 @@ export class VGridMarkupGenerator {
     //is it a checkbox?
     //todo: adding the update part without choice, maybe param for that?
     if (col.colType === "checkbox") {
-      col.colRowTemplate = `<input v-update-current-entity-on="click" ${css} ${classNames} ${type} ${colAddRowAttributes}  checked.bind="${col.colField}">`;
+      col.colRowTemplate = `<input v-observe-field="${this.getAttribute(col.colField)}" ${css} ${classNames} ${type} ${colAddRowAttributes}  checked.bind="${col.colField}">`;
     } else {
-      col.colRowTemplate = `<input v-update-current-entity-on="keydown" ${css} ${classNames} ${type} ${colAddRowAttributes}  value.bind="${col.colField}">`;
+      col.colRowTemplate = `<input v-observe-field=${this.getAttribute(col.colField)} ${css} ${classNames} ${type} ${colAddRowAttributes}  value.bind="${col.colField}">`;
     }
 
   }
