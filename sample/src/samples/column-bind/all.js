@@ -88,6 +88,7 @@ export class BasicUse {
       colWidth:107,
       colHeader:"Profil img",
       colType: "image",
+      colFilterTop:true,
       colAddFilterAttributes: "v-header-menu='images'",
       colAddRowAttributes: "v-row-menu='images' v-key-move tabindex='0'"
     }
