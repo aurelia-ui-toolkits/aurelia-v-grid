@@ -45,55 +45,54 @@ export class VGridMarkupGenerator {
     array.forEach((col, index)=> {
 
       //we need attribute or rowtemplate, else throm error
-      if (!col.attribute && !col.rowTemplate) {
-        throw new Error('attribute is not set on column', index);
+      if (!col.colField && !col.colRowTemplate) {
+        throw new Error('colField is not set on column', index);
       }
 
 
       //we want by default to observe attributes if we can
-      this.addToObserverArray(this.getAttribute(col.attribute, false));
+      this.addToObserverArray(this.getAttribute(col.colField, false));
 
 
       //set default, some can be missing
-      col.type = col.type || "text";
-      col.filterTop = col.filterTop || false;
-      col.header = col.header || this.getAttribute(col.attribute, true);
-      col.width = col.width || 100;
-      col.css = col.css || '';
-      col.attribute = this.checkAttribute(col.attribute);
+      col.colType = col.colType || "text";
+      col.colFilterTop = col.colFilterTop || false;
+      col.colHeaderName = col.colHeaderName || this.getAttribute(col.colField, true);
+      col.colWidth = col.colWidth || 100;
+      col.colCss = col.colCss || '';
+      col.colField = this.checkAttribute(col.colField);
 
       //if selection type
-      if (col.type === "selection") {
+      if (col.colType === "selection") {
         //override to manual selection
         this.vGrid.vGridConfig.attManualSelection = true;
-        let dragDropClass = this.vGrid.vGridConfig.attSortableHeader ? "vGrid-vGridDragHandle" : "";
         //set template
-        col.headerTemplate = `<input class="vgrid-row-checkbox-100 ${dragDropClass}" v-selection="header" type="checkbox">`;
-        col.rowTemplate = `<input class="vgrid-row-checkbox-100"  v-selection="row" type="checkbox" >`;
+        col.colHeaderTemplate = `<input class="vgrid-row-checkbox-100" v-selection="header" type="checkbox">`;
+        col.colRowTemplate = `<input class="vgrid-row-checkbox-100"  v-selection="row" type="checkbox" >`;
 
       } else {
 
         //does a rowTemplate exist, if not we create one, else we skip it
-        if (!col.rowTemplate) {
-          if (col.type === "image") {
+        if (!col.colRowTemplate) {
+          if (col.colType === "image") {
             this.createImageRowMarkup(col);
           } else {
             this.createInputRowMarkup(col);
           }
         }
 
-        if (!col.headerTemplate) {
-          if (col.type === "image") {
+        if (!col.colHeaderTemplate) {
+          if (col.colType === "image") {
             var inputHeader = "";
             var labelHeader = this.createLabelMarkup(col);
           } else {
             var inputHeader = this.createInputHeaderMarkup(col);
             var labelHeader = this.createLabelMarkup(col);
           }
-          if (col.filterTop) {
-            col.headerTemplate = inputHeader + labelHeader;
+          if (col.colFilterTop) {
+            col.colHeaderTemplate = inputHeader + labelHeader;
           } else {
-            col.headerTemplate = labelHeader + inputHeader;
+            col.colHeaderTemplate = labelHeader + inputHeader;
           }
         }
       }
@@ -159,35 +158,35 @@ export class VGridMarkupGenerator {
   createImageRowMarkup(col) {
     //get the values/settings
     let classNames = 'class="vgrid-image-round"';
-    let attributeRow = col.attributeRow ? col.attributeRow : '';
-    let css = col.css ? `css="${col.css}"` : '';
+    let attributeRow = col.colAddRowAttributes ? col.colAddRowAttributes : '';
+    let css = col.colCss ? `css="${col.colCss}"` : '';
 
     //insert the markup
-    col.rowTemplate = `<image ${css} ${classNames} v-image-fix ${attributeRow} src.bind="${col.attribute}">`;
+    col.colRowTemplate = `<image ${css} ${classNames} v-image-fix ${attributeRow} src.bind="${col.colField}">`;
 
   }
 
 
   createInputRowMarkup(col) {
     //get the values/settings
-    let classNames = `class="${col.type === "checkbox" ? 'vgrid-row-checkbox-100' : 'vgrid-row-input'}"`;
+    let classNames = `class="${col.colType === "checkbox" ? 'vgrid-row-checkbox-100' : 'vgrid-row-input'}"`;
 
     //type
-    let type = `type="${col.type}"`;
+    let type = `type="${col.colType}"`;
 
 
     //get attributes row
-    let attributeRow = col.attributeRow ? col.attributeRow : '';
+    let colAddRowAttributes = col.colAddRowAttributes ? col.colAddRowAttributes : '';
 
     //get css
-    let css = col.css ? `css="${col.css}"` : '';
+    let css = col.colCss ? `css="${col.colCss}"` : '';
 
     //is it a checkbox?
     //todo: adding the update part without choice, maybe param for that?
-    if (col.type === "checkbox") {
-      col.rowTemplate = `<input v-update-current-entity-on="click" ${css} ${classNames} ${type} ${attributeRow}  checked.bind="${col.attribute}">`;
+    if (col.colType === "checkbox") {
+      col.colRowTemplate = `<input v-update-current-entity-on="click" ${css} ${classNames} ${type} ${colAddRowAttributes}  checked.bind="${col.colField}">`;
     } else {
-      col.rowTemplate = `<input v-update-current-entity-on="keydown" ${css} ${classNames} ${type} ${attributeRow}  value.bind="${col.attribute}">`;
+      col.colRowTemplate = `<input v-update-current-entity-on="keydown" ${css} ${classNames} ${type} ${colAddRowAttributes}  value.bind="${col.colField}">`;
     }
 
   }
@@ -197,27 +196,27 @@ export class VGridMarkupGenerator {
 
     //is it filter ?
     let markup;
-    if (col.filter) {
+    if (col.colFilter) {
 
       //type
-      let type = `type="${col.type}"`;
+      let type = `type="${col.colType}"`;
 
       //filter
-      let filter = col.filter ? `v-filter="${col.filter}"` : '';
+      let filter = col.colFilter ? `v-filter="${col.colFilter}"` : '';
 
       //get attributes label
-      let attributeFilter = col.attributeFilter ? col.attributeFilter : '';
+      let colAddFilterAttributes = col.colAddFilterAttributes ? col.colAddFilterAttributes : '';
 
       //is it a checkbox ?
       let classNames = '';
-      if (col.type === "checkbox") {
-        classNames = `class="${col.filterTop ? 'vgrid-row-checkbox-50' : 'vgrid-row-checkbox-50'}"`;
+      if (col.colType === "checkbox") {
+        classNames = `class="${col.colFilterTop ? 'vgrid-row-checkbox-50' : 'vgrid-row-checkbox-50'}"`;
       } else {
-        classNames = `class="${col.filterTop ? 'vgrid-header-input-top' : 'vgrid-header-input-bottom'}"`;
+        classNames = `class="${col.colFilterTop ? 'vgrid-header-input-top' : 'vgrid-header-input-bottom'}"`;
       }
 
       //apply magic
-      markup = `<input  ${classNames} ${attributeFilter} ${type} ${filter}">`;
+      markup = `<input  ${classNames} ${colAddFilterAttributes} ${type} ${filter}">`;
     } else {
       markup = '';
     }
@@ -229,19 +228,19 @@ export class VGridMarkupGenerator {
 
   createLabelMarkup(col) {
     //get the values/settings
-    let filterClass = col.filter ? `${col.filterTop ? 'vgrid-label-bottom' : 'vgrid-label-top'}` : 'vgrid-label-full';
+    let filterClass = col.colFilter ? `${col.colFilterTop ? 'vgrid-label-bottom' : 'vgrid-label-top'}` : 'vgrid-label-full';
     
     let dragDropClass = this.vGrid.vGridConfig.attSortableHeader ? 'vGrid-vGridDragHandle' : '';
 
     let classname = `class="${dragDropClass} ${filterClass}"`;
 
-    let attributeLabel = col.attributeLabel ? col.attributeLabel : '';
+    let colAddLabelAttributes = col.colAddLabelAttributes ? col.colAddLabelAttributes : '';
 
-    let sort = col.sort ? `v-sort="${col.sort}"` : '';
+    let sort = col.colSort ? `v-sort="${col.colSort}"` : '';
 
     //apply magic
     //todo, atm Im adding resize columns and dragdrop columns, should this be a choice?
-    let markup = `<p v-drag-drop-col v-resize-col ${classname} ${sort} ${attributeLabel}>${col.header}</p>`;
+    let markup = `<p v-drag-drop-col v-resize-col ${classname} ${sort} ${colAddLabelAttributes}>${col.colHeaderName}</p>`;
     //return the markup
     return markup;
   }
