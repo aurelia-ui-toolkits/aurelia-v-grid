@@ -11,6 +11,6 @@ export class Index {
 
   configureRouter(config, router) {
     this.router = router;
-    return this.registry.load(config, 'other');
+    return this.registry.load(config, 'remote');
   }
 }
