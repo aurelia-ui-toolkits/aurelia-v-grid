@@ -7,6 +7,9 @@
     },
     "all": {
       "files": ["html", "js"]
+    },
+    "selection-column": {
+      "files": ["html", "js"]
     }
   }
 }
