@@ -28,7 +28,6 @@ export class VGrid {
   @bindable({attribute: "v-row-height"}) attRowHeight;
   @bindable({attribute: "v-header-height"}) attHeaderHeight;
   @bindable({attribute: "v-footer-height"}) attFooterHeight;
-  @bindable({attribute: "v-attibutes-observe"}) attAttributeObserve;
   @bindable({attribute: "v-multi-select"}) attMultiSelect;
   @bindable({attribute: "v-manual-sel"}) attManualSelection;
   @bindable({attribute: "v-loading-threshold"}) attLoadingThreshold;
