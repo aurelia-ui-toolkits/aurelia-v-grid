@@ -13,21 +13,21 @@ import {VGrid} from './v-grid';
   var headerTemplateElement = element.getElementsByTagName("V-HEADER-TEMPLATE")[0];
   let headerTemplateHtml = headerTemplateElement ? headerTemplateElement.innerHTML : null;
   if (headerTemplateHtml !== '') {
-    instruction.headerTemplate = headerTemplateHtml;
+    instruction.colHeaderTemplate = headerTemplateHtml;
   }
 
   var rowTemplateElement = element.getElementsByTagName("V-ROW-TEMPLATE")[0];
   let rowTemplateHtml = rowTemplateElement ? rowTemplateElement.innerHTML : null;
   if (rowTemplateHtml !== '') {
-    instruction.rowTemplate = rowTemplateHtml;
+    instruction.colRowTemplate = rowTemplateHtml;
   }
 
   element.innerHTML = '';
 
   //we want to get this css attribute and use if later
-  var css = element.getAttribute("css");
+  var css = element.getAttribute("col-css");
   if (css) {
-    instruction.rowCSS = css;
+    instruction.colCss = css;
   }
 
 
@@ -35,25 +35,25 @@ import {VGrid} from './v-grid';
 @customElement('v-grid-col')
 @inject(Element, VGrid, TargetInstruction)
 export class VGridElementColConfig {
-  @bindable width;//default 100
-  @bindable attribute;
-  @bindable header; //if not set Upperstring first char of attribute
-  @bindable sort; //default false
-  @bindable filter; //default false
-  @bindable filterTop;//default false
-  @bindable attributeLabel; //for custom attibutes they want to add
-  @bindable attributeFilter; //for custom attibutes they want to add
-  @bindable attributeRow; //for custom attibutes they want to add
-  @bindable type; //default = text
-  @bindable css;
+  @bindable({attribute: "col-width"}) colWidth;
+  @bindable({attribute: "col-field"}) colField;
+  @bindable({attribute: "col-header-name"}) colHeaderName;
+  @bindable({attribute: "col-sort"}) colSort;
+  @bindable({attribute: "col-filter"}) colFilter;
+  @bindable({attribute: "col-filter-top"}) colFilterTop;
+  @bindable({attribute: "col-add-label-attributes"}) colAddLabelAttributes;
+  @bindable({attribute: "col-add-filter-attributes"}) colAddFilterAttributes;
+  @bindable({attribute: "col-add-row-attributes"}) colAddRowAttributes;
+  @bindable({attribute: "col-type"}) colType;
+
 
 
   constructor(element, vGrid, targetInstruction) {
     this.vGrid = vGrid;
     this.element = element;
-    this.rowTemplate = targetInstruction.elementInstruction.rowTemplate;
-    this.headerTemplate = targetInstruction.elementInstruction.headerTemplate;
-    this.cssString = targetInstruction.elementInstruction.rowCSS;
+    this.colRowTemplate = targetInstruction.elementInstruction.colRowTemplate;
+    this.colHeaderTemplate = targetInstruction.elementInstruction.colHeaderTemplate;
+    this.colCss = targetInstruction.elementInstruction.colCss;
   }
 
 
@@ -61,19 +61,19 @@ export class VGridElementColConfig {
     this.vGrid.vGridConfig.columnLength++; //count columns
 
     this.vGrid.vGridConfig.colConfig.push({
-      width: this.width || 100,
-      rowTemplate: this.rowTemplate,
-      headerTemplate: this.headerTemplate,
-      attribute: this.attribute,
-      header: this.header,
-      attributeLabel: this.attributeLabel,
-      attributeFilter: this.attributeFilter,
-      attributeRow: this.attributeRow,
-      sort: this.sort,
-      filter: this.filter,
-      filterTop: this.filterTop === "true" ? true : false,
-      css: this.cssString,
-      type: this.type || "text"
+      colWidth: this.colWidth || 100,
+      colRowTemplate: this.colRowTemplate,
+      colHeaderTemplate: this.colHeaderTemplate,
+      colField: this.colField,
+      colHeaderName: this.colHeaderName,
+      colAddLabelAttributes: this.colAddLabelAttributes,
+      colAddFilterAttributes: this.colAddFilterAttributes,
+      colAddRowAttributes: this.colAddRowAttributes,
+      colSort: this.colSort,
+      colFilter: this.colFilter,
+      colFilterTop: this.colFilterTop === "true" ? true : false,
+      colCss: this.colCss,
+      colType: this.colType || "text"
     });
 
 

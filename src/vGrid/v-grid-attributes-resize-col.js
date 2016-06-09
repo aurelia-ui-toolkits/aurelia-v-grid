@@ -68,7 +68,7 @@ onmouseup() {
   this.vGridGenerator.headerElement.onmouseup = "";
 
   //update this column width
-  this.vGridConfig.colConfig[this.index].width = parseInt(this.mainCol.style.width);
+  this.vGridConfig.colConfig[this.index].colWidth = parseInt(this.mainCol.style.width);
 
   //reset template and fill data
   this.vGridGenerator.rowTemplate = null;
@@ -112,7 +112,7 @@ updateHeader(e) {
   //updates
   var newWidth = parseInt(this.originalWidth) - ((this.screenX - e.screenX)) + "px";
   if(parseInt(newWidth) > 15){
-  this.vGridConfig.colConfig[this.index].width = parseInt(newWidth);
+  this.vGridConfig.colConfig[this.index].colWidth = parseInt(newWidth);
   this.mainCol.style.width = parseInt(this.originalWidth) - ((this.screenX - e.screenX)) + "px";
   this.mainCol.style.width = parseInt(this.originalWidth) - ((this.screenX - e.screenX)) + "px";
 

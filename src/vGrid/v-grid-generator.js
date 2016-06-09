@@ -459,9 +459,9 @@ export class VGridGenerator {
     } else {
       for (var i = 0; i < this.vGridConfig.columnLength; i++) {
 
-        var style = `style="width:${this.vGridConfig.colConfig[i].width}px"`;
+        var style = `style="width:${this.vGridConfig.colConfig[i].colWidth}px"`;
         var elementClass = `class="${this.vGridConfig.css.rowHeaderColumn + i}"`;
-        var template = this.vGridConfig.colConfig[i].headerTemplate;
+        var template = this.vGridConfig.colConfig[i].colHeaderTemplate;
 
         rowTemplate = rowTemplate + `<v-grid-header-col ${style} ${elementClass} column-no="${i}">${template}</v-grid-header-col>`;
       }
@@ -487,9 +487,9 @@ export class VGridGenerator {
         rowTemplate = '<template>';
         for (var i = 0; i < this.vGridConfig.columnLength; i++) {
 
-          var style = `style="width:${this.vGridConfig.colConfig[i].width}px"`;
+          var style = `style="width:${this.vGridConfig.colConfig[i].colWidth}px"`;
           var elementClass = `class="${this.vGridConfig.css.rowColumn + i}"`;
-          var template = this.vGridConfig.colConfig[i].rowTemplate;
+          var template = this.vGridConfig.colConfig[i].colRowTemplate;
 
           rowTemplate = rowTemplate + `<v-grid-row-col ${style} ${elementClass} column-no=${i}>${template}</v-grid-row-col>`;
         }
@@ -513,7 +513,7 @@ export class VGridGenerator {
   getTotalColumnWidth() {
     var total = 0;
     for (var i = 0; i < this.vGridConfig.columnLength; i++) {
-      total = total + parseInt(this.vGridConfig.colConfig[i].width, 10);
+      total = total + parseInt(this.vGridConfig.colConfig[i].colWidth, 10);
     }
     return total;
   };
