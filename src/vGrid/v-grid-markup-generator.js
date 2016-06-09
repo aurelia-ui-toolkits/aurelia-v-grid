@@ -64,7 +64,7 @@ export class VGridMarkupGenerator {
         this.vGrid.vGridConfig.attManualSelection = true;
         //set template
         col.colHeaderTemplate = `<input class="vgrid-row-checkbox-100" v-selection="header" type="checkbox">`;
-        col.colRowTemplate = `<input class="vgrid-row-checkbox-100"  v-selection="row" type="checkbox" >`;
+        col.colRowTemplate = `<input v-key-move class="vgrid-row-checkbox-100"  v-selection="row" type="checkbox" >`;
 
       } else {
 
@@ -79,7 +79,10 @@ export class VGridMarkupGenerator {
 
         if (!col.colHeaderTemplate) {
           if (col.colType === "image") {
-            var inputHeader = "";
+            var inputHeader = '<p class="vgrid-label-top"></p>';
+            if(!col.colFilterTop){
+              col.colFilter = "x"
+            }
             var labelHeader = this.createLabelMarkup(col);
           } else {
             var inputHeader = this.createInputHeaderMarkup(col);
