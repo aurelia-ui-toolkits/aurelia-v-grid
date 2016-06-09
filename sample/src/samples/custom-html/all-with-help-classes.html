@@ -30,7 +30,7 @@
       <v-grid-col col-width="120">
         <v-header-template>
           <p class="vgrid-label-bottom vGrid-vGridDragHandle" v-sort="name">Full name</p>
-          <input v-header-menu="name" class="vgrid-header-input-top" v-filter="name|*|onKeyDown" v-resize-col v-drag-drop-col>
+          <input v-header-menu="name" class="vgrid-header-input-bottom" v-filter="name|*|onKeyDown" v-resize-col v-drag-drop-col>
         </v-header-template>
         <v-row-template>
           <input v-row-menu="name" v-key-move class="vgrid-row-input" v-observe-field="name" value.bind="rowRef.name">
