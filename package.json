@@ -1,16 +1,18 @@
 {
-  "name": "skeleton-bridge",
+  "name": "aurelia-v-grid",
   "version": "0.0.1",
   "registry": "github",
   "description": "Starter project for an Aurelia bridge",
   "keywords": [
     "aurelia",
     "plugin",
-    "bridge"
+    "bridge",
+    "v-grid",
+    "aurelia-v-grid"
   ],
-  "homepage": "https://github.com/aurelia-ui-toolkits/skeleton-bridge",
+  "homepage": "https://github.com/aurelia-ui-toolkits/aurelia-v-grid",
   "bugs": {
-    "url": "https://github.com/aurelia-ui-toolkits/skeleton-bridge/issues"
+    "url": "https://github.com/aurelia-ui-toolkits/aurelia-v-grid/issues"
   },
   "license": "MIT",
   "author": "aurelia-ui-toolkits",
@@ -24,7 +26,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/aurelia-ui-toolkits/skeleton-bridge.git"
+    "url": "https://github.com/aurelia-ui-toolkits/aurelia-v-grid.git"
   },
   "jspm": {
     "main": "index",
