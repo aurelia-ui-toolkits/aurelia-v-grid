@@ -5,6 +5,7 @@
     <v-grid
       class="col-md-6"
       style="height:350px"
+      v-manual-sel="true"
       v-row-height="25"
       v-header-height="50"
       v-row-onclick.delegate="singleClick($event.detail)"
@@ -14,6 +15,16 @@
       v-row-on-draw.call="onRowDraw($event)"
       v-collection.bind=myCollection
       v-grid-context.bind=myGrid>
+
+
+      <v-grid-col col-width="30">
+        <v-header-template>
+          <input class="vgrid-row-checkbox-100" v-selection="header" type="checkbox">
+        </v-header-template>
+        <v-row-template>
+          <input class="vgrid-row-checkbox-100" v-selection="row" type="checkbox" checked.bind="selection"
+        </v-row-template>
+      </v-grid-col>
 
 
       <v-grid-col col-width="85">
@@ -81,7 +92,7 @@
         </v-row-template>
       </v-grid-col>
 
-      </v-grid>
+    </v-grid>
 
     <!-- Form to the right -->
     <v-grid-control-form entity.bind="myCurrentEntity"></v-grid-control-form>
