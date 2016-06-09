@@ -51,7 +51,9 @@ export class VGridMarkupGenerator {
 
       //we need attribute or rowtemplate, else throm error
       if (!col.colField && !col.colRowTemplate) {
-        throw new Error('colField is not set on column', index);
+        if(col.colType !== "selection"){
+          throw new Error('colField is not set on column', index);
+        }
       }
 
       //set default, some can be missing
@@ -86,7 +88,8 @@ export class VGridMarkupGenerator {
           //override to manual selection
           this.vGrid.vGridConfig.attManualSelection = true;
           //set template
-          col.colHeaderTemplate = `<input class="vgrid-row-checkbox-100" v-selection="header" type="checkbox">`;
+          labelHeader = '';
+          inputHeader = `<input class="vgrid-row-checkbox-100" v-selection="header" type="checkbox">`;
           break;
 
         case "image":
