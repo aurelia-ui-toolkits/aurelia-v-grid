@@ -351,7 +351,6 @@ var VGridSelection = exports.VGridSelection = function () {
           }
           this.lastRowSelected = currentRow;
         } else {
-          isSel = this.isSelected(currentRow);
           this.select(currentRow);
         }
 

@@ -381,7 +381,7 @@ export class vGridDragDropCol {
     //get column element
     let mainCol = this.element;
     while (mainCol.nodeName !== 'V-GRID-HEADER-COL') {
-      mainCol = mainCol.offsetParent;
+      mainCol = mainCol.parentNode;
     }
     this.mainCol = mainCol;
 
@@ -1225,7 +1225,7 @@ export class vGridAttributesResizeCol {
     //get the column element
     let mainCol = this.element;
     while (mainCol.nodeName !== 'V-GRID-HEADER-COL') {
-      mainCol = mainCol.offsetParent;
+      mainCol = mainCol.parentNode;
     }
     this.mainCol = mainCol;
 
@@ -4735,10 +4735,10 @@ export class VGridSelection {
     this.vGrid = vGrid;
 
     if (mode === false) {
-      this.selectionMode = "single"
+      this.selectionMode = "single";
     }
     if (mode === true) {
-      this.selectionMode = "multible"
+      this.selectionMode = "multible";
     }
 
     this.selection = new Set([]);
@@ -4750,10 +4750,10 @@ export class VGridSelection {
   setMode(mode) {
     this.selectionMode = "none";
     if (mode === false) {
-      this.selectionMode = "single"
+      this.selectionMode = "single";
     }
     if (mode === true) {
-      this.selectionMode = "multible"
+      this.selectionMode = "multible";
     }
 
   }
@@ -5062,7 +5062,7 @@ export class VGridSelection {
                 }
                 break;
               default:
-                console.error("error, this should not happen, debug selection")
+                console.error("error, this should not happen, debug selection");
             }
           } else {
             this.select(currentRow);
@@ -5070,7 +5070,7 @@ export class VGridSelection {
           this.lastKeyKodeUsed = currentKeyKode;
 
           //update selection on rows
-          vGridGenerator.updateSelectionOnAllRows()
+          vGridGenerator.updateSelectionOnAllRows();
         }
       } else {
         //same row clicked again
@@ -5088,11 +5088,11 @@ export class VGridSelection {
           this.lastRowSelected = currentRow
         } else {
           //else we just wanto make it current..
-          isSel = this.isSelected(currentRow);
+          //isSel = this.isSelected(currentRow);
           this.select(currentRow);
         }
         //update selection on rows
-        vGridGenerator.updateSelectionOnAllRows()
+        vGridGenerator.updateSelectionOnAllRows();
       }
     }
   };

@@ -359,7 +359,6 @@ System.register([], function (_export, _context) {
                 }
                 this.lastRowSelected = currentRow;
               } else {
-                isSel = this.isSelected(currentRow);
                 this.select(currentRow);
               }
 

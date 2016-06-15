@@ -369,7 +369,7 @@ var vGridDragDropCol = exports.vGridDragDropCol = (_dec5 = (0, _aureliaFramework
 
     var mainCol = this.element;
     while (mainCol.nodeName !== 'V-GRID-HEADER-COL') {
-      mainCol = mainCol.offsetParent;
+      mainCol = mainCol.parentNode;
     }
     this.mainCol = mainCol;
 
@@ -1011,7 +1011,7 @@ var vGridAttributesResizeCol = exports.vGridAttributesResizeCol = (_dec15 = (0, 
 
     var mainCol = this.element;
     while (mainCol.nodeName !== 'V-GRID-HEADER-COL') {
-      mainCol = mainCol.offsetParent;
+      mainCol = mainCol.parentNode;
     }
     this.mainCol = mainCol;
 
@@ -4032,7 +4032,6 @@ var VGridSelection = exports.VGridSelection = function () {
           }
           this.lastRowSelected = currentRow;
         } else {
-          isSel = this.isSelected(currentRow);
           this.select(currentRow);
         }
 
