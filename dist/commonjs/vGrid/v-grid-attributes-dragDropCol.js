@@ -55,7 +55,7 @@ var vGridDragDropCol = exports.vGridDragDropCol = (_dec = (0, _aureliaFramework.
 
     var mainCol = this.element;
     while (mainCol.nodeName !== 'V-GRID-HEADER-COL') {
-      mainCol = mainCol.offsetParent;
+      mainCol = mainCol.parentNode;
     }
     this.mainCol = mainCol;
 

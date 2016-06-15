@@ -67,7 +67,7 @@ export class vGridDragDropCol {
     //get column element
     let mainCol = this.element;
     while (mainCol.nodeName !== 'V-GRID-HEADER-COL') {
-      mainCol = mainCol.offsetParent;
+      mainCol = mainCol.parentNode;
     }
     this.mainCol = mainCol;
 

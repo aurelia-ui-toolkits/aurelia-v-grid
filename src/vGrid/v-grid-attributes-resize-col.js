@@ -38,7 +38,7 @@ export class vGridAttributesResizeCol {
     //get the column element
     let mainCol = this.element;
     while (mainCol.nodeName !== 'V-GRID-HEADER-COL') {
-      mainCol = mainCol.offsetParent;
+      mainCol = mainCol.parentNode;
     }
     this.mainCol = mainCol;
 
