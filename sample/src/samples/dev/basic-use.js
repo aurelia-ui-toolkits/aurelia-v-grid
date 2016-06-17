@@ -25,5 +25,18 @@ export class BasicUse {
 
   }
 
+  showSelectedBtn(){
+    this.myGrid.ctx.showOnlySelected();
+
+  }
+
+  showAll(){
+    this.myGrid.ctx.showSelectedAndNotSelected();
+  }
+
+  showOnlyNotSelected(){
+    this.myGrid.ctx.showOnlyNotSelected();
+  }
+
 
 }

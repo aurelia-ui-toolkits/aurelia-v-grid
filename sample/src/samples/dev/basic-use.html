@@ -8,6 +8,7 @@
        v-header-height="50"
        v-current-entity.bind=myCurrentEntity
        v-collection.bind=myCollection
+       v-multi-select="true"
        v-grid-context.bind=myGrid>
          <v-grid-col col-field="index"></v-grid-col>
          <v-grid-col col-field="name"></v-grid-col>
@@ -20,6 +21,9 @@
   <!-- Form to the right -->
   <v-grid-control-form context.bind="context"></v-grid-control-form>
   <v-grid-buttons-form show.bind="showOnlySelected" context.bind="context"></v-grid-buttons-form>
+  <button click.trigger="showSelectedBtn()">show selected</button>
+  <button click.trigger="showAll()">show all</button>
+  <button click.trigger="showOnlyNotSelected()">show not selected</button>
 
 </div>
 </template>
