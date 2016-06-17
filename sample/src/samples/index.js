@@ -30,13 +30,13 @@ export class MainIndex {
         nav: true,
         title: 'Row repeat (no columns)'
       },
-      {
-        name: 'dev',
-        route: 'dev',
-        moduleId: './dev/index',
-        nav: true,
-        title: 'dev'
-      },
+      // {
+      //   name: 'dev',
+      //   route: 'dev',
+      //   moduleId: './dev/index',
+      //   nav: true,
+      //   title: 'dev'
+      // },
       {name: 'remote', route: 'other', moduleId: './remote/index', nav: true, title: 'remote'},
       {name: 'default', route: '', redirect: 'simple-html-col'}
     ]);
