@@ -1,7 +1,7 @@
 <template>
 
       <div class="col-md-12">
-        <ul class="well well-sm nav nav-pills nav-justified">
+        <ul class="well well-sm nav nav-pills nav-justified menu2">
           <li repeat.for="row of router.navigation" class="${row.isActive ? 'active' : ''}">
             <a href.bind="row.href">${row.title}</a>
           </li>
