@@ -41,6 +41,9 @@ export class BasicUse {
       this.myCollection = data;
     });
 
+    this.context = this;
+    this.showOnlySelected = false;
+
   }
 
 
