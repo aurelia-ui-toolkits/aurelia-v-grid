@@ -42,7 +42,7 @@ export class BasicUse {
     });
 
     this.context = this;
-    this.showOnlySelected = false;
+    this.showButtonsForm = false;
 
   }
 

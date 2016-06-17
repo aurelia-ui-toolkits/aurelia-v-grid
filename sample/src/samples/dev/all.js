@@ -12,37 +12,14 @@ export class BasicUse {
   myCollection = [];
 
 
-  onRowDraw(data) {
-    if (data) {
-      if (data.tempRef) {
-        if (data.tempRef.number > 100) {
-          data.tempRef.numberColor = "green";
-          data.tempRef.numberFont = "normal";
-        } else {
-          data.tempRef.numberColor = "red";
-          data.tempRef.numberFont = "bold";
-        }
-      }
-    }
-  }
-
-  singleClick(e) {
-    console.log("click")
-  }
-
-
-  singleDblClick(e) {
-    console.log("dblClick")
-  }
 
 
   //helper for dummy data
   constructor(dummyDataGenerator) {
     //get this element
-    this.dummyDataGenerator = dummyDataGenerator;
-    this.dummyDataGenerator.generateData(10000, (data) => {
-      this.myCollection = data;
-    });
+    for (let i = 0; i < 1000; i++) {
+      this.myCollection.push({ id: i, title: `item ${i+1}`, isSelected: false });
+    }
 
     this.context = this;
     this.showOnlySelected = false;
@@ -50,4 +27,21 @@ export class BasicUse {
   }
 
 
+}
+
+
+export class SelectedValueConverter {
+  toView(array, selectedProperty, isActive) {
+    if (array) {
+      if (isActive) {
+        return array.filter(item => {
+          return item.isSelected;
+
+
+        });
+      } else {
+        return array;
+      }
+    }
+  }
 }
