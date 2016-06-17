@@ -5,7 +5,7 @@
         <div>
             <div class="col-md-2">
                 <ul class="menu2 nav well nav-pills nav-stacked">
-                  <!-- <h5 class="text-center"><strong>${router.title}</strong></h5> -->
+                   <h5 class="text-center"><strong>${router.title}</strong></h5>
                     <li repeat.for="row of router.navigation" class="${row.isActive ? 'active' : ''}">
                         <a href.bind="row.href">${row.title}</a>
                     </li>
