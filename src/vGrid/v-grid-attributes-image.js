@@ -23,7 +23,7 @@ export class vGridAttributesImageFix {
 
     let x = this.element.src;
     this.element.src = "";
-    this.element.src = x
+    this.element.src = x;
   }
 
   attached() {

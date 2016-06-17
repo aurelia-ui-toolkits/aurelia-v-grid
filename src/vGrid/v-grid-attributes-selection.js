@@ -36,7 +36,7 @@ export class vGridAttributesSelection {
     this.selected = this.vGrid.vGridSelection.isSelected(this.bindingContext.row);
     this.element.checked = this.selected;
 
-    this.element.onclick = (e) => { 
+    this.element.onclick = () => { 
 
       var status = this.element.checked === "true" || this.element.checked === true ? true : false;
 
@@ -62,7 +62,7 @@ export class vGridAttributesSelection {
         }
       }
 
-    }
+    };
 
 
   }

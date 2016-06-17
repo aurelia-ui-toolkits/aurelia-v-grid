@@ -6,22 +6,19 @@
  ****************************************************************************************************************/
 export class VGridSelection {
 
-
-  selectionMode = "none";
-  lastRowSelected = -1; //this ned to be reset when filtering
-  lastKeyKodeUsed = "none"; //this ned to be reset when filtering
-  selectedRows = 0;
-
-
   constructor(mode, vGrid) {
 
     this.vGrid = vGrid;
+    this.selectionMode = "none";
+    this.lastRowSelected = -1; //this need to be reset when filtering
+    this.lastKeyKodeUsed = "none"; //this ned to be reset when filtering
+    this.selectedRows = 0;
 
     if (mode === false) {
       this.selectionMode = "single";
     }
     if (mode === true) {
-      this.selectionMode = "multible";
+      this.selectionMode = "multiple";
     }
 
     this.selection = new Set([]);
@@ -36,7 +33,7 @@ export class VGridSelection {
       this.selectionMode = "single";
     }
     if (mode === true) {
-      this.selectionMode = "multible";
+      this.selectionMode = "multiple";
     }
 
   }
@@ -50,7 +47,7 @@ export class VGridSelection {
       }
     }
     return result;
-  };
+  }
 
 
   isSelectedMain(row) {
@@ -61,7 +58,7 @@ export class VGridSelection {
       }
     }
     return result;
-  };
+  }
 
 
   deSelect(row) {
@@ -93,7 +90,7 @@ export class VGridSelection {
         }
         this.selectedRows = this.selection.size;
         break;
-      case "multible":
+      case "multiple":
         if (!addToSelection) {
           this.selection.clear();
           if (this.vGrid.vGridCollectionFiltered[row]) {
@@ -107,7 +104,7 @@ export class VGridSelection {
           this.selectedRows = this.selection.size;
         }
     }
-  };
+  }
 
 
   selectMain(row, addToSelection) {
@@ -123,7 +120,7 @@ export class VGridSelection {
         }
         this.selectedRows = this.selection.size;
         break;
-      case "multible":
+      case "multiple":
         if (!addToSelection) {
           this.selection.clear();
           if (this.vGrid.vGridCollection[row]) {
@@ -137,22 +134,22 @@ export class VGridSelection {
           this.selectedRows = this.selection.size;
         }
     }
-  };
+  }
 
 
   selectRange(start, end) {
-    if (this.selectionMode === "multible") {
+    if (this.selectionMode === "multiple") {
       this.selection.clear();
       for (var i = start; i < end + 1; i++) {
         this.selection.add(this.vGrid.vGridCollectionFiltered[i][this.vGrid.vGridRowKey]);
       }
       this.selectedRows = this.selection.size;
     }
-  };
+  }
 
 
   selectAll() {
-    if (this.selectionMode === "multible") {
+    if (this.selectionMode === "multiple") {
       for (var i = 0; i < this.vGrid.vGridCollectionFiltered.length; i++) {
         this.selection.add(this.vGrid.vGridCollectionFiltered[i][this.vGrid.vGridRowKey]);
       }
@@ -163,35 +160,35 @@ export class VGridSelection {
       this.selection.add(this.vGrid.vGridCollectionFiltered[this.vGrid.vGridCurrentRow][this.vGrid.vGridRowKey]);
       this.selectedRows = this.selection.size;
     }
-  };
+  }
 
   deSelectAll() {
     for (var i = 0; i < this.vGrid.vGridCollectionFiltered.length; i++) {
       this.selection.delete(this.vGrid.vGridCollectionFiltered[i][this.vGrid.vGridRowKey]);
     }
     this.selectedRows = this.selection.size;
-  };
+  }
 
 
   selectRangeMain(start, end) {
-    if (this.selectionMode === "multible") {
+    if (this.selectionMode === "multiple") {
       this.selection.clear();
       for (var i = start; i < end + 1; i++) {
         this.selection.add(this.vGrid.vGridCollection[i][this.vGrid.vGridRowKey]);
       }
       this.selectedRows = this.selection.size;
     }
-  };
+  }
 
 
   reset() {
     if (this.selectedRows > 0) {
-      this.selection.clear()
+      this.selection.clear();
     }
     this.lastRowSelected = -1;
     this.lastKeyKodeUsed = "none";
     this.selectedRows = this.selection.size;
-  };
+  }
 
 
   getSelectedRows() {
@@ -199,12 +196,12 @@ export class VGridSelection {
     if (this.selectedRows > 0) {
       this.vGrid.vGridCollectionFiltered.forEach((x, index) => {
         if (this.selection.has(x[this.vGrid.vGridRowKey]) === true) {
-          array.push(index)
+          array.push(index);
         }
       });
     }
-    return array
-  };
+    return array;
+  }
 
 
   getSelectedRowsMain() {
@@ -212,12 +209,12 @@ export class VGridSelection {
     if (this.selectedRows > 0) {
       this.vGrid.vGridCollection.forEach((x, index) => {
         if (this.selection.has(x[this.vGrid.vGridRowKey]) === true) {
-          array.push(index)
+          array.push(index);
         }
       });
     }
-    return array
-  };
+    return array;
+  }
 
   setSelectedRows(newRows) {
     if (this.selectedRows > 0) {
@@ -227,7 +224,7 @@ export class VGridSelection {
       this.selection.add(this.vGrid.vGridCollectionFiltered[newRows[i]][this.vGrid.vGridRowKey]);
     }
     this.selectedRows = this.selection.size;
-  };
+  }
 
 
   setSelectedRowsMain(newRows) {
@@ -238,26 +235,27 @@ export class VGridSelection {
       this.selection.add(this.vGrid.vGridCollection[newRows[i]][this.vGrid.vGridRowKey]);
     }
     this.selectedRows = this.selection.size;
-  };
+  }
 
 
   /****************************************************************************************************************************
    * fixes highlight and select...
    ****************************************************************************************************************************/
-  setHightlight(e, currentRow, vGridGenerator) {
+  highlight(e, currentRow, vGridGenerator) {
 
     var isSel;
     var manualSel = this.vGrid.vGridConfig.attManualSelection;
     if (!manualSel) {
       var currentselectedRows = this.getSelectedRows();
+      var currentKeyKode = "";
 
       if (currentRow !== this.lastRowSelected || currentselectedRows[0] !== currentRow) {
 
         if (currentRow <= (vGridGenerator.vGridConfig.getCollectionLength() - 1)) { //do I need to check this?
 
-          if (this.selectionMode === "multible") { //if multiselect duh!
+          if (this.selectionMode === "multiple") { //if multiselect duh!
 
-            var currentKeyKode = "";
+
 
             if (e.shiftKey) {
               currentKeyKode = "shift";
@@ -356,21 +354,22 @@ export class VGridSelection {
           vGridGenerator.updateSelectionOnAllRows();
         }
       } else {
+
         //same row clicked again
         if (e.ctrlKey) {
           currentKeyKode = "ctrl";
         }
 
-        //if ctrl button we wanto remove selection
+        //if ctrl button we want to remove selection
         if (currentKeyKode === "ctrl") {
           this.lastKeyKodeUsed = currentKeyKode;
           isSel = this.isSelected(currentRow);
           if (isSel === true) {
             this.deSelect(currentRow);
           }
-          this.lastRowSelected = currentRow
+          this.lastRowSelected = currentRow;
         } else {
-          //else we just wanto make it current..
+          //else we just want to make it current..
           //isSel = this.isSelected(currentRow);
           this.select(currentRow);
         }
@@ -378,7 +377,7 @@ export class VGridSelection {
         vGridGenerator.updateSelectionOnAllRows();
       }
     }
-  };
+  }
 
 
 }

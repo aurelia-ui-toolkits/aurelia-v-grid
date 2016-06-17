@@ -16,7 +16,7 @@ export class vGridAttributesObserveField {
     this.vGrid = vGrid;
     this.element = element;
     this.timer = null;
-    this.bindingEngine = bindingEngine
+    this.bindingEngine = bindingEngine;
   }
 
 

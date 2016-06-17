@@ -38,9 +38,9 @@ export class vGridAttributesSort {
       this.vGrid.vGridConfig.onOrderBy(this.attribute, e.shiftKey);
     };
 
-    this.vGrid.element.addEventListener("sortIconUpdate", (e)=> {
+    this.vGrid.element.addEventListener("sortIconUpdate", ()=> {
       this.sortIcon.innerHTML = this.getSortIconMarkup(this.attribute);
-    })
+    });
   }
 
 
@@ -61,7 +61,7 @@ export class vGridAttributesSort {
     });
 
     return markup;
-  };
+  }
 
 
 }

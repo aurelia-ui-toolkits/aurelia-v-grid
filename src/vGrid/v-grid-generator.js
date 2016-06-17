@@ -147,7 +147,7 @@ export class VGridGenerator {
         var currentRow = parseInt(e.currentTarget.getAttribute("row"));
         this.vGridConfig.clickHandler(e, currentRow);
         if (this.vGridConfig.attMultiSelect !== undefined) {
-          this.vGridSelection.setHightlight(e, currentRow, this);
+          this.vGridSelection.highlight(e, currentRow, this);
         }
       }, false);
 

@@ -63,13 +63,6 @@ export class VGridCtx {
     }
   }
 
-  get vGridResizable() {
-    if (this.vGrid) {
-      return this.vGrid.vGridResizable;
-    } else {
-      return null;
-    }
-  }
 
   get vGridFilter() {
     if (this.vGrid) {
@@ -151,7 +144,7 @@ export class VGridCtx {
       offset: this.vGridConfig.remoteOffset,
       length: this.vGridConfig.remoteLength
     });
-  };
+  }
 
 
   /****************************************************************************************************************************
