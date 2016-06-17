@@ -2416,9 +2416,9 @@ export class VGridCtx {
     this.vGrid.vGridCollection = data.col || [];
     this.setLoadingOverlay(false);
     this.vGrid.vGridPager.updatePager({
-      limit : this.vGridConfig.remoteLimit,
-      offset : this.vGridConfig.remoteOffset,
-      length : this.vGridConfig.remoteLength
+      limit: this.vGridConfig.remoteLimit,
+      offset: this.vGridConfig.remoteOffset,
+      length: this.vGridConfig.remoteLength
     });
   };
 
@@ -2455,7 +2455,6 @@ export class VGridCtx {
   };
 
 
-
   setScrollTop(newTop) {
     this.vGridGenerator.contentElement.scrollTop = newTop;
   };
@@ -2482,6 +2481,45 @@ export class VGridCtx {
    ****************************************************************************************************************************/
   redrawGrid() {
     this.vGridGenerator.redrawGrid();
+  }
+
+
+  /****************************************************************************************************************************
+   * explain
+   ****************************************************************************************************************************/
+  showSelectedAndNotSelected() {
+    this.vGrid.vGridCollectionFiltered = this.vGrid.vGridCollection.slice(0);
+    this.vGridGenerator.collectionChange();
+  }
+
+
+  /****************************************************************************************************************************
+   * explain
+   ****************************************************************************************************************************/
+  showOnlySelected() {
+    let newArray = [];
+    this.vGridCollection.forEach((x, i)=> {
+      if(this.vGridSelection.isSelectedMain(i)){
+        newArray.push(x)
+      }
+    });
+    this.vGrid.vGridCollectionFiltered = newArray;
+    this.vGridGenerator.collectionChange();
+  }
+
+
+  /****************************************************************************************************************************
+   * explain
+   ****************************************************************************************************************************/
+  showOnlyNotSelected() {
+    let newArray = [];
+    this.vGridCollection.forEach((x, i)=> {
+      if(!this.vGridSelection.isSelectedMain(i)){
+        newArray.push(x)
+      }
+    });
+    this.vGrid.vGridCollectionFiltered = newArray;
+    this.vGridGenerator.collectionChange();
   }
 
 
@@ -2537,7 +2575,7 @@ export class VGridCtx {
     }
     document.body.removeChild(div);
     var total = Math.ceil(supportedHeight / this.vGridConfig.attRowHeight); //lol
-    return  total + ", error margin:" + Math.ceil(10000 / this.vGridConfig.attRowHeight);
+    return total + ", error margin:" + Math.ceil(10000 / this.vGridConfig.attRowHeight);
   }
 
 
@@ -3346,8 +3384,8 @@ export class VGridGenerator {
         top: 0
       }], 0, top);
 
-      row.style.minWidth = this.gridElement.offsetWidth + "px";
-      row.style.width = this.vGrid.vGridConfig.repeater ? "100%" : this.getTotalColumnWidth() + "px";
+      row.style["min-width"] = this.getTotalColumnWidth() + "px";
+      row.style.width = "100%";
 
       //inner magic
       row.innerHTML = ""; //? why Im I doing this? todo test... why
@@ -3608,7 +3646,8 @@ export class VGridGenerator {
   correctRowAndScrollbodyWidth() {
     this.contentScrollBodyElement.style.width = this.vGrid.vGridConfig.repeater ? "100%" : this.getTotalColumnWidth() + "px";
     for (var i = 0; i < this.rowElementArray.length; i++) {
-      this.rowElementArray[i].div.style.width = this.vGrid.vGridConfig.repeater ? "100%" : this.getTotalColumnWidth() + "px";
+      this.rowElementArray[i].div.style.width = "100%";
+      this.rowElementArray[i].div.style["min-width"] = this.getTotalColumnWidth() + "px";
     }
     this.headerScrollElement.style.width = this.vGrid.vGridConfig.repeater ? "100%" : this.getTotalColumnWidth() + "px";
   };
@@ -4210,6 +4249,7 @@ export class VGridObservables {
 
       //reset filter/and collection/selection. (should I have option to check is they want to set something?)
       this.vGrid.vGridCurrentRow = -1;
+
       this.vGrid.vGridSort.reset();
       if(!this.vGrid.vGridConfig.keepFilterOnCollectionChange){
         //clear sort icons //todo improve with event
@@ -4222,6 +4262,7 @@ export class VGridObservables {
       this.vGrid.vGridGenerator.collectionChange();
 
       //reset
+      this.vGrid.vGridCurrentEntityRef = null;
       for (var k in this.vGrid.vGridCurrentEntity) {
         if (this.vGrid.vGridCurrentEntity.hasOwnProperty(k)) {
           this.vGrid.vGridCurrentEntity[k] = undefined;

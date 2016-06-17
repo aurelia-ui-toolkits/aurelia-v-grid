@@ -300,8 +300,8 @@ export class VGridGenerator {
         top: 0
       }], 0, top);
 
-      row.style.minWidth = this.gridElement.offsetWidth + "px";
-      row.style.width = this.vGrid.vGridConfig.repeater ? "100%" : this.getTotalColumnWidth() + "px";
+      row.style["min-width"] = this.getTotalColumnWidth() + "px";
+      row.style.width = "100%";
 
       //inner magic
       row.innerHTML = ""; //? why Im I doing this? todo test... why
@@ -562,7 +562,8 @@ export class VGridGenerator {
   correctRowAndScrollbodyWidth() {
     this.contentScrollBodyElement.style.width = this.vGrid.vGridConfig.repeater ? "100%" : this.getTotalColumnWidth() + "px";
     for (var i = 0; i < this.rowElementArray.length; i++) {
-      this.rowElementArray[i].div.style.width = this.vGrid.vGridConfig.repeater ? "100%" : this.getTotalColumnWidth() + "px";
+      this.rowElementArray[i].div.style.width = "100%";
+      this.rowElementArray[i].div.style["min-width"] = this.getTotalColumnWidth() + "px";
     }
     this.headerScrollElement.style.width = this.vGrid.vGridConfig.repeater ? "100%" : this.getTotalColumnWidth() + "px";
   };

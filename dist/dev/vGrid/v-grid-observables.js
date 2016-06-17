@@ -35,6 +35,7 @@ System.register([], function (_export, _context) {
             _this.vGrid.checkKeys();
 
             _this.vGrid.vGridCurrentRow = -1;
+
             _this.vGrid.vGridSort.reset();
             if (!_this.vGrid.vGridConfig.keepFilterOnCollectionChange) {
               _this.vGrid.vGridSort.reset();
@@ -45,6 +46,7 @@ System.register([], function (_export, _context) {
             }
             _this.vGrid.vGridGenerator.collectionChange();
 
+            _this.vGrid.vGridCurrentEntityRef = null;
             for (var k in _this.vGrid.vGridCurrentEntity) {
               if (_this.vGrid.vGridCurrentEntity.hasOwnProperty(k)) {
                 _this.vGrid.vGridCurrentEntity[k] = undefined;

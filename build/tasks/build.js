@@ -103,12 +103,22 @@ gulp.task('copy-css', function() {
 });
 
 
+gulp.task('copy-font', function() {
+  return gulp.src(paths.font)
+    .pipe(gulp.dest(paths.output + 'es6'))
+    .pipe(gulp.dest(paths.output + 'commonjs'))
+    .pipe(gulp.dest(paths.output + 'amd'))
+    .pipe(gulp.dest(paths.output + 'dev'))
+    .pipe(gulp.dest(paths.output + 'system'));
+});
+
+
 gulp.task('build', function(callback) {
   return runSequence(
     'clean',
     'build-index',
     ['build-es6-temp', 'build-es6', 'build-commonjs', 'build-amd', 'build-system', 'build-dev'],
-    ['copy-html', 'copy-css'],
+    ['copy-html', 'copy-css', 'copy-font'],
     'build-dts',
     callback
   );
@@ -120,7 +130,7 @@ gulp.task('build-release', function(callback) {
     'clean',
     'build-index',
     ['build-es6-temp', 'build-es6', 'build-commonjs', 'build-amd', 'build-system', 'build-dev'],
-    ['copy-html', 'copy-css'],
+    ['copy-html', 'copy-css', 'copy-font'],
     'build-dts',
     callback
   );

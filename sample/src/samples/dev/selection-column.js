@@ -11,6 +11,7 @@ export class BasicUse {
   //collection to display
   myCollection = [];
 
+
   onRowDraw(data) {
     if (data) {
       if (data.tempRef) {
@@ -29,9 +30,11 @@ export class BasicUse {
     console.log("click")
   }
 
+
   singleDblClick(e) {
     console.log("dblClick")
   }
+
 
   //helper for dummy data
   constructor(dummyDataGenerator) {
@@ -42,7 +45,7 @@ export class BasicUse {
     });
 
     this.context = this;
-    this.showButtonsForm = false;
+    this.showOnlySelected = false;
 
   }
 

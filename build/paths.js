@@ -9,6 +9,7 @@ module.exports = {
   source: appRoot + '**/*.js',
   html: appRoot + '**/*.html',
   style: appRoot + '**/*.css',
+  font: appRoot + '**/*.woff2',
   output: 'devbuild/',
   releaseOutput: 'dist/',
   sample: 'sample',
@@ -19,5 +20,5 @@ module.exports = {
   tests: 'test/unit/**/*.js',
   e2eSpecsSrc: 'test/e2e/src/*.js',
   e2eSpecsDist: 'test/e2e/dist/',
-  packageName: pkg.name,
+  packageName: pkg.name
 };

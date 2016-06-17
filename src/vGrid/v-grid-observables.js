@@ -34,6 +34,7 @@ export class VGridObservables {
 
       //reset filter/and collection/selection. (should I have option to check is they want to set something?)
       this.vGrid.vGridCurrentRow = -1;
+
       this.vGrid.vGridSort.reset();
       if(!this.vGrid.vGridConfig.keepFilterOnCollectionChange){
         //clear sort icons //todo improve with event
@@ -46,6 +47,7 @@ export class VGridObservables {
       this.vGrid.vGridGenerator.collectionChange();
 
       //reset
+      this.vGrid.vGridCurrentEntityRef = null;
       for (var k in this.vGrid.vGridCurrentEntity) {
         if (this.vGrid.vGridCurrentEntity.hasOwnProperty(k)) {
           this.vGrid.vGridCurrentEntity[k] = undefined;
