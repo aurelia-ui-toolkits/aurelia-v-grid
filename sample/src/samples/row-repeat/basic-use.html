@@ -35,7 +35,7 @@
               <input type="checkbox" checked.bind="rowRef.bool" disabled.bind="!rowRef.__vGridKey"> Bool
             </label>
           </div>
-          <img if.bind="rowRef.__vGridKey" src.bind="rowRef.images" alt="images" class="img-circle">
+          <img v-image-fix if.bind="rowRef.__vGridKey" src.bind="rowRef.images" alt="images" class="img-circle">
 
         </form>
 
