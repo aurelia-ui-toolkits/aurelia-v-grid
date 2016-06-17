@@ -125,7 +125,7 @@ export class Contextmenu {
     if (el.classList.contains(className)) {
       return el;
     } else {
-      while (el = el.parentNode) {
+      while (el === el.parentNode) {
         if (el.classList && el.classList.contains(className)) {
           return el;
         }

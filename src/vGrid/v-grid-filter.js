@@ -53,7 +53,7 @@ export class VGridFilter {
    * run the name of filter
    ***************************************************************************************/
   getNameOfFilter(name) {
-    return this.filterOperatorTableString[name]
+    return this.filterOperatorTableString[name];
   }
 
   /***************************************************************************************
@@ -65,7 +65,7 @@ export class VGridFilter {
     let filterOperatorTable = this.filterOperatorTable;
 
 
-    var resultArray = objArray.filter(function (data, i) {
+    var resultArray = objArray.filter(function (data) {
 
 
       //lets have true as default, so all that should not be there we set false..
@@ -133,7 +133,7 @@ export class VGridFilter {
             //wildcard end and first = contains
             if (x.value.charAt(x.value.length - 1) === "*" && filterOperator === 1 && newFilterOperator === 10) {
               newFilterOperator = 6;
-              filterValue = filterValue.substr(0, filterValue.length - 1)
+              filterValue = filterValue.substr(0, filterValue.length - 1);
             }
 
 

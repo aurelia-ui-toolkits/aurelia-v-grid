@@ -48,11 +48,11 @@ export class vGridAttributesResizeCol {
 
     //register onmouse doen event
     resizeHandle.onmousedown = (e) => {
-      this.onmousedown(e)
+      this.onmousedown(e);
     };
 
     //add
-    this.mainCol.appendChild(resizeHandle)
+    this.mainCol.appendChild(resizeHandle);
 
   }
 
@@ -126,7 +126,7 @@ export class vGridAttributesResizeCol {
 
         //loop the columns and update each row
         for (var col = 0; col < columnsToFix.length; col++) {
-          columnsToFix[col].style.width = newWidth
+          columnsToFix[col].style.width = newWidth;
         }
 
         //update scrollbars and row widths
@@ -161,7 +161,7 @@ export class vGridAttributesResizeCol {
 
 
     //incase they just release right away
-    this.vGridGenerator.headerElement.onmouseup = (e) => {
+    this.vGridGenerator.headerElement.onmouseup = () => {
       if (!this.started) {
         this.vGridGenerator.headerElement.onmousemove = "";
       }

@@ -38,7 +38,7 @@ export class vGridAttributesFilter {
     if (values.length > 1) {
       values.forEach((value, i)=> {
         if (i !== 0) {
-          this.checkParams(value)
+          this.checkParams(value);
         }
       });
     }
@@ -109,7 +109,7 @@ export class vGridAttributesFilter {
 
       //we found a filter, lets update
       if (this.getValue() === "") {
-        curFilter.splice(filterIndex, 1)
+        curFilter.splice(filterIndex, 1);
       } else {
         curFilter[filterIndex].value = this.getValue();
         curFilter[filterIndex].operator = this.filterOperator;
@@ -150,7 +150,7 @@ export class vGridAttributesFilter {
         }
       });
 
-      this.vGrid.element.addEventListener("filterClearAll", (e)=> {
+      this.vGrid.element.addEventListener("filterClearAll", ()=> {
         this.resetValue();
         this.updateFilter(this.vGrid.vGridFilter.lastFilter);
       });

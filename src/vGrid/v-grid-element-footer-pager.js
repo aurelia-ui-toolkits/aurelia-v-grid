@@ -60,7 +60,7 @@ export class VGridElementFooterPager {
       this.statusLastButton = true;
     }
 
-    this.info = `Page ${this.page} of ${Math.ceil(this.collectionLength/this.limit)}, Total entities:${this.collectionLength}, page size ${this.limit}`
+    this.info = `Page ${this.page} of ${Math.ceil(this.collectionLength/this.limit)}, Total entities:${this.collectionLength}, page size ${this.limit}`;
 
   }
 
@@ -68,7 +68,7 @@ export class VGridElementFooterPager {
   firstBtn(){
     this.vGrid.loading = true;
     this.vGridConfig.remoteOffset = 0;
-    this.vGridConfig.remoteCall()
+    this.vGridConfig.remoteCall();
   }
 
 
@@ -76,7 +76,7 @@ export class VGridElementFooterPager {
   nextBtn(){
     this.vGrid.loading = true;
     this.vGridConfig.remoteOffset = this.vGridConfig.remoteOffset + this.vGridConfig.remoteLimit;
-    this.vGridConfig.remoteCall()
+    this.vGridConfig.remoteCall();
   }
 
 
@@ -84,7 +84,7 @@ export class VGridElementFooterPager {
   prevBtn(){
     this.vGrid.loading = true;
     this.vGridConfig.remoteOffset = this.vGridConfig.remoteOffset - this.vGridConfig.remoteLimit;
-    this.vGridConfig.remoteCall()
+    this.vGridConfig.remoteCall();
   }
 
 
@@ -92,7 +92,7 @@ export class VGridElementFooterPager {
   lastBtn(){
     this.vGrid.loading = true;
     this.vGridConfig.remoteOffset = this.vGridConfig.remoteLength-this.vGridConfig.remoteLimit;
-    this.vGridConfig.remoteCall()
+    this.vGridConfig.remoteCall();
   }
 
 

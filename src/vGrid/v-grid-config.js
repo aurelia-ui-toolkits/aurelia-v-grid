@@ -104,7 +104,7 @@ export class VGridConfig {
       value = htmlAttributeValue;
     }
     return value;
-  };
+  }
 
 
   setBindValueArray(value, toProperty) {

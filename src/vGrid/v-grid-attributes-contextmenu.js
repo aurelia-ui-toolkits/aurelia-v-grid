@@ -1,6 +1,6 @@
 /*****************************************************************************************************************
  *    ContextMenu
- *    This is where I create all the <v-grid> attibutes, and set then to vGridConfig
+ *    This is where I create all the <v-grid> attributes, and set then to vGridConfig
  *    Main idea/source https://github.com/callmenick/Custom-Context-Menu
  *    Created by vegar ringdal
  *
@@ -21,19 +21,19 @@ export class VGridHeaderMenu extends Contextmenu {
   altMenuLogic = null; //alt menu to open
 
 
-  //main menu lisntner
+  //main menu listener
   menuItemListener(link) {
     var value = link.getAttribute("data-action");
 
     if (this.altMenuLogic) {
       this.filterMenuLogic(value);
     } else {
-      this.defaultMenu(value)
+      this.defaultMenu(value);
     }
-  };
+  }
 
 
-  canOpen(e) {
+  canOpen() {
     return true;
   }
 
@@ -209,18 +209,18 @@ export class ContextRowMenu extends Contextmenu {
   altMenuLogic = null; //alt menu to open
 
 
-  //main menu lisntner
+  //main menu listener
   menuItemListener(link) {
     var value = link.getAttribute("data-action");
     if (this.altMenuLogic) {
       this.filterMenuLogic(value);
     } else {
-      this.defaultMenu(value)
+      this.defaultMenu(value);
     }
-  };
+  }
 
 
-  canOpen(e) {
+  canOpen() {
     return true;
   }
 
@@ -242,7 +242,7 @@ export class ContextRowMenu extends Contextmenu {
         isHeader: false
       }
     ]);
-  };
+  }
 
 
   defaultMenu(value) {
