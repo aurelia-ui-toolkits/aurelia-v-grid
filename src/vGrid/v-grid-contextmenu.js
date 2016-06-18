@@ -37,9 +37,9 @@ export class Contextmenu {
 
 
   }
-  
-  
-  getLang(value){
+
+
+  getLang(value) {
     return this.vGrid.vGridConfig.attLanguage[value];
   }
 
@@ -51,13 +51,13 @@ export class Contextmenu {
 
 
   attached() {
-      this.element.classList.contains(this.classToOpenOn)? null:this.element.classList.add(this.classToOpenOn);
-      this.addListener();
+    this.element.classList.contains(this.classToOpenOn) ? null : this.element.classList.add(this.classToOpenOn);
+    this.addListener();
   }
 
 
   detached() {
-      this.removeListener();
+    this.removeListener();
   }
 
 
@@ -66,18 +66,38 @@ export class Contextmenu {
   }
 
 
+  closeIfOpen() {
+    if (this.menuState) {
+      this.toggleMenuOff();
+    }
+  }
+
+
   addListener() {
     this.contextListenerBinded = this.contextListener.bind(this);
+    this.closeIfOpenBinded = this.closeIfOpen.bind(this);
     this.element.addEventListener("contextmenu", this.contextListenerBinded);
+    this.vGrid.element.addEventListener("vGridCloseContextMenuIfOpen", this.closeIfOpenBinded);
   }
 
 
   removeListener() {
     this.element.removeEventListener("contextmenu", this.contextListenerBinded);
+    this.element.removeEventListener("vGridCloseContextMenuIfOpen", this.closeIfOpenBinded);
+
   }
 
 
   contextListener(e) {
+
+    //close if menus if they are open when opening a new one
+    let event = new CustomEvent("vGridCloseContextMenuIfOpen", {
+      detail: "",
+      bubbles: true
+    });
+    this.vGrid.element.dispatchEvent(event);
+
+
     if (this.canOpen(e)) {
 
       this.taskItemInContext = this.clickInsideElement(e, this.classToOpenOn);
