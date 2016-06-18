@@ -7,8 +7,6 @@
 import {inject, customElement, bindable} from 'aurelia-framework';
 
 
-
-
 @customElement('v-grid-pager')
 @inject(Element)
 export class VGridElementFooterPager {
@@ -20,13 +18,12 @@ export class VGridElementFooterPager {
     this.element = element;
   }
 
-  
+
   bind(parent) {
     this.parent = parent;
     this.vGrid = parent.vGrid;
     this.vGridConfig = parent.vGrid.vGridConfig;
     this.vGrid.vGridPager = this;
-
   }
 
 
@@ -36,15 +33,33 @@ export class VGridElementFooterPager {
     this.statusFirstButton = false;
     this.statusPrevButton = false;
 
+    this.statusNextButtonTitle = this.getLang("pagerBtnNext") || "Next";
+    this.statusLastButtonTitle = this.getLang("pagerBtnLast") || "Last";
+    this.statusFirstButtonTitle = this.getLang("pagerBtnFirst") || "First";
+    this.statusPrevButtonTitle = this.getLang("pagerBtnLast") || "Last";
+
+    this.pagerStringPage = this.getLang("pagerStringPage") || "Page ";
+    this.pagerStringOf = this.getLang("pagerStringOf") || " of ";
+    this.pagerStringTotalEntities = this.getLang("pagerStringTotalEntities") || ", Total entities:";
+    this.pagerStringPageSize = this.getLang("pagerStringPageSize") || ", page size ";
+
+  }
+
+  
+  getLang(value){
+    return this.vGrid.vGridConfig.attLanguage[value];
   }
 
 
-  updatePager(data){
-     this.collectionLength = data.length;
-     this.limit = data.limit;
-     this.offset = data.offset;
-    this.page = this.offset ? Math.ceil(this.offset/this.limit)+1:1;
-    if(this.page === 1){
+  updatePager(data) {
+    this.collectionLength = data.length;
+    this.limit = data.limit;
+    this.offset = data.offset;
+
+    this.page = this.offset ? Math.ceil(this.offset / this.limit) + 1 : 1;
+
+
+    if (this.page === 1) {
       this.statusFirstButton = false;
       this.statusPrevButton = false;
     } else {
@@ -52,7 +67,8 @@ export class VGridElementFooterPager {
       this.statusPrevButton = true;
     }
 
-    if(this.offset >= this.collectionLength-this.limit){
+
+    if (this.offset >= this.collectionLength - this.limit) {
       this.statusNextButton = false;
       this.statusLastButton = false;
     } else {
@@ -60,38 +76,49 @@ export class VGridElementFooterPager {
       this.statusLastButton = true;
     }
 
-    this.info = `Page ${this.page} of ${Math.ceil(this.collectionLength/this.limit)}, Total entities:${this.collectionLength}, page size ${this.limit}`;
+
+    //do we show page info?
+    if (!this.vGridConfig.attHidePagerInfo) {
+      this.info = `${this.pagerStringPage}${this.page}${this.pagerStringOf}${Math.ceil(this.collectionLength / this.limit)}${this.pagerStringTotalEntities}${this.collectionLength}${this.pagerStringPageSize}${this.limit}`;
+    }
+
+
+    //raise event
+    this.vGrid.raiseEvent("v-remote-collection-event", {
+      evt: "v-remote-collection-event",
+      page: this.page,
+      pages: Math.ceil(this.collectionLength / this.limit),
+      length: this.collectionLength,
+      pageSize: this.limit
+    });
 
   }
 
 
-  firstBtn(){
+  firstBtn() {
     this.vGrid.loading = true;
     this.vGridConfig.remoteOffset = 0;
     this.vGridConfig.remoteCall();
   }
 
 
-
-  nextBtn(){
+  nextBtn() {
     this.vGrid.loading = true;
     this.vGridConfig.remoteOffset = this.vGridConfig.remoteOffset + this.vGridConfig.remoteLimit;
     this.vGridConfig.remoteCall();
   }
 
 
-
-  prevBtn(){
+  prevBtn() {
     this.vGrid.loading = true;
     this.vGridConfig.remoteOffset = this.vGridConfig.remoteOffset - this.vGridConfig.remoteLimit;
     this.vGridConfig.remoteCall();
   }
 
 
-
-  lastBtn(){
+  lastBtn() {
     this.vGrid.loading = true;
-    this.vGridConfig.remoteOffset = this.vGridConfig.remoteLength-this.vGridConfig.remoteLimit;
+    this.vGridConfig.remoteOffset = this.vGridConfig.remoteLength - this.vGridConfig.remoteLimit;
     this.vGridConfig.remoteCall();
   }
 

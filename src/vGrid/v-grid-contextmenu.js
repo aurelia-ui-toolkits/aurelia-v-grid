@@ -37,6 +37,11 @@ export class Contextmenu {
 
 
   }
+  
+  
+  getLang(value){
+    return this.vGrid.vGridConfig.attLanguage[value];
+  }
 
 
   bind(bindingContext, overrideContext) {

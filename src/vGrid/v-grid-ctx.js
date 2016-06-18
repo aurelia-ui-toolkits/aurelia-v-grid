@@ -144,6 +144,7 @@ export class VGridCtx {
       offset: this.vGridConfig.remoteOffset,
       length: this.vGridConfig.remoteLength
     });
+    
   }
 
 
@@ -325,6 +326,53 @@ export class VGridCtx {
   getScrollTop() {
     return this.vGridGenerator.contentElement.scrollTop;
   };
+
+
+  /****************************************************************************************************************************
+   * remote external call for pager
+   ****************************************************************************************************************************/
+  remoteGoToFirst(){
+    this.vGrid.loading = true;
+    this.vGridConfig.remoteOffset = 0;
+    this.vGridConfig.remoteCall();
+  }
+
+
+
+  remoteGoToNext(){
+    this.vGrid.loading = true;
+    this.vGridConfig.remoteOffset = this.vGridConfig.remoteOffset + this.vGridConfig.remoteLimit;
+    this.vGridConfig.remoteCall();
+  }
+
+
+  remoteGoToPage(x){
+    this.vGrid.loading = true;
+    this.vGridConfig.remoteOffset = x * this.vGridConfig.remoteLimit;
+    this.vGridConfig.remoteCall();
+  }
+
+
+  remoteGoToOffset(x){
+    this.vGrid.loading = true;
+    this.vGridConfig.remoteOffset = x;
+    this.vGridConfig.remoteCall();
+  }
+    
+
+  remoteGoTofirstPrev(){
+    this.vGrid.loading = true;
+    this.vGridConfig.remoteOffset = this.vGridConfig.remoteOffset - this.vGridConfig.remoteLimit;
+    this.vGridConfig.remoteCall();
+  }
+
+
+
+  remoteGoTofirstLast(){
+    this.vGrid.loading = true;
+    this.vGridConfig.remoteOffset = this.vGridConfig.remoteLength-this.vGridConfig.remoteLimit;
+    this.vGridConfig.remoteCall();
+  }
 
 
 }

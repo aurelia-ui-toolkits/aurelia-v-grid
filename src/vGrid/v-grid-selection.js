@@ -27,6 +27,12 @@ export class VGridSelection {
   }
 
 
+  triggerEvent(){
+    //send out event
+    this.vGrid.sendCollectionEvent();
+  }
+
+
   setMode(mode) {
     this.selectionMode = "none";
     if (mode === false) {
@@ -66,6 +72,10 @@ export class VGridSelection {
       this.selection.delete(this.vGrid.vGridCollectionFiltered[row][this.vGrid.vGridRowKey]);
     }
     this.selectedRows = this.selection.size;
+
+    //send out event
+    this.triggerEvent();
+
   }
 
 
@@ -74,6 +84,10 @@ export class VGridSelection {
       this.selection.delete(this.vGrid.vGridCollection[row][this.vGrid.vGridRowKey]);
     }
     this.selectedRows = this.selection.size;
+
+    //send out event
+    this.triggerEvent();
+
   }
 
 
@@ -104,6 +118,10 @@ export class VGridSelection {
           this.selectedRows = this.selection.size;
         }
     }
+
+    //send out event
+    this.triggerEvent();
+
   }
 
 
@@ -134,6 +152,10 @@ export class VGridSelection {
           this.selectedRows = this.selection.size;
         }
     }
+
+    //send out event
+    this.triggerEvent();
+
   }
 
 
@@ -145,6 +167,9 @@ export class VGridSelection {
       }
       this.selectedRows = this.selection.size;
     }
+
+    //send out event
+    this.triggerEvent();
   }
 
 
@@ -160,6 +185,10 @@ export class VGridSelection {
       this.selection.add(this.vGrid.vGridCollectionFiltered[this.vGrid.vGridCurrentRow][this.vGrid.vGridRowKey]);
       this.selectedRows = this.selection.size;
     }
+
+    //send out event
+    this.triggerEvent();
+
   }
 
   deSelectAll() {
@@ -167,6 +196,9 @@ export class VGridSelection {
       this.selection.delete(this.vGrid.vGridCollectionFiltered[i][this.vGrid.vGridRowKey]);
     }
     this.selectedRows = this.selection.size;
+
+    //send out event
+    this.triggerEvent();
   }
 
 
@@ -178,6 +210,9 @@ export class VGridSelection {
       }
       this.selectedRows = this.selection.size;
     }
+
+    //send out event
+    this.triggerEvent();
   }
 
 
@@ -188,6 +223,9 @@ export class VGridSelection {
     this.lastRowSelected = -1;
     this.lastKeyKodeUsed = "none";
     this.selectedRows = this.selection.size;
+
+    //send out event
+    this.triggerEvent();
   }
 
 
@@ -201,6 +239,7 @@ export class VGridSelection {
       });
     }
     return array;
+
   }
 
 
@@ -224,6 +263,10 @@ export class VGridSelection {
       this.selection.add(this.vGrid.vGridCollectionFiltered[newRows[i]][this.vGrid.vGridRowKey]);
     }
     this.selectedRows = this.selection.size;
+
+    //send out event
+    this.triggerEvent();
+
   }
 
 
@@ -235,6 +278,10 @@ export class VGridSelection {
       this.selection.add(this.vGrid.vGridCollection[newRows[i]][this.vGrid.vGridRowKey]);
     }
     this.selectedRows = this.selection.size;
+
+    //send out event
+    this.triggerEvent();
+
   }
 
 

@@ -71,6 +71,9 @@ export class VGridConfig {
     this.eventOnRowClick = null;
     this.eventOnRowDblClick = null;
     this.eventOnRemoteCall = null;
+    this.attHidePagerInfo = false;
+    this.attCustomPager = null;
+    this.attLanguage = {};
 
     //repeat html vars
     this.repeater = false;
