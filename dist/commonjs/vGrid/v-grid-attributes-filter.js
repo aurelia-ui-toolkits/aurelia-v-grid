@@ -135,7 +135,7 @@ var vGridAttributesFilter = exports.vGridAttributesFilter = (_dec = (0, _aurelia
         }
       });
 
-      this.vGrid.element.addEventListener("filterClearAll", function (e) {
+      this.vGrid.element.addEventListener("filterClearAll", function () {
         _this3.resetValue();
         _this3.updateFilter(_this3.vGrid.vGridFilter.lastFilter);
       });

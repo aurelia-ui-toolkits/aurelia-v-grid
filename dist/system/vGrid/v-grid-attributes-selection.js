@@ -44,7 +44,7 @@ System.register(['aurelia-framework', './v-grid'], function (_export, _context) 
           this.selected = this.vGrid.vGridSelection.isSelected(this.bindingContext.row);
           this.element.checked = this.selected;
 
-          this.element.onclick = function (e) {
+          this.element.onclick = function () {
 
             var status = _this.element.checked === "true" || _this.element.checked === true ? true : false;
 

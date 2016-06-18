@@ -15,23 +15,25 @@ define(["exports"], function (exports) {
     function VGridSelection(mode, vGrid) {
       _classCallCheck(this, VGridSelection);
 
+      this.vGrid = vGrid;
       this.selectionMode = "none";
       this.lastRowSelected = -1;
       this.lastKeyKodeUsed = "none";
       this.selectedRows = 0;
 
-
-      this.vGrid = vGrid;
-
       if (mode === false) {
         this.selectionMode = "single";
       }
       if (mode === true) {
-        this.selectionMode = "multible";
+        this.selectionMode = "multiple";
       }
 
       this.selection = new Set([]);
     }
+
+    VGridSelection.prototype.triggerEvent = function triggerEvent() {
+      this.vGrid.sendCollectionEvent();
+    };
 
     VGridSelection.prototype.setMode = function setMode(mode) {
       this.selectionMode = "none";
@@ -39,7 +41,7 @@ define(["exports"], function (exports) {
         this.selectionMode = "single";
       }
       if (mode === true) {
-        this.selectionMode = "multible";
+        this.selectionMode = "multiple";
       }
     };
 
@@ -68,6 +70,8 @@ define(["exports"], function (exports) {
         this.selection.delete(this.vGrid.vGridCollectionFiltered[row][this.vGrid.vGridRowKey]);
       }
       this.selectedRows = this.selection.size;
+
+      this.triggerEvent();
     };
 
     VGridSelection.prototype.deSelectMain = function deSelectMain(row) {
@@ -75,6 +79,8 @@ define(["exports"], function (exports) {
         this.selection.delete(this.vGrid.vGridCollection[row][this.vGrid.vGridRowKey]);
       }
       this.selectedRows = this.selection.size;
+
+      this.triggerEvent();
     };
 
     VGridSelection.prototype.select = function select(row, addToSelection) {
@@ -90,7 +96,7 @@ define(["exports"], function (exports) {
           }
           this.selectedRows = this.selection.size;
           break;
-        case "multible":
+        case "multiple":
           if (!addToSelection) {
             this.selection.clear();
             if (this.vGrid.vGridCollectionFiltered[row]) {
@@ -104,6 +110,8 @@ define(["exports"], function (exports) {
             this.selectedRows = this.selection.size;
           }
       }
+
+      this.triggerEvent();
     };
 
     VGridSelection.prototype.selectMain = function selectMain(row, addToSelection) {
@@ -119,7 +127,7 @@ define(["exports"], function (exports) {
           }
           this.selectedRows = this.selection.size;
           break;
-        case "multible":
+        case "multiple":
           if (!addToSelection) {
             this.selection.clear();
             if (this.vGrid.vGridCollection[row]) {
@@ -133,20 +141,24 @@ define(["exports"], function (exports) {
             this.selectedRows = this.selection.size;
           }
       }
+
+      this.triggerEvent();
     };
 
     VGridSelection.prototype.selectRange = function selectRange(start, end) {
-      if (this.selectionMode === "multible") {
+      if (this.selectionMode === "multiple") {
         this.selection.clear();
         for (var i = start; i < end + 1; i++) {
           this.selection.add(this.vGrid.vGridCollectionFiltered[i][this.vGrid.vGridRowKey]);
         }
         this.selectedRows = this.selection.size;
       }
+
+      this.triggerEvent();
     };
 
     VGridSelection.prototype.selectAll = function selectAll() {
-      if (this.selectionMode === "multible") {
+      if (this.selectionMode === "multiple") {
         for (var i = 0; i < this.vGrid.vGridCollectionFiltered.length; i++) {
           this.selection.add(this.vGrid.vGridCollectionFiltered[i][this.vGrid.vGridRowKey]);
         }
@@ -157,6 +169,8 @@ define(["exports"], function (exports) {
         this.selection.add(this.vGrid.vGridCollectionFiltered[this.vGrid.vGridCurrentRow][this.vGrid.vGridRowKey]);
         this.selectedRows = this.selection.size;
       }
+
+      this.triggerEvent();
     };
 
     VGridSelection.prototype.deSelectAll = function deSelectAll() {
@@ -164,16 +178,20 @@ define(["exports"], function (exports) {
         this.selection.delete(this.vGrid.vGridCollectionFiltered[i][this.vGrid.vGridRowKey]);
       }
       this.selectedRows = this.selection.size;
+
+      this.triggerEvent();
     };
 
     VGridSelection.prototype.selectRangeMain = function selectRangeMain(start, end) {
-      if (this.selectionMode === "multible") {
+      if (this.selectionMode === "multiple") {
         this.selection.clear();
         for (var i = start; i < end + 1; i++) {
           this.selection.add(this.vGrid.vGridCollection[i][this.vGrid.vGridRowKey]);
         }
         this.selectedRows = this.selection.size;
       }
+
+      this.triggerEvent();
     };
 
     VGridSelection.prototype.reset = function reset() {
@@ -183,6 +201,8 @@ define(["exports"], function (exports) {
       this.lastRowSelected = -1;
       this.lastKeyKodeUsed = "none";
       this.selectedRows = this.selection.size;
+
+      this.triggerEvent();
     };
 
     VGridSelection.prototype.getSelectedRows = function getSelectedRows() {
@@ -221,6 +241,8 @@ define(["exports"], function (exports) {
         this.selection.add(this.vGrid.vGridCollectionFiltered[newRows[i]][this.vGrid.vGridRowKey]);
       }
       this.selectedRows = this.selection.size;
+
+      this.triggerEvent();
     };
 
     VGridSelection.prototype.setSelectedRowsMain = function setSelectedRowsMain(newRows) {
@@ -231,22 +253,23 @@ define(["exports"], function (exports) {
         this.selection.add(this.vGrid.vGridCollection[newRows[i]][this.vGrid.vGridRowKey]);
       }
       this.selectedRows = this.selection.size;
+
+      this.triggerEvent();
     };
 
-    VGridSelection.prototype.setHightlight = function setHightlight(e, currentRow, vGridGenerator) {
+    VGridSelection.prototype.highlight = function highlight(e, currentRow, vGridGenerator) {
 
       var isSel;
       var manualSel = this.vGrid.vGridConfig.attManualSelection;
       if (!manualSel) {
         var currentselectedRows = this.getSelectedRows();
+        var currentKeyKode = "";
 
         if (currentRow !== this.lastRowSelected || currentselectedRows[0] !== currentRow) {
 
           if (currentRow <= vGridGenerator.vGridConfig.getCollectionLength() - 1) {
 
-            if (this.selectionMode === "multible") {
-
-              var currentKeyKode = "";
+            if (this.selectionMode === "multiple") {
 
               if (e.shiftKey) {
                 currentKeyKode = "shift";

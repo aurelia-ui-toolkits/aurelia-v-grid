@@ -36,20 +36,20 @@ export class vGridDragDropCol {
     //need to be better, will change when I rebuild header into custom element
     this.rootEl = this.vGrid.vGridGenerator.headerScrollElement; //this is BAD!
 
-    //add eventlistnes for draggable
+    //add event listeners for draggable
     this.mainCol.addEventListener('dragstart', this.onDragStart.bind(this), false);
 
 
-    //event listner for when starting to drag
+    //event listener for when starting to drag
     this.vGrid.element.addEventListener("vGridDragStart", ()=> {
       this.drophelper.style["z-index"] = "100";
     });
 
 
-    //event listner when stopped dragging
+    //event listener when stopped dragging
     this.vGrid.element.addEventListener("vGridDragStop", ()=> {
       this.drophelper.style["z-index"] = "-100";
-    })
+    });
 
 
   }
@@ -133,7 +133,7 @@ export class vGridDragDropCol {
 
     //reorder to new column no
     tempArr.forEach((oldI, newI) => {
-      vGridConfig[newI] = this.vGrid.vGridConfig.colConfig[oldI]
+      vGridConfig[newI] = this.vGrid.vGridConfig.colConfig[oldI];
     });
 
 

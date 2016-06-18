@@ -34,6 +34,9 @@ export class VGrid {
   @bindable({attribute: "v-remote-index"}) attRemoteIndex;
   @bindable({attribute: "v-row-on-draw"}) eventOnRowDraw;
   @bindable({attribute: "v-event-onremote"}) eventOnRemoteCall;
+  @bindable({attribute: "v-hide-pager-info"}) attHidePagerInfo;
+  @bindable({attribute: "v-custom-pager"}) attCustomPager;
+  @bindable({attribute: "v-language"}) attLanguage;
   @bindable loadingMessage = "Working please wait";
   loading = false;
 
@@ -73,6 +76,12 @@ export class VGrid {
     this.vGridMarkupGenerator = new VGridMarkupGenerator(this);
     this.vGridPager = null; //set by pager
 
+
+    //vars
+    this.lastCollectionLength;
+    this.lastFilterLength;
+    this.lastSelectionLength;
+
   }
 
   /***************************************************************************************
@@ -88,6 +97,39 @@ export class VGrid {
 
     return event;
   }
+
+
+  //sends out event that total/filtered or selection have changed
+  sendCollectionEvent(){
+
+    let x1 = this.lastCollectionLength;
+    let x2 = this.lastFilterLength;
+    let x3 = this.lastSelectionLength;
+    let y1 = this.vGridCollection.length;
+    let y2 = this.vGridCollectionFiltered.length;
+    let y3 = this.vGridSelection.selectedRows;
+
+    if(x1 !== y1 || x2 !== y2 || x3 !== y3){
+
+      //send out event
+      this.raiseEvent("v-local-collection-event", {
+        evt: "v-local-collection-event",
+        totalLength: this.vGridCollection.length,
+        filterLength : this.vGridCollectionFiltered.length,
+        selectionLength:this.vGridSelection.selectedRows
+      });
+
+      //set new values
+      this.lastCollectionLength = this.vGridCollection.length;
+      this.lastFilterLength = this.vGridCollectionFiltered.length;
+      this.lastSelectionLength = this.vGridSelection.selectedRows;
+    }
+
+
+
+
+  }
+
 
 
   /***************************************************************************************
@@ -162,6 +204,11 @@ export class VGrid {
     vConfig.setBindValueBool(this.attManualSelection, 'attManualSelection');
     vConfig.setBindValueFunction(this.eventOnRowDraw, 'eventOnRowDraw');
     vConfig.setBindValueFunction(this.eventOnRemoteCall, 'eventOnRemoteCall');
+    vConfig.setBindValueBool(this.attHidePagerInfo, 'attHidePagerInfo');
+    vConfig.setBindValueString(this.attCustomPager, 'attCustomPager');
+    this.vGridConfig.attLanguage = this.attLanguage || this.vGridConfig.attLanguage;
+
+    
 
 
     //lets test that they have set the mandatory config settings

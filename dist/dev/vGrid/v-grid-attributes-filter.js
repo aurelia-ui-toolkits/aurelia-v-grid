@@ -157,7 +157,7 @@ System.register(['aurelia-framework', './v-grid'], function (_export, _context) 
               }
             });
 
-            this.vGrid.element.addEventListener("filterClearAll", function (e) {
+            this.vGrid.element.addEventListener("filterClearAll", function () {
               _this3.resetValue();
               _this3.updateFilter(_this3.vGrid.vGridFilter.lastFilter);
             });

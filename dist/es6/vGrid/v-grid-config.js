@@ -71,6 +71,9 @@ export class VGridConfig {
     this.eventOnRowClick = null;
     this.eventOnRowDblClick = null;
     this.eventOnRemoteCall = null;
+    this.attHidePagerInfo = false;
+    this.attCustomPager = null;
+    this.attLanguage = {};
 
     //repeat html vars
     this.repeater = false;
@@ -104,7 +107,7 @@ export class VGridConfig {
       value = htmlAttributeValue;
     }
     return value;
-  };
+  }
 
 
   setBindValueArray(value, toProperty) {

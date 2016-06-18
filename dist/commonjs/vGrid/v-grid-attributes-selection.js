@@ -38,7 +38,7 @@ var vGridAttributesSelection = exports.vGridAttributesSelection = (_dec = (0, _a
     this.selected = this.vGrid.vGridSelection.isSelected(this.bindingContext.row);
     this.element.checked = this.selected;
 
-    this.element.onclick = function (e) {
+    this.element.onclick = function () {
 
       var status = _this.element.checked === "true" || _this.element.checked === true ? true : false;
 

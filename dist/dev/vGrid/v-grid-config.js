@@ -115,6 +115,9 @@ System.register([], function (_export, _context) {
           this.eventOnRowClick = null;
           this.eventOnRowDblClick = null;
           this.eventOnRemoteCall = null;
+          this.attHidePagerInfo = false;
+          this.attCustomPager = null;
+          this.attLanguage = {};
 
           this.repeater = false;
           this.repeatRowTemplate = null;

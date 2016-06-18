@@ -40,7 +40,7 @@ export class vGridAttributesKeyMove {
     });
 
 
-    this.element.addEventListener('focus', (e)=> {
+    this.element.addEventListener('focus', ()=> {
 
       if (this.vGrid.vGridCurrentEntityRef === null) {
         let ev = document.createEvent('Event');
@@ -96,7 +96,7 @@ export class vGridAttributesKeyMove {
       this.cells = element.querySelectorAll("." + this.classname);
     }
     return thisTop;
-  };
+  }
 
 
   /***************************************************************************************
@@ -124,7 +124,7 @@ export class vGridAttributesKeyMove {
       this.timer = setTimeout(()=> {
         this.timer = null;
         callback();
-      }, 150)
+      }, 150);
     }
   }
 
@@ -171,10 +171,7 @@ export class vGridAttributesKeyMove {
         this.keyDownDelay(() => {
 
 
-          //get scrolltop
-          var currentscrolltop = this.vGrid.vGridClientCtx.getScrollTop();
-
-          //get content height/rows
+         //get content height/rows
           var rowHeight = this.vGrid.vGridConfig.attRowHeight;
           var containerHeight = this.vGrid.vGridGenerator.contentElement.clientHeight;
           var containerRows = parseInt(containerHeight / rowHeight, 10);
