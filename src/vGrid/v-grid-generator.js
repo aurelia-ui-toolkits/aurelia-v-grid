@@ -105,6 +105,9 @@ export class VGridGenerator {
     this.updateGridScrollbars();
     this.rebindAllRowSlots();
     this.setLargeScrollLimit();
+
+    this.vGrid.sendCollectionEvent();
+
   }
 
 
@@ -392,7 +395,8 @@ export class VGridGenerator {
    * creates the footer viewslots
    ****************************************************************************************************************************/
   createFooterViewSlot() {
-    var viewFactory = this.vGrid.viewCompiler.compile('<template><v-grid-pager></v-grid-pager></template>', this.vGrid.viewResources);
+    var pagerElement = this.vGridConfig.attCustomPager || '<v-grid-pager></v-grid-pager>';
+    var viewFactory = this.vGrid.viewCompiler.compile(`<template>${pagerElement}</template>`, this.vGrid.viewResources);
     var view = viewFactory.create(this.vGrid.container);
 
     this.footerViewSlot = new ViewSlot(this.footerElement, true);
@@ -809,6 +813,8 @@ export class VGridGenerator {
     //if I dont do this, chrome fails...
     this.contentScrollBodyElement.style.height = this.scrollBodyHeight - 1 + "px";
     this.contentScrollBodyElement.style.height = this.scrollBodyHeight + 1 + "px";
+
+    this.vGrid.sendCollectionEvent();
   };
 
 
