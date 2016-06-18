@@ -126,7 +126,7 @@ System.register(['aurelia-framework', './v-grid'], function (_export, _context) 
             _this3.onmousemove(e);
           };
 
-          this.vGridGenerator.headerElement.onmouseup = function (e) {
+          this.vGridGenerator.headerElement.onmouseup = function () {
             if (!_this3.started) {
               _this3.vGridGenerator.headerElement.onmousemove = "";
             }

@@ -53,7 +53,7 @@ export function configure(config) {
 
 /*****************************************************************************************************************
  *    ContextMenu
- *    This is where I create all the <v-grid> attibutes, and set then to vGridConfig
+ *    This is where I create all the <v-grid> attributes, and set then to vGridConfig
  *    Main idea/source https://github.com/callmenick/Custom-Context-Menu
  *    Created by vegar ringdal
  *
@@ -69,19 +69,19 @@ export class VGridHeaderMenu extends Contextmenu {
   altMenuLogic = null; //alt menu to open
 
 
-  //main menu lisntner
+  //main menu listener
   menuItemListener(link) {
     var value = link.getAttribute("data-action");
 
     if (this.altMenuLogic) {
       this.filterMenuLogic(value);
     } else {
-      this.defaultMenu(value)
+      this.defaultMenu(value);
     }
-  };
+  }
 
 
-  canOpen(e) {
+  canOpen() {
     return true;
   }
 
@@ -91,20 +91,20 @@ export class VGridHeaderMenu extends Contextmenu {
     return this.createMenuHTML([
       {
         action: "",
-        value: "Options",
+        value: this.getLang("menuMainHeaderOptions") || "Options",
         isHeader: true
       }, {
         action: "clear-cell",
-        value: "Clear cell"
+        value: this.getLang("menuMainHeaderClearCell") || "Clear cell"
       }, {
         action: "clear-all",
-        value: "Clear All Cells"
+        value: this.getLang("menuMainHeaderClearAllCells") || "Clear All Cells"
       }, {
         action: "show-all",
-        value: "Show all (keep filter text)"
+        value: this.getLang("menuMainHeaderShowAll") || "Show all (keep filter text)"
       }, {
         action: "set-filter",
-        value: "Set Filter"
+        value: this.getLang("menuMainHeaderSetFilter") || "Set Filter"
       }
     ]);
   }
@@ -115,38 +115,38 @@ export class VGridHeaderMenu extends Contextmenu {
     return this.createMenuHTML([
       {
         action: "",
-        value: "Set filter",
+        value: this.getLang("menuFilterHeaderSetFilter") || "Set filter",
         isHeader: true
       }, {
         action: "set-filter-1",
-        value: "equals"
+        value: this.getLang("menuFilterHeaderEquals") || "equals"
       }, {
         action: "set-filter-2",
-        value: "less than or eq"
+        value: this.getLang("menuFilterHeaderLessThanOrEq") || "less than or eq"
       }, {
         action: "set-filter-3",
-        value: "greater than or eq"
+        value: this.getLang("menuFilterHeaderGreaterThanOrEq") || "greater than or eq"
       }, {
         action: "set-filter-4",
-        value: "less than"
+        value: this.getLang("menuFilterHeaderLessThan") || "less than"
       }, {
         action: "set-filter-5",
-        value: "greater than"
+        value: this.getLang("menuFilterHeaderGreaterThan") || "greater than"
       }, {
         action: "set-filter-6",
-        value: "contains"
+        value: this.getLang("menuFilterHeaderContains") || "contains"
       }, {
         action: "set-filter-7",
-        value: "not equal to"
+        value: this.getLang("menuFilterHeaderNotEqualTo") || "not equal to"
       }, {
         action: "set-filter-8",
-        value: "does not contain"
+        value: this.getLang("menuFilterHeaderDoesNotContain") || "does not contain"
       }, {
         action: "set-filter-9",
-        value: "begins with"
+        value: this.getLang("menuFilterHeaderBeginsWith") || "begins with"
       }, {
         action: "set-filter-10",
-        value: "ends with"
+        value: this.getLang("menuFilterEndsWith") || "ends with"
       }
     ]);
   }
@@ -257,18 +257,18 @@ export class ContextRowMenu extends Contextmenu {
   altMenuLogic = null; //alt menu to open
 
 
-  //main menu lisntner
+  //main menu listener
   menuItemListener(link) {
     var value = link.getAttribute("data-action");
     if (this.altMenuLogic) {
       this.filterMenuLogic(value);
     } else {
-      this.defaultMenu(value)
+      this.defaultMenu(value);
     }
-  };
+  }
 
 
-  canOpen(e) {
+  canOpen() {
     return true;
   }
 
@@ -278,19 +278,19 @@ export class ContextRowMenu extends Contextmenu {
     return this.createMenuHTML([
       {
         action: "",
-        value: "Options",
+        value: this.getLang("menuRowOptions") || "Options",
         isHeader: true
       }, {
         action: "copy-cell",
-        value: "Copy cell value",
+        value: this.getLang("menuRowCopyCellValue") || "Copy cell value",
         isHeader: false
       }, {
         action: "paste-cell",
-        value: "Paste into cell/selected rows",
+        value: this.getLang("menuRowCopyPasteIntoCell") || "Paste into cell/selected rows",
         isHeader: false
       }
     ]);
-  };
+  }
 
 
   defaultMenu(value) {
@@ -350,20 +350,20 @@ export class vGridDragDropCol {
     //need to be better, will change when I rebuild header into custom element
     this.rootEl = this.vGrid.vGridGenerator.headerScrollElement; //this is BAD!
 
-    //add eventlistnes for draggable
+    //add event listeners for draggable
     this.mainCol.addEventListener('dragstart', this.onDragStart.bind(this), false);
 
 
-    //event listner for when starting to drag
+    //event listener for when starting to drag
     this.vGrid.element.addEventListener("vGridDragStart", ()=> {
       this.drophelper.style["z-index"] = "100";
     });
 
 
-    //event listner when stopped dragging
+    //event listener when stopped dragging
     this.vGrid.element.addEventListener("vGridDragStop", ()=> {
       this.drophelper.style["z-index"] = "-100";
-    })
+    });
 
 
   }
@@ -447,7 +447,7 @@ export class vGridDragDropCol {
 
     //reorder to new column no
     tempArr.forEach((oldI, newI) => {
-      vGridConfig[newI] = this.vGrid.vGridConfig.colConfig[oldI]
+      vGridConfig[newI] = this.vGrid.vGridConfig.colConfig[oldI];
     });
 
 
@@ -610,7 +610,7 @@ export class vGridAttributesFilter {
     if (values.length > 1) {
       values.forEach((value, i)=> {
         if (i !== 0) {
-          this.checkParams(value)
+          this.checkParams(value);
         }
       });
     }
@@ -681,7 +681,7 @@ export class vGridAttributesFilter {
 
       //we found a filter, lets update
       if (this.getValue() === "") {
-        curFilter.splice(filterIndex, 1)
+        curFilter.splice(filterIndex, 1);
       } else {
         curFilter[filterIndex].value = this.getValue();
         curFilter[filterIndex].operator = this.filterOperator;
@@ -722,7 +722,7 @@ export class vGridAttributesFilter {
         }
       });
 
-      this.vGrid.element.addEventListener("filterClearAll", (e)=> {
+      this.vGrid.element.addEventListener("filterClearAll", ()=> {
         this.resetValue();
         this.updateFilter(this.vGrid.vGridFilter.lastFilter);
       });
@@ -802,7 +802,7 @@ export class vGridAttributesImageFix {
 
     let x = this.element.src;
     this.element.src = "";
-    this.element.src = x
+    this.element.src = x;
   }
 
   attached() {
@@ -850,7 +850,7 @@ export class vGridAttributesKeyMove {
     });
 
 
-    this.element.addEventListener('focus', (e)=> {
+    this.element.addEventListener('focus', ()=> {
 
       if (this.vGrid.vGridCurrentEntityRef === null) {
         let ev = document.createEvent('Event');
@@ -906,7 +906,7 @@ export class vGridAttributesKeyMove {
       this.cells = element.querySelectorAll("." + this.classname);
     }
     return thisTop;
-  };
+  }
 
 
   /***************************************************************************************
@@ -934,7 +934,7 @@ export class vGridAttributesKeyMove {
       this.timer = setTimeout(()=> {
         this.timer = null;
         callback();
-      }, 150)
+      }, 150);
     }
   }
 
@@ -981,10 +981,7 @@ export class vGridAttributesKeyMove {
         this.keyDownDelay(() => {
 
 
-          //get scrolltop
-          var currentscrolltop = this.vGrid.vGridClientCtx.getScrollTop();
-
-          //get content height/rows
+         //get content height/rows
           var rowHeight = this.vGrid.vGridConfig.attRowHeight;
           var containerHeight = this.vGrid.vGridGenerator.contentElement.clientHeight;
           var containerRows = parseInt(containerHeight / rowHeight, 10);
@@ -1131,7 +1128,7 @@ export class vGridAttributesObserveField {
     this.vGrid = vGrid;
     this.element = element;
     this.timer = null;
-    this.bindingEngine = bindingEngine
+    this.bindingEngine = bindingEngine;
   }
 
 
@@ -1235,11 +1232,11 @@ export class vGridAttributesResizeCol {
 
     //register onmouse doen event
     resizeHandle.onmousedown = (e) => {
-      this.onmousedown(e)
+      this.onmousedown(e);
     };
 
     //add
-    this.mainCol.appendChild(resizeHandle)
+    this.mainCol.appendChild(resizeHandle);
 
   }
 
@@ -1313,7 +1310,7 @@ export class vGridAttributesResizeCol {
 
         //loop the columns and update each row
         for (var col = 0; col < columnsToFix.length; col++) {
-          columnsToFix[col].style.width = newWidth
+          columnsToFix[col].style.width = newWidth;
         }
 
         //update scrollbars and row widths
@@ -1348,7 +1345,7 @@ export class vGridAttributesResizeCol {
 
 
     //incase they just release right away
-    this.vGridGenerator.headerElement.onmouseup = (e) => {
+    this.vGridGenerator.headerElement.onmouseup = () => {
       if (!this.started) {
         this.vGridGenerator.headerElement.onmousemove = "";
       }
@@ -1393,7 +1390,7 @@ export class vGridAttributesSelection {
     this.selected = this.vGrid.vGridSelection.isSelected(this.bindingContext.row);
     this.element.checked = this.selected;
 
-    this.element.onclick = (e) => { 
+    this.element.onclick = () => { 
 
       var status = this.element.checked === "true" || this.element.checked === true ? true : false;
 
@@ -1419,7 +1416,7 @@ export class vGridAttributesSelection {
         }
       }
 
-    }
+    };
 
 
   }
@@ -1463,9 +1460,9 @@ export class vGridAttributesSort {
       this.vGrid.vGridConfig.onOrderBy(this.attribute, e.shiftKey);
     };
 
-    this.vGrid.element.addEventListener("sortIconUpdate", (e)=> {
+    this.vGrid.element.addEventListener("sortIconUpdate", ()=> {
       this.sortIcon.innerHTML = this.getSortIconMarkup(this.attribute);
-    })
+    });
   }
 
 
@@ -1486,7 +1483,7 @@ export class vGridAttributesSort {
     });
 
     return markup;
-  };
+  }
 
 
 }
@@ -1564,6 +1561,9 @@ export class VGridConfig {
     this.eventOnRowClick = null;
     this.eventOnRowDblClick = null;
     this.eventOnRemoteCall = null;
+    this.attHidePagerInfo = false;
+    this.attCustomPager = null;
+    this.attLanguage = {};
 
     //repeat html vars
     this.repeater = false;
@@ -1597,7 +1597,7 @@ export class VGridConfig {
       value = htmlAttributeValue;
     }
     return value;
-  };
+  }
 
 
   setBindValueArray(value, toProperty) {
@@ -2052,6 +2052,11 @@ export class Contextmenu {
   }
 
 
+  getLang(value) {
+    return this.vGrid.vGridConfig.attLanguage[value];
+  }
+
+
   bind(bindingContext, overrideContext) {
     this.bindingContext = bindingContext;
     this.overrideContext = overrideContext;
@@ -2059,13 +2064,13 @@ export class Contextmenu {
 
 
   attached() {
-      this.element.classList.contains(this.classToOpenOn)? null:this.element.classList.add(this.classToOpenOn);
-      this.addListener();
+    this.element.classList.contains(this.classToOpenOn) ? null : this.element.classList.add(this.classToOpenOn);
+    this.addListener();
   }
 
 
   detached() {
-      this.removeListener();
+    this.removeListener();
   }
 
 
@@ -2074,18 +2079,38 @@ export class Contextmenu {
   }
 
 
+  closeIfOpen() {
+    if (this.menuState) {
+      this.toggleMenuOff();
+    }
+  }
+
+
   addListener() {
     this.contextListenerBinded = this.contextListener.bind(this);
+    this.closeIfOpenBinded = this.closeIfOpen.bind(this);
     this.element.addEventListener("contextmenu", this.contextListenerBinded);
+    this.vGrid.element.addEventListener("vGridCloseContextMenuIfOpen", this.closeIfOpenBinded);
   }
 
 
   removeListener() {
     this.element.removeEventListener("contextmenu", this.contextListenerBinded);
+    this.element.removeEventListener("vGridCloseContextMenuIfOpen", this.closeIfOpenBinded);
+
   }
 
 
   contextListener(e) {
+
+    //close if menus if they are open when opening a new one
+    let event = new CustomEvent("vGridCloseContextMenuIfOpen", {
+      detail: "",
+      bubbles: true
+    });
+    this.vGrid.element.dispatchEvent(event);
+
+
     if (this.canOpen(e)) {
 
       this.taskItemInContext = this.clickInsideElement(e, this.classToOpenOn);
@@ -2138,7 +2163,7 @@ export class Contextmenu {
     if (el.classList.contains(className)) {
       return el;
     } else {
-      while (el = el.parentNode) {
+      while (el === el.parentNode) {
         if (el.classList && el.classList.contains(className)) {
           return el;
         }
@@ -2332,13 +2357,6 @@ export class VGridCtx {
     }
   }
 
-  get vGridResizable() {
-    if (this.vGrid) {
-      return this.vGrid.vGridResizable;
-    } else {
-      return null;
-    }
-  }
 
   get vGridFilter() {
     if (this.vGrid) {
@@ -2420,7 +2438,8 @@ export class VGridCtx {
       offset: this.vGridConfig.remoteOffset,
       length: this.vGridConfig.remoteLength
     });
-  };
+    
+  }
 
 
   /****************************************************************************************************************************
@@ -2603,6 +2622,53 @@ export class VGridCtx {
   };
 
 
+  /****************************************************************************************************************************
+   * remote external call for pager
+   ****************************************************************************************************************************/
+  remoteGoToFirst(){
+    this.vGrid.loading = true;
+    this.vGridConfig.remoteOffset = 0;
+    this.vGridConfig.remoteCall();
+  }
+
+
+
+  remoteGoToNext(){
+    this.vGrid.loading = true;
+    this.vGridConfig.remoteOffset = this.vGridConfig.remoteOffset + this.vGridConfig.remoteLimit;
+    this.vGridConfig.remoteCall();
+  }
+
+
+  remoteGoToPage(x){
+    this.vGrid.loading = true;
+    this.vGridConfig.remoteOffset = x * this.vGridConfig.remoteLimit;
+    this.vGridConfig.remoteCall();
+  }
+
+
+  remoteGoToOffset(x){
+    this.vGrid.loading = true;
+    this.vGridConfig.remoteOffset = x;
+    this.vGridConfig.remoteCall();
+  }
+    
+
+  remoteGoTofirstPrev(){
+    this.vGrid.loading = true;
+    this.vGridConfig.remoteOffset = this.vGridConfig.remoteOffset - this.vGridConfig.remoteLimit;
+    this.vGridConfig.remoteCall();
+  }
+
+
+
+  remoteGoTofirstLast(){
+    this.vGrid.loading = true;
+    this.vGridConfig.remoteOffset = this.vGridConfig.remoteLength-this.vGridConfig.remoteLimit;
+    this.vGridConfig.remoteCall();
+  }
+
+
 }
 
 /*****************************************************************************************************************
@@ -2703,13 +2769,12 @@ export class VGridElementFooterPager {
     this.element = element;
   }
 
-  
+
   bind(parent) {
     this.parent = parent;
     this.vGrid = parent.vGrid;
     this.vGridConfig = parent.vGrid.vGridConfig;
     this.vGrid.vGridPager = this;
-
   }
 
 
@@ -2719,15 +2784,33 @@ export class VGridElementFooterPager {
     this.statusFirstButton = false;
     this.statusPrevButton = false;
 
+    this.statusNextButtonTitle = this.getLang("pagerBtnNext") || "Next";
+    this.statusLastButtonTitle = this.getLang("pagerBtnLast") || "Last";
+    this.statusFirstButtonTitle = this.getLang("pagerBtnFirst") || "First";
+    this.statusPrevButtonTitle = this.getLang("pagerBtnLast") || "Last";
+
+    this.pagerStringPage = this.getLang("pagerStringPage") || "Page ";
+    this.pagerStringOf = this.getLang("pagerStringOf") || " of ";
+    this.pagerStringTotalEntities = this.getLang("pagerStringTotalEntities") || ", Total entities:";
+    this.pagerStringPageSize = this.getLang("pagerStringPageSize") || ", page size ";
+
+  }
+
+  
+  getLang(value){
+    return this.vGrid.vGridConfig.attLanguage[value];
   }
 
 
-  updatePager(data){
-     this.collectionLength = data.length;
-     this.limit = data.limit;
-     this.offset = data.offset;
-    this.page = this.offset ? Math.ceil(this.offset/this.limit)+1:1;
-    if(this.page === 1){
+  updatePager(data) {
+    this.collectionLength = data.length;
+    this.limit = data.limit;
+    this.offset = data.offset;
+
+    this.page = this.offset ? Math.ceil(this.offset / this.limit) + 1 : 1;
+
+
+    if (this.page === 1) {
       this.statusFirstButton = false;
       this.statusPrevButton = false;
     } else {
@@ -2735,7 +2818,8 @@ export class VGridElementFooterPager {
       this.statusPrevButton = true;
     }
 
-    if(this.offset >= this.collectionLength-this.limit){
+
+    if (this.offset >= this.collectionLength - this.limit) {
       this.statusNextButton = false;
       this.statusLastButton = false;
     } else {
@@ -2743,39 +2827,50 @@ export class VGridElementFooterPager {
       this.statusLastButton = true;
     }
 
-    this.info = `Page ${this.page} of ${Math.ceil(this.collectionLength/this.limit)}, Total entities:${this.collectionLength}, page size ${this.limit}`
+
+    //do we show page info?
+    if (!this.vGridConfig.attHidePagerInfo) {
+      this.info = `${this.pagerStringPage}${this.page}${this.pagerStringOf}${Math.ceil(this.collectionLength / this.limit)}${this.pagerStringTotalEntities}${this.collectionLength}${this.pagerStringPageSize}${this.limit}`;
+    }
+
+
+    //raise event
+    this.vGrid.raiseEvent("v-remote-collection-event", {
+      evt: "v-remote-collection-event",
+      page: this.page,
+      pages: Math.ceil(this.collectionLength / this.limit),
+      length: this.collectionLength,
+      pageSize: this.limit
+    });
 
   }
 
 
-  firstBtn(){
+  firstBtn() {
     this.vGrid.loading = true;
     this.vGridConfig.remoteOffset = 0;
-    this.vGridConfig.remoteCall()
+    this.vGridConfig.remoteCall();
   }
 
 
-
-  nextBtn(){
+  nextBtn() {
     this.vGrid.loading = true;
     this.vGridConfig.remoteOffset = this.vGridConfig.remoteOffset + this.vGridConfig.remoteLimit;
-    this.vGridConfig.remoteCall()
+    this.vGridConfig.remoteCall();
   }
 
 
-
-  prevBtn(){
+  prevBtn() {
     this.vGrid.loading = true;
     this.vGridConfig.remoteOffset = this.vGridConfig.remoteOffset - this.vGridConfig.remoteLimit;
-    this.vGridConfig.remoteCall()
+    this.vGridConfig.remoteCall();
   }
 
 
-
-  lastBtn(){
+  lastBtn() {
     this.vGrid.loading = true;
-    this.vGridConfig.remoteOffset = this.vGridConfig.remoteLength-this.vGridConfig.remoteLimit;
-    this.vGridConfig.remoteCall()
+    this.vGridConfig.remoteOffset = this.vGridConfig.remoteLength - this.vGridConfig.remoteLimit;
+    this.vGridConfig.remoteCall();
   }
 
 
@@ -2891,7 +2986,7 @@ export class VGridFilter {
    * run the name of filter
    ***************************************************************************************/
   getNameOfFilter(name) {
-    return this.filterOperatorTableString[name]
+    return this.filterOperatorTableString[name];
   }
 
   /***************************************************************************************
@@ -2903,7 +2998,7 @@ export class VGridFilter {
     let filterOperatorTable = this.filterOperatorTable;
 
 
-    var resultArray = objArray.filter(function (data, i) {
+    var resultArray = objArray.filter(function (data) {
 
 
       //lets have true as default, so all that should not be there we set false..
@@ -2971,7 +3066,7 @@ export class VGridFilter {
             //wildcard end and first = contains
             if (x.value.charAt(x.value.length - 1) === "*" && filterOperator === 1 && newFilterOperator === 10) {
               newFilterOperator = 6;
-              filterValue = filterValue.substr(0, filterValue.length - 1)
+              filterValue = filterValue.substr(0, filterValue.length - 1);
             }
 
 
@@ -3189,6 +3284,9 @@ export class VGridGenerator {
     this.updateGridScrollbars();
     this.rebindAllRowSlots();
     this.setLargeScrollLimit();
+
+    this.vGrid.sendCollectionEvent();
+
   }
 
 
@@ -3231,7 +3329,7 @@ export class VGridGenerator {
         var currentRow = parseInt(e.currentTarget.getAttribute("row"));
         this.vGridConfig.clickHandler(e, currentRow);
         if (this.vGridConfig.attMultiSelect !== undefined) {
-          this.vGridSelection.setHightlight(e, currentRow, this);
+          this.vGridSelection.highlight(e, currentRow, this);
         }
       }, false);
 
@@ -3476,7 +3574,8 @@ export class VGridGenerator {
    * creates the footer viewslots
    ****************************************************************************************************************************/
   createFooterViewSlot() {
-    var viewFactory = this.vGrid.viewCompiler.compile('<template><v-grid-pager></v-grid-pager></template>', this.vGrid.viewResources);
+    var pagerElement = this.vGridConfig.attCustomPager || '<v-grid-pager></v-grid-pager>';
+    var viewFactory = this.vGrid.viewCompiler.compile(`<template>${pagerElement}</template>`, this.vGrid.viewResources);
     var view = viewFactory.create(this.vGrid.container);
 
     this.footerViewSlot = new ViewSlot(this.footerElement, true);
@@ -3893,6 +3992,8 @@ export class VGridGenerator {
     //if I dont do this, chrome fails...
     this.contentScrollBodyElement.style.height = this.scrollBodyHeight - 1 + "px";
     this.contentScrollBodyElement.style.height = this.scrollBodyHeight + 1 + "px";
+
+    this.vGrid.sendCollectionEvent();
   };
 
 
@@ -4764,27 +4865,30 @@ export class VGridScrollEvents {
  ****************************************************************************************************************/
 export class VGridSelection {
 
-
-  selectionMode = "none";
-  lastRowSelected = -1; //this ned to be reset when filtering
-  lastKeyKodeUsed = "none"; //this ned to be reset when filtering
-  selectedRows = 0;
-
-
   constructor(mode, vGrid) {
 
     this.vGrid = vGrid;
+    this.selectionMode = "none";
+    this.lastRowSelected = -1; //this need to be reset when filtering
+    this.lastKeyKodeUsed = "none"; //this ned to be reset when filtering
+    this.selectedRows = 0;
 
     if (mode === false) {
       this.selectionMode = "single";
     }
     if (mode === true) {
-      this.selectionMode = "multible";
+      this.selectionMode = "multiple";
     }
 
     this.selection = new Set([]);
 
 
+  }
+
+
+  triggerEvent(){
+    //send out event
+    this.vGrid.sendCollectionEvent();
   }
 
 
@@ -4794,7 +4898,7 @@ export class VGridSelection {
       this.selectionMode = "single";
     }
     if (mode === true) {
-      this.selectionMode = "multible";
+      this.selectionMode = "multiple";
     }
 
   }
@@ -4808,7 +4912,7 @@ export class VGridSelection {
       }
     }
     return result;
-  };
+  }
 
 
   isSelectedMain(row) {
@@ -4819,7 +4923,7 @@ export class VGridSelection {
       }
     }
     return result;
-  };
+  }
 
 
   deSelect(row) {
@@ -4827,6 +4931,10 @@ export class VGridSelection {
       this.selection.delete(this.vGrid.vGridCollectionFiltered[row][this.vGrid.vGridRowKey]);
     }
     this.selectedRows = this.selection.size;
+
+    //send out event
+    this.triggerEvent();
+
   }
 
 
@@ -4835,6 +4943,10 @@ export class VGridSelection {
       this.selection.delete(this.vGrid.vGridCollection[row][this.vGrid.vGridRowKey]);
     }
     this.selectedRows = this.selection.size;
+
+    //send out event
+    this.triggerEvent();
+
   }
 
 
@@ -4851,7 +4963,7 @@ export class VGridSelection {
         }
         this.selectedRows = this.selection.size;
         break;
-      case "multible":
+      case "multiple":
         if (!addToSelection) {
           this.selection.clear();
           if (this.vGrid.vGridCollectionFiltered[row]) {
@@ -4865,7 +4977,11 @@ export class VGridSelection {
           this.selectedRows = this.selection.size;
         }
     }
-  };
+
+    //send out event
+    this.triggerEvent();
+
+  }
 
 
   selectMain(row, addToSelection) {
@@ -4881,7 +4997,7 @@ export class VGridSelection {
         }
         this.selectedRows = this.selection.size;
         break;
-      case "multible":
+      case "multiple":
         if (!addToSelection) {
           this.selection.clear();
           if (this.vGrid.vGridCollection[row]) {
@@ -4895,22 +5011,29 @@ export class VGridSelection {
           this.selectedRows = this.selection.size;
         }
     }
-  };
+
+    //send out event
+    this.triggerEvent();
+
+  }
 
 
   selectRange(start, end) {
-    if (this.selectionMode === "multible") {
+    if (this.selectionMode === "multiple") {
       this.selection.clear();
       for (var i = start; i < end + 1; i++) {
         this.selection.add(this.vGrid.vGridCollectionFiltered[i][this.vGrid.vGridRowKey]);
       }
       this.selectedRows = this.selection.size;
     }
-  };
+
+    //send out event
+    this.triggerEvent();
+  }
 
 
   selectAll() {
-    if (this.selectionMode === "multible") {
+    if (this.selectionMode === "multiple") {
       for (var i = 0; i < this.vGrid.vGridCollectionFiltered.length; i++) {
         this.selection.add(this.vGrid.vGridCollectionFiltered[i][this.vGrid.vGridRowKey]);
       }
@@ -4921,35 +5044,48 @@ export class VGridSelection {
       this.selection.add(this.vGrid.vGridCollectionFiltered[this.vGrid.vGridCurrentRow][this.vGrid.vGridRowKey]);
       this.selectedRows = this.selection.size;
     }
-  };
+
+    //send out event
+    this.triggerEvent();
+
+  }
 
   deSelectAll() {
     for (var i = 0; i < this.vGrid.vGridCollectionFiltered.length; i++) {
       this.selection.delete(this.vGrid.vGridCollectionFiltered[i][this.vGrid.vGridRowKey]);
     }
     this.selectedRows = this.selection.size;
-  };
+
+    //send out event
+    this.triggerEvent();
+  }
 
 
   selectRangeMain(start, end) {
-    if (this.selectionMode === "multible") {
+    if (this.selectionMode === "multiple") {
       this.selection.clear();
       for (var i = start; i < end + 1; i++) {
         this.selection.add(this.vGrid.vGridCollection[i][this.vGrid.vGridRowKey]);
       }
       this.selectedRows = this.selection.size;
     }
-  };
+
+    //send out event
+    this.triggerEvent();
+  }
 
 
   reset() {
     if (this.selectedRows > 0) {
-      this.selection.clear()
+      this.selection.clear();
     }
     this.lastRowSelected = -1;
     this.lastKeyKodeUsed = "none";
     this.selectedRows = this.selection.size;
-  };
+
+    //send out event
+    this.triggerEvent();
+  }
 
 
   getSelectedRows() {
@@ -4957,12 +5093,13 @@ export class VGridSelection {
     if (this.selectedRows > 0) {
       this.vGrid.vGridCollectionFiltered.forEach((x, index) => {
         if (this.selection.has(x[this.vGrid.vGridRowKey]) === true) {
-          array.push(index)
+          array.push(index);
         }
       });
     }
-    return array
-  };
+    return array;
+
+  }
 
 
   getSelectedRowsMain() {
@@ -4970,12 +5107,12 @@ export class VGridSelection {
     if (this.selectedRows > 0) {
       this.vGrid.vGridCollection.forEach((x, index) => {
         if (this.selection.has(x[this.vGrid.vGridRowKey]) === true) {
-          array.push(index)
+          array.push(index);
         }
       });
     }
-    return array
-  };
+    return array;
+  }
 
   setSelectedRows(newRows) {
     if (this.selectedRows > 0) {
@@ -4985,7 +5122,11 @@ export class VGridSelection {
       this.selection.add(this.vGrid.vGridCollectionFiltered[newRows[i]][this.vGrid.vGridRowKey]);
     }
     this.selectedRows = this.selection.size;
-  };
+
+    //send out event
+    this.triggerEvent();
+
+  }
 
 
   setSelectedRowsMain(newRows) {
@@ -4996,26 +5137,31 @@ export class VGridSelection {
       this.selection.add(this.vGrid.vGridCollection[newRows[i]][this.vGrid.vGridRowKey]);
     }
     this.selectedRows = this.selection.size;
-  };
+
+    //send out event
+    this.triggerEvent();
+
+  }
 
 
   /****************************************************************************************************************************
    * fixes highlight and select...
    ****************************************************************************************************************************/
-  setHightlight(e, currentRow, vGridGenerator) {
+  highlight(e, currentRow, vGridGenerator) {
 
     var isSel;
     var manualSel = this.vGrid.vGridConfig.attManualSelection;
     if (!manualSel) {
       var currentselectedRows = this.getSelectedRows();
+      var currentKeyKode = "";
 
       if (currentRow !== this.lastRowSelected || currentselectedRows[0] !== currentRow) {
 
         if (currentRow <= (vGridGenerator.vGridConfig.getCollectionLength() - 1)) { //do I need to check this?
 
-          if (this.selectionMode === "multible") { //if multiselect duh!
+          if (this.selectionMode === "multiple") { //if multiselect duh!
 
-            var currentKeyKode = "";
+
 
             if (e.shiftKey) {
               currentKeyKode = "shift";
@@ -5114,21 +5260,22 @@ export class VGridSelection {
           vGridGenerator.updateSelectionOnAllRows();
         }
       } else {
+
         //same row clicked again
         if (e.ctrlKey) {
           currentKeyKode = "ctrl";
         }
 
-        //if ctrl button we wanto remove selection
+        //if ctrl button we want to remove selection
         if (currentKeyKode === "ctrl") {
           this.lastKeyKodeUsed = currentKeyKode;
           isSel = this.isSelected(currentRow);
           if (isSel === true) {
             this.deSelect(currentRow);
           }
-          this.lastRowSelected = currentRow
+          this.lastRowSelected = currentRow;
         } else {
-          //else we just wanto make it current..
+          //else we just want to make it current..
           //isSel = this.isSelected(currentRow);
           this.select(currentRow);
         }
@@ -5136,7 +5283,7 @@ export class VGridSelection {
         vGridGenerator.updateSelectionOnAllRows();
       }
     }
-  };
+  }
 
 
 }
@@ -5301,6 +5448,9 @@ export class VGrid {
   @bindable({attribute: "v-remote-index"}) attRemoteIndex;
   @bindable({attribute: "v-row-on-draw"}) eventOnRowDraw;
   @bindable({attribute: "v-event-onremote"}) eventOnRemoteCall;
+  @bindable({attribute: "v-hide-pager-info"}) attHidePagerInfo;
+  @bindable({attribute: "v-custom-pager"}) attCustomPager;
+  @bindable({attribute: "v-language"}) attLanguage;
   @bindable loadingMessage = "Working please wait";
   loading = false;
 
@@ -5340,6 +5490,12 @@ export class VGrid {
     this.vGridMarkupGenerator = new VGridMarkupGenerator(this);
     this.vGridPager = null; //set by pager
 
+
+    //vars
+    this.lastCollectionLength;
+    this.lastFilterLength;
+    this.lastSelectionLength;
+
   }
 
   /***************************************************************************************
@@ -5355,6 +5511,39 @@ export class VGrid {
 
     return event;
   }
+
+
+  //sends out event that total/filtered or selection have changed
+  sendCollectionEvent(){
+
+    let x1 = this.lastCollectionLength;
+    let x2 = this.lastFilterLength;
+    let x3 = this.lastSelectionLength;
+    let y1 = this.vGridCollection.length;
+    let y2 = this.vGridCollectionFiltered.length;
+    let y3 = this.vGridSelection.selectedRows;
+
+    if(x1 !== y1 || x2 !== y2 || x3 !== y3){
+
+      //send out event
+      this.raiseEvent("v-local-collection-event", {
+        evt: "v-local-collection-event",
+        totalLength: this.vGridCollection.length,
+        filterLength : this.vGridCollectionFiltered.length,
+        selectionLength:this.vGridSelection.selectedRows
+      });
+
+      //set new values
+      this.lastCollectionLength = this.vGridCollection.length;
+      this.lastFilterLength = this.vGridCollectionFiltered.length;
+      this.lastSelectionLength = this.vGridSelection.selectedRows;
+    }
+
+
+
+
+  }
+
 
 
   /***************************************************************************************
@@ -5429,6 +5618,11 @@ export class VGrid {
     vConfig.setBindValueBool(this.attManualSelection, 'attManualSelection');
     vConfig.setBindValueFunction(this.eventOnRowDraw, 'eventOnRowDraw');
     vConfig.setBindValueFunction(this.eventOnRemoteCall, 'eventOnRemoteCall');
+    vConfig.setBindValueBool(this.attHidePagerInfo, 'attHidePagerInfo');
+    vConfig.setBindValueString(this.attCustomPager, 'attCustomPager');
+    this.vGridConfig.attLanguage = this.attLanguage || this.vGridConfig.attLanguage;
+
+    
 
 
     //lets test that they have set the mandatory config settings

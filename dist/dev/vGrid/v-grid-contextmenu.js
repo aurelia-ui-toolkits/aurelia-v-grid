@@ -43,6 +43,10 @@ System.register([], function (_export, _context) {
           this.windowHeight = null;
         }
 
+        Contextmenu.prototype.getLang = function getLang(value) {
+          return this.vGrid.vGridConfig.attLanguage[value];
+        };
+
         Contextmenu.prototype.bind = function bind(bindingContext, overrideContext) {
           this.bindingContext = bindingContext;
           this.overrideContext = overrideContext;
@@ -61,16 +65,31 @@ System.register([], function (_export, _context) {
           return true;
         };
 
+        Contextmenu.prototype.closeIfOpen = function closeIfOpen() {
+          if (this.menuState) {
+            this.toggleMenuOff();
+          }
+        };
+
         Contextmenu.prototype.addListener = function addListener() {
           this.contextListenerBinded = this.contextListener.bind(this);
+          this.closeIfOpenBinded = this.closeIfOpen.bind(this);
           this.element.addEventListener("contextmenu", this.contextListenerBinded);
+          this.vGrid.element.addEventListener("vGridCloseContextMenuIfOpen", this.closeIfOpenBinded);
         };
 
         Contextmenu.prototype.removeListener = function removeListener() {
           this.element.removeEventListener("contextmenu", this.contextListenerBinded);
+          this.element.removeEventListener("vGridCloseContextMenuIfOpen", this.closeIfOpenBinded);
         };
 
         Contextmenu.prototype.contextListener = function contextListener(e) {
+          var event = new CustomEvent("vGridCloseContextMenuIfOpen", {
+            detail: "",
+            bubbles: true
+          });
+          this.vGrid.element.dispatchEvent(event);
+
           if (this.canOpen(e)) {
 
             this.taskItemInContext = this.clickInsideElement(e, this.classToOpenOn);
@@ -117,7 +136,7 @@ System.register([], function (_export, _context) {
           if (el.classList.contains(className)) {
             return el;
           } else {
-            while (el = el.parentNode) {
+            while (el === el.parentNode) {
               if (el.classList && el.classList.contains(className)) {
                 return el;
               }

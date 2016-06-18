@@ -1,6 +1,6 @@
 /*****************************************************************************************************************
  *    ContextMenu
- *    This is where I create all the <v-grid> attibutes, and set then to vGridConfig
+ *    This is where I create all the <v-grid> attributes, and set then to vGridConfig
  *    Main idea/source https://github.com/callmenick/Custom-Context-Menu
  *    Created by vegar ringdal
  *
@@ -21,19 +21,19 @@ export class VGridHeaderMenu extends Contextmenu {
   altMenuLogic = null; //alt menu to open
 
 
-  //main menu lisntner
+  //main menu listener
   menuItemListener(link) {
     var value = link.getAttribute("data-action");
 
     if (this.altMenuLogic) {
       this.filterMenuLogic(value);
     } else {
-      this.defaultMenu(value)
+      this.defaultMenu(value);
     }
-  };
+  }
 
 
-  canOpen(e) {
+  canOpen() {
     return true;
   }
 
@@ -43,20 +43,20 @@ export class VGridHeaderMenu extends Contextmenu {
     return this.createMenuHTML([
       {
         action: "",
-        value: "Options",
+        value: this.getLang("menuMainHeaderOptions") || "Options",
         isHeader: true
       }, {
         action: "clear-cell",
-        value: "Clear cell"
+        value: this.getLang("menuMainHeaderClearCell") || "Clear cell"
       }, {
         action: "clear-all",
-        value: "Clear All Cells"
+        value: this.getLang("menuMainHeaderClearAllCells") || "Clear All Cells"
       }, {
         action: "show-all",
-        value: "Show all (keep filter text)"
+        value: this.getLang("menuMainHeaderShowAll") || "Show all (keep filter text)"
       }, {
         action: "set-filter",
-        value: "Set Filter"
+        value: this.getLang("menuMainHeaderSetFilter") || "Set Filter"
       }
     ]);
   }
@@ -67,38 +67,38 @@ export class VGridHeaderMenu extends Contextmenu {
     return this.createMenuHTML([
       {
         action: "",
-        value: "Set filter",
+        value: this.getLang("menuFilterHeaderSetFilter") || "Set filter",
         isHeader: true
       }, {
         action: "set-filter-1",
-        value: "equals"
+        value: this.getLang("menuFilterHeaderEquals") || "equals"
       }, {
         action: "set-filter-2",
-        value: "less than or eq"
+        value: this.getLang("menuFilterHeaderLessThanOrEq") || "less than or eq"
       }, {
         action: "set-filter-3",
-        value: "greater than or eq"
+        value: this.getLang("menuFilterHeaderGreaterThanOrEq") || "greater than or eq"
       }, {
         action: "set-filter-4",
-        value: "less than"
+        value: this.getLang("menuFilterHeaderLessThan") || "less than"
       }, {
         action: "set-filter-5",
-        value: "greater than"
+        value: this.getLang("menuFilterHeaderGreaterThan") || "greater than"
       }, {
         action: "set-filter-6",
-        value: "contains"
+        value: this.getLang("menuFilterHeaderContains") || "contains"
       }, {
         action: "set-filter-7",
-        value: "not equal to"
+        value: this.getLang("menuFilterHeaderNotEqualTo") || "not equal to"
       }, {
         action: "set-filter-8",
-        value: "does not contain"
+        value: this.getLang("menuFilterHeaderDoesNotContain") || "does not contain"
       }, {
         action: "set-filter-9",
-        value: "begins with"
+        value: this.getLang("menuFilterHeaderBeginsWith") || "begins with"
       }, {
         action: "set-filter-10",
-        value: "ends with"
+        value: this.getLang("menuFilterEndsWith") || "ends with"
       }
     ]);
   }
@@ -209,18 +209,18 @@ export class ContextRowMenu extends Contextmenu {
   altMenuLogic = null; //alt menu to open
 
 
-  //main menu lisntner
+  //main menu listener
   menuItemListener(link) {
     var value = link.getAttribute("data-action");
     if (this.altMenuLogic) {
       this.filterMenuLogic(value);
     } else {
-      this.defaultMenu(value)
+      this.defaultMenu(value);
     }
-  };
+  }
 
 
-  canOpen(e) {
+  canOpen() {
     return true;
   }
 
@@ -230,19 +230,19 @@ export class ContextRowMenu extends Contextmenu {
     return this.createMenuHTML([
       {
         action: "",
-        value: "Options",
+        value: this.getLang("menuRowOptions") || "Options",
         isHeader: true
       }, {
         action: "copy-cell",
-        value: "Copy cell value",
+        value: this.getLang("menuRowCopyCellValue") || "Copy cell value",
         isHeader: false
       }, {
         action: "paste-cell",
-        value: "Paste into cell/selected rows",
+        value: this.getLang("menuRowCopyPasteIntoCell") || "Paste into cell/selected rows",
         isHeader: false
       }
     ]);
-  };
+  }
 
 
   defaultMenu(value) {

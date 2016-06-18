@@ -45,7 +45,7 @@ System.register(['aurelia-framework', './v-grid'], function (_export, _context) 
             _this.vGrid.vGridConfig.onOrderBy(_this.attribute, e.shiftKey);
           };
 
-          this.vGrid.element.addEventListener("sortIconUpdate", function (e) {
+          this.vGrid.element.addEventListener("sortIconUpdate", function () {
             _this.sortIcon.innerHTML = _this.getSortIconMarkup(_this.attribute);
           });
         };
