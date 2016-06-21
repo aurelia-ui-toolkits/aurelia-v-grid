@@ -1,8 +1,8 @@
 {
   "name": "aurelia-v-grid",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "registry": "github",
-  "description": "Starter project for an Aurelia bridge",
+  "description": "Data grid for Aurelia",
   "keywords": [
     "aurelia",
     "plugin",
