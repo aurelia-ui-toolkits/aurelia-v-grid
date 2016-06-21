@@ -4414,6 +4414,10 @@ var VGrid = exports.VGrid = (_dec41 = (0, _aureliaFramework.bindable)({ attribut
       this.vGridContextObj = {};
     }
 
+    if (!this.vGridCurrentEntity) {
+      this.vGridCurrentEntity = {};
+    }
+
     this.vGridContextObj.ctx = this.vGridClientCtx;
     var vConfig = this.vGridConfig;
     vConfig.setBindValueArray(this.attAttributeObserve, 'attAttributeObserve');
@@ -4432,17 +4436,10 @@ var VGrid = exports.VGrid = (_dec41 = (0, _aureliaFramework.bindable)({ attribut
     vConfig.setBindValueString(this.attCustomPager, 'attCustomPager');
     this.vGridConfig.attLanguage = this.attLanguage || this.vGridConfig.attLanguage;
 
-    if (this.vGridCollection === undefined || this.vGridCurrentEntity === undefined) {
-      if (this.vGridCollection === undefined && this.vGridCurrentEntity === undefined) {
-        console.warn("currentEntity & collection not set/binded in config attribute");
-      } else {
-        if (this.vGridCurrentEntity === undefined) {
-          console.warn("currentEntity not set/binded in config attribute");
-        }
-        if (this.vGridCollection === undefined) {
-          console.warn("collection not set/binded in config attribute");
-        }
-      }
+    if (this.vGridCollection === undefined) {
+      console.warn("collection not set/binded please check the v-collection attribute");
+      this.vGridCollection = [];
+      this.vGridCollectionFiltered = this.vGridCollection.slice(0);
     } else {
       this.vGridCollectionFiltered = this.vGridCollection.slice(0);
 
