@@ -5597,10 +5597,14 @@ export class VGrid {
     this.$parent = parent;
     this.overrideContext = overrideContext;
 
-    //if they havent binded a context, then lets make one.
-    //that context they will be able to trigger event on the grid
+    //if they havent binded a context, then just create a object for it so internals dont fail
     if (!this.vGridContextObj) {
       this.vGridContextObj = {};
+    }
+
+    //if they havent binded a current entity, then just create a object for it so internals dont fail
+    if (!this.vGridCurrentEntity) {
+      this.vGridCurrentEntity = {};
     }
 
     //set vgrid attibutes to our config/utillity class
@@ -5626,17 +5630,10 @@ export class VGrid {
 
 
     //lets test that they have set the mandatory config settings
-    if (this.vGridCollection === undefined || this.vGridCurrentEntity === undefined) {
-      if (this.vGridCollection === undefined && this.vGridCurrentEntity === undefined) {
-        console.warn("currentEntity & collection not set/binded in config attribute");
-      } else {
-        if (this.vGridCurrentEntity === undefined) {
-          console.warn("currentEntity not set/binded in config attribute");
-        }
-        if (this.vGridCollection === undefined) {
-          console.warn("collection not set/binded in config attribute");
-        }
-      }
+    if (this.vGridCollection === undefined) {
+      console.warn("collection not set/binded please check the v-collection attribute");
+      this.vGridCollection = [];
+      this.vGridCollectionFiltered = this.vGridCollection.slice(0);
     } else {
       //clone collection and add key index, so we know it.
       this.vGridCollectionFiltered = this.vGridCollection.slice(0);
