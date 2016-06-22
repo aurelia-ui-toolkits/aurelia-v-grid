@@ -2585,11 +2585,15 @@ var VGridGenerator = exports.VGridGenerator = function () {
   }
 
   VGridGenerator.prototype.init = function init(isRebuild) {
+
     this.addHtml();
+    this.addRowsAndSlots();
     this.addEvents();
     if (!isRebuild) {
       this.vGridSelection.setMode(this.vGridConfig.attMultiSelect);
+      this.listenForWindowResize();
     }
+
     this.updateGridScrollbars();
     this.rebindAllRowSlots();
     this.setLargeScrollLimit();
@@ -2604,6 +2608,9 @@ var VGridGenerator = exports.VGridGenerator = function () {
     this.createGridFooterElement();
     this.createGridScrollBodyElement();
     this.createGridRowElements();
+  };
+
+  VGridGenerator.prototype.addRowsAndSlots = function addRowsAndSlots() {
 
     this.createLoadingScreenViewSlot();
     this.createHeaderViewSlot();
@@ -2714,11 +2721,17 @@ var VGridGenerator = exports.VGridGenerator = function () {
   VGridGenerator.prototype.createGridRowElements = function createGridRowElements() {
     var minimumRowsNeeded = parseInt(this.contentHeight / this.vGridConfig.attRowHeight, 10);
 
+    if (0 > this.contentHeight) {
+      minimumRowsNeeded = 100;
+    }
+
     if (minimumRowsNeeded % 2 === 1) {
       minimumRowsNeeded = minimumRowsNeeded + 7;
     } else {
       minimumRowsNeeded = minimumRowsNeeded + 6;
     }
+
+    this.minimumRowsNeeded = minimumRowsNeeded;
 
     var top = 0;
     for (var i = 0; i < minimumRowsNeeded; i++) {
@@ -2967,7 +2980,7 @@ var VGridGenerator = exports.VGridGenerator = function () {
       this.headerElement.style.overflowY = "scroll";
     }
 
-    if (this.contentElement.offsetWidth - 5 < this.getTotalColumnWidth()) {
+    if (this.contentElement.offsetWidth < this.getTotalColumnWidth()) {
       this.contentElement.style.overflowX = "scroll";
     }
   };
@@ -3106,6 +3119,31 @@ var VGridGenerator = exports.VGridGenerator = function () {
     this.vGrid.sendCollectionEvent();
   };
 
+  VGridGenerator.prototype.listenForWindowResize = function listenForWindowResize() {
+    var _this29 = this;
+
+    window.addEventListener("resize", function () {
+
+      _this29.gridHeight = _this29.gridElement.clientHeight;
+      _this29.gridWidght = _this29.gridElement.clientWidth;
+      var gridWrapperHeight = _this29.gridHeight;
+      var headerAndFooterHeight = _this29.vGridConfig.attHeaderHeight + _this29.vGridConfig.attFooterHeight;
+      _this29.contentHeight = gridWrapperHeight - headerAndFooterHeight;
+      _this29.contentElement.style.height = _this29.contentHeight + "px";
+
+      var minimumRowsNeeded = parseInt(_this29.contentHeight / _this29.vGridConfig.attRowHeight, 10);
+      if (minimumRowsNeeded > _this29.minimumRowsNeeded) {
+        var last = _this29.contentElement.scrollTop;
+
+        _this29.redrawGrid();
+
+        _this29.contentElement.scrollTop = last;
+
+        _this29.vGridScrollEvents.onScrollbarScrolling();
+      }
+    });
+  };
+
   _createClass(VGridGenerator, [{
     key: 'vGridSelection',
     get: function get() {
@@ -3228,7 +3266,7 @@ var VGridMarkupGenerator = exports.VGridMarkupGenerator = function () {
   };
 
   VGridMarkupGenerator.prototype.processColumns = function processColumns(array) {
-    var _this29 = this;
+    var _this30 = this;
 
     array.forEach(function (col, index) {
       if (!col.colField && !col.colRowTemplate) {
@@ -3239,13 +3277,13 @@ var VGridMarkupGenerator = exports.VGridMarkupGenerator = function () {
 
       col.colType = col.colType || "text";
       col.colFilterTop = col.colFilterTop || false;
-      col.colHeaderName = col.colHeaderName || _this29.getAttribute(col.colField, true);
+      col.colHeaderName = col.colHeaderName || _this30.getAttribute(col.colField, true);
       col.colWidth = col.colWidth || 100;
       col.colCss = col.colCss || '';
-      col.colField = _this29.checkAttribute(col.colField);
+      col.colField = _this30.checkAttribute(col.colField);
 
-      _this29.createHeaderTemplate(col);
-      _this29.createRowTemplate(col);
+      _this30.createHeaderTemplate(col);
+      _this30.createRowTemplate(col);
     });
   };
 
@@ -3399,34 +3437,34 @@ var VGridObservables = exports.VGridObservables = function () {
   }
 
   VGridObservables.prototype.enableObservablesCollection = function enableObservablesCollection() {
-    var _this30 = this;
+    var _this31 = this;
 
     var collectionSubscription = function collectionSubscription(x, y) {
-      _this30.disableObservablesArray();
+      _this31.disableObservablesArray();
 
-      _this30.vGrid.vGridCollectionFiltered = _this30.vGrid.vGridCollection.slice(0);
-      _this30.vGrid.checkKeys();
+      _this31.vGrid.vGridCollectionFiltered = _this31.vGrid.vGridCollection.slice(0);
+      _this31.vGrid.checkKeys();
 
-      _this30.vGrid.vGridCurrentRow = -1;
+      _this31.vGrid.vGridCurrentRow = -1;
 
-      _this30.vGrid.vGridSort.reset();
-      if (!_this30.vGrid.vGridConfig.keepFilterOnCollectionChange) {
-        _this30.vGrid.vGridSort.reset();
-        _this30.vGrid.vGridGenerator.rebuildGridHeaderHtmlAndViewSlot();
+      _this31.vGrid.vGridSort.reset();
+      if (!_this31.vGrid.vGridConfig.keepFilterOnCollectionChange) {
+        _this31.vGrid.vGridSort.reset();
+        _this31.vGrid.vGridGenerator.rebuildGridHeaderHtmlAndViewSlot();
 
-        _this30.vGrid.vGridSelection.reset();
-        _this30.vGrid.vGridConfig.keepFilterOnCollectionChange = false;
+        _this31.vGrid.vGridSelection.reset();
+        _this31.vGrid.vGridConfig.keepFilterOnCollectionChange = false;
       }
-      _this30.vGrid.vGridGenerator.collectionChange();
+      _this31.vGrid.vGridGenerator.collectionChange();
 
-      _this30.vGrid.vGridCurrentEntityRef = null;
-      for (var k in _this30.vGrid.vGridCurrentEntity) {
-        if (_this30.vGrid.vGridCurrentEntity.hasOwnProperty(k)) {
-          _this30.vGrid.vGridCurrentEntity[k] = undefined;
+      _this31.vGrid.vGridCurrentEntityRef = null;
+      for (var k in _this31.vGrid.vGridCurrentEntity) {
+        if (_this31.vGrid.vGridCurrentEntity.hasOwnProperty(k)) {
+          _this31.vGrid.vGridCurrentEntity[k] = undefined;
         }
       }
 
-      _this30.enableObservablesArray();
+      _this31.enableObservablesArray();
     };
     this.vGrid.__observers__.vGridCollection.subscribe(this.vGrid, collectionSubscription);
     this.collectioncallable = collectionSubscription;
@@ -3435,17 +3473,17 @@ var VGridObservables = exports.VGridObservables = function () {
   };
 
   VGridObservables.prototype.enableObservablesArray = function enableObservablesArray() {
-    var _this31 = this;
+    var _this32 = this;
 
     var arrayObserver = this.bindingEngine.collectionObserver(this.vGrid.vGridCollection).subscribe(function (arrayObserverChanges) {
 
-      var colFiltered = _this31.vGrid.vGridCollectionFiltered;
-      var col = _this31.vGrid.vGridCollection;
-      var grid = _this31.vGrid.vGridGenerator;
+      var colFiltered = _this32.vGrid.vGridCollectionFiltered;
+      var col = _this32.vGrid.vGridCollection;
+      var grid = _this32.vGrid.vGridGenerator;
 
       var curKey = -1;
-      if (_this31.vGrid.vGridCurrentEntityRef) {
-        curKey = _this31.vGrid.vGridCurrentEntityRef[_this31.vGrid.vGridRowKey];
+      if (_this32.vGrid.vGridCurrentEntityRef) {
+        curKey = _this32.vGrid.vGridCurrentEntityRef[_this32.vGrid.vGridRowKey];
       }
       var curEntityValid = true;
 
@@ -3458,19 +3496,19 @@ var VGridObservables = exports.VGridObservables = function () {
           if (observerChange.addedCount > 0) {
             for (var i = 0; i < observerChange.addedCount; i++) {
               colFiltered.push(col[observerChange.index + i]);
-              _this31.vGrid.checkKey(col[observerChange.index + i]);
+              _this32.vGrid.checkKey(col[observerChange.index + i]);
             }
           }
 
           if (observerChange.removed.length > 0) {
             observerChange.removed.forEach(function (x) {
-              if (x[_this31.vGrid.vGridRowKey] === curKey) {
+              if (x[_this32.vGrid.vGridRowKey] === curKey) {
                 curEntityValid = false;
               }
 
               var rowToRemove = -1;
               colFiltered.forEach(function (row, index) {
-                if (row[_this31.vGrid.vGridRowKey] === x[_this31.vGrid.vGridRowKey]) {
+                if (row[_this32.vGrid.vGridRowKey] === x[_this32.vGrid.vGridRowKey]) {
                   rowToRemove = index;
                 }
               });
@@ -3484,18 +3522,18 @@ var VGridObservables = exports.VGridObservables = function () {
         var newRowNo = -1;
 
         if (!curEntityValid) {
-          for (var k in _this31.vGrid.vGridCurrentEntity) {
-            if (_this31.vGrid.vGridCurrentEntity.hasOwnProperty(k)) {
-              _this31.vGrid.vGridCurrentEntity[k] = undefined;
+          for (var k in _this32.vGrid.vGridCurrentEntity) {
+            if (_this32.vGrid.vGridCurrentEntity.hasOwnProperty(k)) {
+              _this32.vGrid.vGridCurrentEntity[k] = undefined;
             }
           }
-          _this31.vGrid.vGridCurrentEntityRef = null;
-          _this31.vGrid.vGridCurrentRow = -1;
+          _this32.vGrid.vGridCurrentEntityRef = null;
+          _this32.vGrid.vGridCurrentRow = -1;
         } else {
           if (curKey !== -1) {
-            _this31.vGrid.vGridCollectionFiltered.forEach(function (x, index) {
-              if (curKey === x[_this31.vGrid.vGridRowKey]) {
-                _this31.vGrid.vGridCurrentRow = index;
+            _this32.vGrid.vGridCollectionFiltered.forEach(function (x, index) {
+              if (curKey === x[_this32.vGrid.vGridRowKey]) {
+                _this32.vGrid.vGridCurrentRow = index;
               }
             });
           }
@@ -3507,19 +3545,19 @@ var VGridObservables = exports.VGridObservables = function () {
   };
 
   VGridObservables.prototype.enableObservablesAttributes = function enableObservablesAttributes() {
-    var _this32 = this;
+    var _this33 = this;
 
     this.vGrid.vGridConfig.attAttributeObserve.forEach(function (property) {
-      var propertyObserver = _this32.bindingEngine.propertyObserver(_this32.vGrid.vGridCurrentEntity, property).subscribe(function (newValue, oldValue) {
+      var propertyObserver = _this33.bindingEngine.propertyObserver(_this33.vGrid.vGridCurrentEntity, property).subscribe(function (newValue, oldValue) {
         var newValueCheck = newValue !== undefined && newValue !== null ? newValue.toString() : newValue;
         var oldValueCheck = oldValue !== undefined && oldValue !== null ? oldValue.toString() : oldValue;
 
-        if (newValueCheck !== oldValueCheck && _this32.vGrid.vGridCurrentEntityRef) {
-          _this32.vGrid.vGridCurrentEntityRef[property] = newValue;
-          _this32.vGrid.vGridGenerator.rebindRowNumber(_this32.vGrid.vGridCurrentRow);
+        if (newValueCheck !== oldValueCheck && _this33.vGrid.vGridCurrentEntityRef) {
+          _this33.vGrid.vGridCurrentEntityRef[property] = newValue;
+          _this33.vGrid.vGridGenerator.rebindRowNumber(_this33.vGrid.vGridCurrentRow);
         }
       });
-      _this32.subscriptionsAttributes.push(propertyObserver);
+      _this33.subscriptionsAttributes.push(propertyObserver);
     });
   };
 
@@ -3557,7 +3595,7 @@ var VGridScrollEvents = exports.VGridScrollEvents = function () {
   }
 
   VGridScrollEvents.prototype.onLargeScroll = function onLargeScroll() {
-    var _this33 = this;
+    var _this34 = this;
 
     this.lastScrollTop = this.vGridGenerator.contentElement.scrollTop;
 
@@ -3574,20 +3612,20 @@ var VGridScrollEvents = exports.VGridScrollEvents = function () {
     var collectionLength = this.vGridConfig.getCollectionLength();
 
     var setAfter = function setAfter(cacheRowNumber) {
-      var row = _this33.vGridGenerator.rowElementArray[cacheRowNumber];
-      _this33.vGridGenerator.setRowTopValue([row], 0, currentRowTop);
+      var row = _this34.vGridGenerator.rowElementArray[cacheRowNumber];
+      _this34.vGridGenerator.setRowTopValue([row], 0, currentRowTop);
       currentRowTop = currentRowTop + rowHeight;
     };
 
     var setBefore = function setBefore(cacheRowNumber) {
-      var row = _this33.vGridGenerator.rowElementArray[cacheRowNumber];
+      var row = _this34.vGridGenerator.rowElementArray[cacheRowNumber];
       firstRowTop = firstRowTop - rowHeight;
-      _this33.vGridGenerator.setRowTopValue([row], 0, firstRowTop);
+      _this34.vGridGenerator.setRowTopValue([row], 0, firstRowTop);
     };
 
     var setHiddenFromView = function setHiddenFromView(cacheRowNumber) {
-      var row = _this33.vGridGenerator.rowElementArray[cacheRowNumber];
-      _this33.vGridGenerator.setRowTopValue([row], 0, -(currentRowTop + _this33.vGridConfig.attRowHeight * 50));
+      var row = _this34.vGridGenerator.rowElementArray[cacheRowNumber];
+      _this34.vGridGenerator.setRowTopValue([row], 0, -(currentRowTop + _this34.vGridConfig.attRowHeight * 50));
     };
 
     for (var i = 0; i < this.vGridGenerator.getRowCacheLength(); i++) {
@@ -3673,7 +3711,7 @@ var VGridScrollEvents = exports.VGridScrollEvents = function () {
   };
 
   VGridScrollEvents.prototype.onScrollbarScrolling = function onScrollbarScrolling() {
-    var _this34 = this;
+    var _this35 = this;
 
     this.isScrollBarScrolling = true;
 
@@ -3682,8 +3720,8 @@ var VGridScrollEvents = exports.VGridScrollEvents = function () {
     clearTimeout(this.scrollbarScrollingTimer);
 
     this.scrollbarScrollingTimer = setTimeout(function () {
-      _this34.onLargeScroll();
-      _this34.isScrollBarScrolling = false;
+      _this35.onLargeScroll();
+      _this35.isScrollBarScrolling = false;
     }, timeout);
   };
 
@@ -4003,12 +4041,12 @@ var VGridSelection = exports.VGridSelection = function () {
   };
 
   VGridSelection.prototype.getSelectedRows = function getSelectedRows() {
-    var _this35 = this;
+    var _this36 = this;
 
     var array = [];
     if (this.selectedRows > 0) {
       this.vGrid.vGridCollectionFiltered.forEach(function (x, index) {
-        if (_this35.selection.has(x[_this35.vGrid.vGridRowKey]) === true) {
+        if (_this36.selection.has(x[_this36.vGrid.vGridRowKey]) === true) {
           array.push(index);
         }
       });
@@ -4017,12 +4055,12 @@ var VGridSelection = exports.VGridSelection = function () {
   };
 
   VGridSelection.prototype.getSelectedRowsMain = function getSelectedRowsMain() {
-    var _this36 = this;
+    var _this37 = this;
 
     var array = [];
     if (this.selectedRows > 0) {
       this.vGrid.vGridCollection.forEach(function (x, index) {
-        if (_this36.selection.has(x[_this36.vGrid.vGridRowKey]) === true) {
+        if (_this37.selection.has(x[_this37.vGrid.vGridRowKey]) === true) {
           array.push(index);
         }
       });
@@ -4372,11 +4410,11 @@ var VGrid = exports.VGrid = (_dec41 = (0, _aureliaFramework.bindable)({ attribut
   };
 
   VGrid.prototype.checkKeys = function checkKeys() {
-    var _this37 = this;
+    var _this38 = this;
 
     this.vGridCollection.forEach(function (row) {
-      if (!row[_this37.vGridRowKey] && row !== undefined && row !== null) {
-        row[_this37.vGridRowKey] = _this37.guid();
+      if (!row[_this38.vGridRowKey] && row !== undefined && row !== null) {
+        row[_this38.vGridRowKey] = _this38.guid();
       }
     });
   };
@@ -4388,11 +4426,11 @@ var VGrid = exports.VGrid = (_dec41 = (0, _aureliaFramework.bindable)({ attribut
   };
 
   VGrid.prototype.vGridGetRowKey = function vGridGetRowKey(key) {
-    var _this38 = this;
+    var _this39 = this;
 
     var rowFound = null;
     this.vGridCollection.forEach(function (row, index) {
-      if (row[_this38.vGridRowKey] === key) {
+      if (row[_this39.vGridRowKey] === key) {
         rowFound = index;
       }
     });

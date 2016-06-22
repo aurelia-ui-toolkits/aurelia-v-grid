@@ -3276,16 +3276,21 @@ export class VGridGenerator {
    * will create the actual grid (cant be constructor since I call this when rebuilding)
    ****************************************************************************************************************************/
   init(isRebuild) {
+
     this.addHtml();
+    this.addRowsAndSlots();
     this.addEvents();
     if (!isRebuild) {
       this.vGridSelection.setMode(this.vGridConfig.attMultiSelect);
+      this.listenForWindowResize();
     }
+
     this.updateGridScrollbars();
     this.rebindAllRowSlots();
     this.setLargeScrollLimit();
 
     this.vGrid.sendCollectionEvent();
+
 
   }
 
@@ -3294,7 +3299,7 @@ export class VGridGenerator {
    * add the html
    ****************************************************************************************************************************/
   addHtml() {
-    //hetml elements
+    //html elements
     this.createGridElement();
     this.createGridHeaderElement();
     this.createGridContentElement();
@@ -3302,13 +3307,20 @@ export class VGridGenerator {
     this.createGridScrollBodyElement();
     this.createGridRowElements();
 
-    //loadingscreen viewslot
+  }
+
+  /****************************************************************************************************************************
+   * add the viewslots
+   ****************************************************************************************************************************/
+  addRowsAndSlots() {
+
     this.createLoadingScreenViewSlot();
     this.createHeaderViewSlot();
     this.createRowViewSlots();
     if (this.vGridConfig.eventOnRemoteCall) {
       this.createFooterViewSlot()
     }
+
   }
 
 
@@ -3455,12 +3467,19 @@ export class VGridGenerator {
     //rows we need to fill up visible container
     var minimumRowsNeeded = parseInt(this.contentHeight / this.vGridConfig.attRowHeight, 10);
 
+    //if this happends then they have done something really wring, or want to display all, lets make 100. (should really not happend)
+    if (0 > this.contentHeight) {
+      minimumRowsNeeded = 100;
+    }
+
     //set extra so we can buffer
     if (minimumRowsNeeded % 2 === 1) {
       minimumRowsNeeded = minimumRowsNeeded + 7;
     } else {
       minimumRowsNeeded = minimumRowsNeeded + 6;
     }
+
+    this.minimumRowsNeeded = minimumRowsNeeded;
 
     var top = 0;
     for (var i = 0; i < minimumRowsNeeded; i++) {
@@ -3801,7 +3820,7 @@ export class VGridGenerator {
     }
 
     //todo, what to do when its a repeater ?
-    if (this.contentElement.offsetWidth - 5 < this.getTotalColumnWidth()) {
+    if (this.contentElement.offsetWidth < this.getTotalColumnWidth()) {
       this.contentElement.style.overflowX = "scroll";
     }
 
@@ -3997,6 +4016,37 @@ export class VGridGenerator {
   };
 
 
+  listenForWindowResize() {
+
+    window.addEventListener("resize", ()=> {
+
+      this.gridHeight = this.gridElement.clientHeight;
+      this.gridWidght = this.gridElement.clientWidth;
+      var gridWrapperHeight = this.gridHeight;
+      var headerAndFooterHeight = this.vGridConfig.attHeaderHeight + this.vGridConfig.attFooterHeight;
+      this.contentHeight = gridWrapperHeight - headerAndFooterHeight;
+      this.contentElement.style.height = this.contentHeight + "px";
+
+      var minimumRowsNeeded = parseInt(this.contentHeight / this.vGridConfig.attRowHeight, 10);
+      if (minimumRowsNeeded > this.minimumRowsNeeded) {
+
+        //get last scrolltop
+        let last = this.contentElement.scrollTop;
+
+        //redraw the grid;
+        this.redrawGrid();
+
+        //set last scrolltop
+        this.contentElement.scrollTop = last;
+
+        //trigger scroll event
+        this.vGridScrollEvents.onScrollbarScrolling();
+      }
+
+    });
+
+
+  }
 
 
 }
