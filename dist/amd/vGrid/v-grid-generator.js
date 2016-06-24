@@ -450,7 +450,7 @@ define(["exports", "aurelia-framework"], function (exports, _aureliaFramework) {
         this.headerElement.style.overflowY = "scroll";
       }
 
-      if (this.contentElement.offsetWidth < this.getTotalColumnWidth()) {
+      if (this.contentElement.offsetWidth < this.getTotalColumnWidth() - 3) {
         this.contentElement.style.overflowX = "scroll";
       }
     };

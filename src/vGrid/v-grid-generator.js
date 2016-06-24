@@ -641,7 +641,7 @@ export class VGridGenerator {
     }
 
     //todo, what to do when its a repeater ?
-    if (this.contentElement.offsetWidth < this.getTotalColumnWidth()) {
+    if (this.contentElement.offsetWidth < this.getTotalColumnWidth() - 3) {
       this.contentElement.style.overflowX = "scroll";
     }
 
