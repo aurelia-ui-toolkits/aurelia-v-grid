@@ -1,6 +1,6 @@
 @font-face {
   font-family: "Glyphicons Halflings";
-  src: url("glyphicons-halflings-regular-fromBootstrap.woff2");
+  src: url("./glyphicons-halflings-regular-fromBootstrap.woff2");
 }
 
 .vGrid-glyphicon {
