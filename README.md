@@ -1,7 +1,7 @@
-# v-grid
+# aurelia-v-grid
 
 [![Join the chat at https://gitter.im/aurelia-ui-toolkits/v-grid](https://badges.gitter.im/aurelia-ui-toolkits/v-grid.svg)](https://gitter.im/aurelia-ui-toolkits/v-grid?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-Official version of Vegar Rindal's grid
+Conversations about aurelia-v-grid
 
 <br><br>
 [Beta Docs](https://vegarringdal.gitbooks.io/v-grid-dev/content/)
