@@ -5,6 +5,7 @@ Conversations about aurelia-v-grid
 
 <br><br>
 [Beta Docs](https://vegarringdal.gitbooks.io/v-grid-dev/content/)
+<br>
 [Demo](http://aurelia-ui-toolkits.github.io/demo-v-grid)
 <br><br><br>
 
