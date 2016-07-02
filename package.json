@@ -35,13 +35,7 @@
       "lib": "dist/amd"
     },
     "dependencies": {
-      "aurelia-binding": "npm:aurelia-binding@^1.0.0-rc.1.0.0",
-      "aurelia-dependency-injection": "npm:aurelia-dependency-injection@^1.0.0-rc.1.0.0",
-      "aurelia-logging": "npm:aurelia-logging@^1.0.0-rc.1.0.0",
-      "aurelia-metadata": "npm:aurelia-metadata@^1.0.0-rc.1.0.0",
-      "aurelia-task-queue": "npm:aurelia-task-queue@^1.0.0-rc.1.0.0",
-      "aurelia-templating": "npm:aurelia-templating@^1.0.0-rc.1.0.0",
-      "aurelia-templating-resources": "npm:aurelia-templating-resources@^1.0.0-rc.1.0.0"
+      "aurelia-framework": "npm:aurelia-framework@^1.0.0-rc.1.0.1"
     },
     "devDependencies": {
       "aurelia-pal": "npm:aurelia-pal@^1.0.0-rc.1.0.0",
