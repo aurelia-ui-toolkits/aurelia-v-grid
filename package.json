@@ -1,6 +1,6 @@
 {
   "name": "aurelia-v-grid",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "registry": "github",
   "description": "Data grid for Aurelia",
   "keywords": [
@@ -106,30 +106,30 @@
   "aurelia": {
     "usedBy": [],
     "build": {
- +      "resources": [
- +         "aurelia-v-grid",
-           "aurelia-v-grid/vGrid/v-grid-element-footer-pager",
-           "aurelia-v-grid/vGrid/v-grid-element-row-repeat",
-           "aurelia-v-grid/vGrid/v-grid-element-col-config",
-           "aurelia-v-grid/vGrid/v-grid",
-           "aurelia-v-grid/vGrid/v-grid-attributes-filter",
-           "aurelia-v-grid/vGrid/v-grid-attributes-sort",
-           "aurelia-v-grid/vGrid/v-grid-attributes-selection",
-           "aurelia-v-grid/vGrid/v-grid-attributes-image",
-           "aurelia-v-grid/vGrid/v-grid-attributes-key-move",
-           "aurelia-v-grid/vGrid/v-grid-attributes-contextmenu",
-           "aurelia-v-grid/vGrid/v-grid-attributes-observe-field",
-           "aurelia-v-grid/vGrid/v-grid-attributes-dragDropCol",
-           "aurelia-v-grid/vGrid/v-grid-attributes-resize-col",
-           "aurelia-v-grid/vGrid/styles/v-grid.css",
-           "aurelia-v-grid/vGrid/styles/v-grid-contextmenu.css",
-           "aurelia-v-grid/vGrid/styles/v-grid-draggable.css",
-           "aurelia-v-grid/vGrid/styles/v-grid-loader.css",
-           "aurelia-v-grid/vGrid/styles/v-grid-pager.css",
-           "aurelia-v-grid/vGrid/styles/v-grid-sorticon.css",
-           "aurelia-v-grid/vGrid/styles/v-grid-optional.css"
- +      ]
- +    },
+      "resources": [
+        "aurelia-v-grid",
+        "aurelia-v-grid/vGrid/v-grid-element-footer-pager",
+        "aurelia-v-grid/vGrid/v-grid-element-row-repeat",
+        "aurelia-v-grid/vGrid/v-grid-element-col-config",
+        "aurelia-v-grid/vGrid/v-grid",
+        "aurelia-v-grid/vGrid/v-grid-attributes-filter",
+        "aurelia-v-grid/vGrid/v-grid-attributes-sort",
+        "aurelia-v-grid/vGrid/v-grid-attributes-selection",
+        "aurelia-v-grid/vGrid/v-grid-attributes-image",
+        "aurelia-v-grid/vGrid/v-grid-attributes-key-move",
+        "aurelia-v-grid/vGrid/v-grid-attributes-contextmenu",
+        "aurelia-v-grid/vGrid/v-grid-attributes-observe-field",
+        "aurelia-v-grid/vGrid/v-grid-attributes-dragDropCol",
+        "aurelia-v-grid/vGrid/v-grid-attributes-resize-col",
+        "aurelia-v-grid/vGrid/styles/v-grid.css",
+        "aurelia-v-grid/vGrid/styles/v-grid-contextmenu.css",
+        "aurelia-v-grid/vGrid/styles/v-grid-draggable.css",
+        "aurelia-v-grid/vGrid/styles/v-grid-loader.css",
+        "aurelia-v-grid/vGrid/styles/v-grid-pager.css",
+        "aurelia-v-grid/vGrid/styles/v-grid-sorticon.css",
+        "aurelia-v-grid/vGrid/styles/v-grid-optional.css"
+        ]
+    },
     "documentation": {
       "links": [
         {
