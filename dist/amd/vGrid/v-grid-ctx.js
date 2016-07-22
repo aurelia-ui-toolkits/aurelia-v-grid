@@ -114,8 +114,9 @@ define(["exports"], function (exports) {
       this.vGridGenerator.collectionChange();
     };
 
-    VGridCtx.prototype.setColumns = function setColumns(paramObj) {
-      this.vGridConfig.colConfig = paramObj.colConfig;
+    VGridCtx.prototype.setColumns = function setColumns(paramArray) {
+      this.vGridConfig.colConfig = paramArray;
+      this.vGrid.vGridConfig.columnLength = paramArray.length;
     };
 
     VGridCtx.prototype.getColumns = function getColumns() {
@@ -131,9 +132,57 @@ define(["exports"], function (exports) {
         }
         arr.push(x);
       });
-      return {
-        "colConfig": arr
-      };
+      return arr;
+    };
+
+    VGridCtx.prototype.reGenerateColumns = function reGenerateColumns(resetScrollToTop) {
+      this.vGrid.vGridMarkupGenerator.generate();
+      this.vGridGenerator.columnChangeAndCollection(resetScrollToTop);
+    };
+
+    VGridCtx.prototype.orderBy = function orderBy(sortArray) {
+      var _this3 = this;
+
+      if (this.vGrid.vGridCollectionFiltered.length > 0) {
+        if (this.vGrid.vGridCollection.length > this.vGridConfig.attLoadingThreshold) {
+          this.vGrid.loading = true;
+        }
+
+        setTimeout(function () {
+
+          _this3.vGrid.vGridSort.reset();
+
+          sortArray.forEach(function (sort) {
+            _this3.vGrid.vGridSort.setFilter({
+              attribute: sort.attribute,
+              asc: sort.asc
+            }, true);
+          });
+
+          var event = new CustomEvent("sortIconUpdate", {
+            detail: "",
+            bubbles: true
+          });
+          _this3.vGrid.element.dispatchEvent(event);
+
+          if (_this3.vGridConfig.eventOnRemoteCall) {
+            _this3.vGridConfig.remoteCall();
+          } else {
+            _this3.vGrid.vGridSort.run(_this3.vGrid.vGridCollectionFiltered);
+
+            if (_this3.vGrid.vGridCurrentEntityRef) {
+              _this3.vGrid.vGridCollectionFiltered.forEach(function (x, index) {
+                if (_this3.vGrid.vGridCurrentEntityRef[_this3.vGrid.vGridRowKey] === x[_this3.vGrid.vGridRowKey]) {
+                  _this3.vGrid.vGridCurrentRow = index;
+                }
+              });
+            }
+
+            _this3.vGrid.vGridGenerator.collectionChange();
+            _this3.vGrid.loading = false;
+          }
+        }, 50);
+      }
     };
 
     VGridCtx.prototype.getMaxRows = function getMaxRows() {

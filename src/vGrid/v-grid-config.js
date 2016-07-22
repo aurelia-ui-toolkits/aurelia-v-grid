@@ -74,6 +74,7 @@ export class VGridConfig {
     this.attHidePagerInfo = false;
     this.attCustomPager = null;
     this.attLanguage = {};
+    this.attOnlyCustom = false; //to stop markup generator for adding attributes when in simple and column config
 
     //repeat html vars
     this.repeater = false;

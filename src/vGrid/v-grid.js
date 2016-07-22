@@ -37,6 +37,8 @@ export class VGrid {
   @bindable({attribute: "v-hide-pager-info"}) attHidePagerInfo;
   @bindable({attribute: "v-custom-pager"}) attCustomPager;
   @bindable({attribute: "v-language"}) attLanguage;
+  @bindable({attribute: "v-only-custom"}) attOnlyCustom;
+  @bindable({attribute: "v-attribute-observe"}) attAttributeObserve;
   @bindable loadingMessage = "Working please wait";
   loading = false;
 
@@ -210,6 +212,8 @@ export class VGrid {
     vConfig.setBindValueFunction(this.eventOnRemoteCall, 'eventOnRemoteCall');
     vConfig.setBindValueBool(this.attHidePagerInfo, 'attHidePagerInfo');
     vConfig.setBindValueString(this.attCustomPager, 'attCustomPager');
+    vConfig.setBindValueBool(this.attOnlyCustom, 'attOnlyCustom');
+
     this.vGridConfig.attLanguage = this.attLanguage || this.vGridConfig.attLanguage;
 
     

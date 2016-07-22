@@ -1564,6 +1564,7 @@ export class VGridConfig {
     this.attHidePagerInfo = false;
     this.attCustomPager = null;
     this.attLanguage = {};
+    this.attOnlyCustom = false; //to stop markup generator for adding attributes when in simple and column config
 
     //repeat html vars
     this.repeater = false;
@@ -2545,8 +2546,9 @@ export class VGridCtx {
   /****************************************************************************************************************************
    * explain
    ****************************************************************************************************************************/
-  setColumns(paramObj) {
-    this.vGridConfig.colConfig = paramObj.colConfig;
+  setColumns(paramArray) {
+    this.vGridConfig.colConfig = paramArray;
+    this.vGrid.vGridConfig.columnLength  = paramArray.length
   };
 
 
@@ -2566,10 +2568,79 @@ export class VGridCtx {
       }
       arr.push(x);
     });
-    return {
-      "colConfig": arr
-    }
+    return arr
   };
+
+
+  /****************************************************************************************************************************
+   * explain
+   ****************************************************************************************************************************/
+  reGenerateColumns(resetScrollToTop) {
+    this.vGrid.vGridMarkupGenerator.generate();
+    this.vGridGenerator.columnChangeAndCollection(resetScrollToTop);
+  };
+
+
+  /****************************************************************************************************************************
+   * explain
+   ****************************************************************************************************************************/
+  orderBy(sortArray) {
+
+
+    //can we do the sorting?
+    if (this.vGrid.vGridCollectionFiltered.length > 0) {
+      //set loading screen
+      if (this.vGrid.vGridCollection.length > this.vGridConfig.attLoadingThreshold) {
+        this.vGrid.loading = true;
+      }
+
+      //set query
+      setTimeout(()=> {
+
+        this.vGrid.vGridSort.reset();
+        //set filter
+        sortArray.forEach((sort)=>{
+          this.vGrid.vGridSort.setFilter({
+            attribute: sort.attribute,
+            asc: sort.asc
+          }, true);
+        });
+
+        let event = new CustomEvent("sortIconUpdate", {
+          detail: "",
+          bubbles: true
+        });
+        this.vGrid.element.dispatchEvent(event);
+
+        //if remote call is set
+        if (this.vGridConfig.eventOnRemoteCall) {
+
+          //trigger remote call
+          this.vGridConfig.remoteCall();
+
+        } else {
+          //run filter
+          this.vGrid.vGridSort.run(this.vGrid.vGridCollectionFiltered);
+
+          //set new row
+          if (this.vGrid.vGridCurrentEntityRef) {
+            this.vGrid.vGridCollectionFiltered.forEach((x, index) => {
+              if (this.vGrid.vGridCurrentEntityRef[this.vGrid.vGridRowKey] === x[this.vGrid.vGridRowKey]) {
+                this.vGrid.vGridCurrentRow = index;
+              }
+            });
+          }
+
+          //update grid
+          this.vGrid.vGridGenerator.collectionChange();
+          this.vGrid.loading = false;
+        }
+
+      }, 50);
+    }
+
+
+  }
 
 
   /****************************************************************************************************************************
@@ -4264,8 +4335,14 @@ export class VGridMarkupGenerator {
     let attributeRow = col.colAddRowAttributes ? col.colAddRowAttributes : '';
     let css = col.colCss ? `css="${col.colCss}"` : '';
 
+    let imageFix = "v-image-fix";
+    if(this.vGrid.vGridConfig.attOnlyCustom){
+      imageFix = "";
+    }
+
+
     //insert the markup
-    col.colRowTemplate = `<image ${css} ${classNames} v-image-fix ${attributeRow} src.bind="${col.colField}">`;
+    col.colRowTemplate = `<image ${css} ${classNames} ${imageFix} ${attributeRow} src.bind="${col.colField}">`;
 
   }
 
@@ -4289,6 +4366,9 @@ export class VGridMarkupGenerator {
 
     //attibute observer for 2 way flow between row and current entity
     let attributeObserver = `v-observe-field="${this.getAttribute(col.colField)}"`;
+    if(this.vGrid.vGridConfig.attOnlyCustom){
+      attributeObserver = "";
+    }
 
     //is it a checkbox?
     //todo: adding the observer part without choice, maybe param for that?
@@ -4354,9 +4434,15 @@ export class VGridMarkupGenerator {
 
     let sort = col.colSort ? `v-sort="${col.colSort}"` : '';
 
+
+    let extraAttributes = "v-drag-drop-col v-resize-col";
+    if(this.vGrid.vGridConfig.attOnlyCustom){
+      extraAttributes = "";
+    }
+
     //apply magic
     //todo, atm Im adding resize columns and dragdrop columns, should this be a choice?
-    let markup = `<p v-drag-drop-col v-resize-col ${classname} ${sort} ${colAddLabelAttributes}>${col.colHeaderName}</p>`;
+    let markup = `<p ${extraAttributes} ${classname} ${sort} ${colAddLabelAttributes}>${col.colHeaderName}</p>`;
     //return the markup
     return markup;
   }
@@ -5501,6 +5587,8 @@ export class VGrid {
   @bindable({attribute: "v-hide-pager-info"}) attHidePagerInfo;
   @bindable({attribute: "v-custom-pager"}) attCustomPager;
   @bindable({attribute: "v-language"}) attLanguage;
+  @bindable({attribute: "v-only-custom"}) attOnlyCustom;
+  @bindable({attribute: "v-attribute-observe"}) attAttributeObserve;
   @bindable loadingMessage = "Working please wait";
   loading = false;
 
@@ -5674,6 +5762,8 @@ export class VGrid {
     vConfig.setBindValueFunction(this.eventOnRemoteCall, 'eventOnRemoteCall');
     vConfig.setBindValueBool(this.attHidePagerInfo, 'attHidePagerInfo');
     vConfig.setBindValueString(this.attCustomPager, 'attCustomPager');
+    vConfig.setBindValueBool(this.attOnlyCustom, 'attOnlyCustom');
+
     this.vGridConfig.attLanguage = this.attLanguage || this.vGridConfig.attLanguage;
 
     
