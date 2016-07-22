@@ -118,7 +118,7 @@ System.register([], function (_export, _context) {
           this.attHidePagerInfo = false;
           this.attCustomPager = null;
           this.attLanguage = {};
-
+          this.attOnlyCustom = false;
           this.repeater = false;
           this.repeatRowTemplate = null;
 

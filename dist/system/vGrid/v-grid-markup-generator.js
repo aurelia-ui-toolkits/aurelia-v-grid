@@ -172,7 +172,12 @@ System.register([], function (_export, _context) {
           var attributeRow = col.colAddRowAttributes ? col.colAddRowAttributes : '';
           var css = col.colCss ? 'css="' + col.colCss + '"' : '';
 
-          col.colRowTemplate = '<image ' + css + ' ' + classNames + ' v-image-fix ' + attributeRow + ' src.bind="' + col.colField + '">';
+          var imageFix = "v-image-fix";
+          if (this.vGrid.vGridConfig.attOnlyCustom) {
+            imageFix = "";
+          }
+
+          col.colRowTemplate = '<image ' + css + ' ' + classNames + ' ' + imageFix + ' ' + attributeRow + ' src.bind="' + col.colField + '">';
         };
 
         VGridMarkupGenerator.prototype.createInputRowMarkup = function createInputRowMarkup(col) {
@@ -185,6 +190,9 @@ System.register([], function (_export, _context) {
           var colCss = col.colCss ? 'css="' + col.colCss + '"' : '';
 
           var attributeObserver = 'v-observe-field="' + this.getAttribute(col.colField) + '"';
+          if (this.vGrid.vGridConfig.attOnlyCustom) {
+            attributeObserver = "";
+          }
 
           if (col.colType === "checkbox") {
             col.colRowTemplate = '<input ' + attributeObserver + ' ' + colCss + ' ' + colClass + ' ' + colType + ' ' + colAddRowAttributes + '  checked.bind="' + col.colField + '">';
@@ -228,7 +236,12 @@ System.register([], function (_export, _context) {
 
           var sort = col.colSort ? 'v-sort="' + col.colSort + '"' : '';
 
-          var markup = '<p v-drag-drop-col v-resize-col ' + classname + ' ' + sort + ' ' + colAddLabelAttributes + '>' + col.colHeaderName + '</p>';
+          var extraAttributes = "v-drag-drop-col v-resize-col";
+          if (this.vGrid.vGridConfig.attOnlyCustom) {
+            extraAttributes = "";
+          }
+
+          var markup = '<p ' + extraAttributes + ' ' + classname + ' ' + sort + ' ' + colAddLabelAttributes + '>' + col.colHeaderName + '</p>';
 
           return markup;
         };

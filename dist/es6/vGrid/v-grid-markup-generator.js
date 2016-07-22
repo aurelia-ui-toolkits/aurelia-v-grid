@@ -211,8 +211,14 @@ export class VGridMarkupGenerator {
     let attributeRow = col.colAddRowAttributes ? col.colAddRowAttributes : '';
     let css = col.colCss ? `css="${col.colCss}"` : '';
 
+    let imageFix = "v-image-fix";
+    if(this.vGrid.vGridConfig.attOnlyCustom){
+      imageFix = "";
+    }
+
+
     //insert the markup
-    col.colRowTemplate = `<image ${css} ${classNames} v-image-fix ${attributeRow} src.bind="${col.colField}">`;
+    col.colRowTemplate = `<image ${css} ${classNames} ${imageFix} ${attributeRow} src.bind="${col.colField}">`;
 
   }
 
@@ -236,6 +242,9 @@ export class VGridMarkupGenerator {
 
     //attibute observer for 2 way flow between row and current entity
     let attributeObserver = `v-observe-field="${this.getAttribute(col.colField)}"`;
+    if(this.vGrid.vGridConfig.attOnlyCustom){
+      attributeObserver = "";
+    }
 
     //is it a checkbox?
     //todo: adding the observer part without choice, maybe param for that?
@@ -301,9 +310,15 @@ export class VGridMarkupGenerator {
 
     let sort = col.colSort ? `v-sort="${col.colSort}"` : '';
 
+
+    let extraAttributes = "v-drag-drop-col v-resize-col";
+    if(this.vGrid.vGridConfig.attOnlyCustom){
+      extraAttributes = "";
+    }
+
     //apply magic
     //todo, atm Im adding resize columns and dragdrop columns, should this be a choice?
-    let markup = `<p v-drag-drop-col v-resize-col ${classname} ${sort} ${colAddLabelAttributes}>${col.colHeaderName}</p>`;
+    let markup = `<p ${extraAttributes} ${classname} ${sort} ${colAddLabelAttributes}>${col.colHeaderName}</p>`;
     //return the markup
     return markup;
   }

@@ -251,8 +251,9 @@ export class VGridCtx {
   /****************************************************************************************************************************
    * explain
    ****************************************************************************************************************************/
-  setColumns(paramObj) {
-    this.vGridConfig.colConfig = paramObj.colConfig;
+  setColumns(paramArray) {
+    this.vGridConfig.colConfig = paramArray;
+    this.vGrid.vGridConfig.columnLength  = paramArray.length
   };
 
 
@@ -272,10 +273,79 @@ export class VGridCtx {
       }
       arr.push(x);
     });
-    return {
-      "colConfig": arr
-    }
+    return arr
   };
+
+
+  /****************************************************************************************************************************
+   * explain
+   ****************************************************************************************************************************/
+  reGenerateColumns(resetScrollToTop) {
+    this.vGrid.vGridMarkupGenerator.generate();
+    this.vGridGenerator.columnChangeAndCollection(resetScrollToTop);
+  };
+
+
+  /****************************************************************************************************************************
+   * explain
+   ****************************************************************************************************************************/
+  orderBy(sortArray) {
+
+
+    //can we do the sorting?
+    if (this.vGrid.vGridCollectionFiltered.length > 0) {
+      //set loading screen
+      if (this.vGrid.vGridCollection.length > this.vGridConfig.attLoadingThreshold) {
+        this.vGrid.loading = true;
+      }
+
+      //set query
+      setTimeout(()=> {
+
+        this.vGrid.vGridSort.reset();
+        //set filter
+        sortArray.forEach((sort)=>{
+          this.vGrid.vGridSort.setFilter({
+            attribute: sort.attribute,
+            asc: sort.asc
+          }, true);
+        });
+
+        let event = new CustomEvent("sortIconUpdate", {
+          detail: "",
+          bubbles: true
+        });
+        this.vGrid.element.dispatchEvent(event);
+
+        //if remote call is set
+        if (this.vGridConfig.eventOnRemoteCall) {
+
+          //trigger remote call
+          this.vGridConfig.remoteCall();
+
+        } else {
+          //run filter
+          this.vGrid.vGridSort.run(this.vGrid.vGridCollectionFiltered);
+
+          //set new row
+          if (this.vGrid.vGridCurrentEntityRef) {
+            this.vGrid.vGridCollectionFiltered.forEach((x, index) => {
+              if (this.vGrid.vGridCurrentEntityRef[this.vGrid.vGridRowKey] === x[this.vGrid.vGridRowKey]) {
+                this.vGrid.vGridCurrentRow = index;
+              }
+            });
+          }
+
+          //update grid
+          this.vGrid.vGridGenerator.collectionChange();
+          this.vGrid.loading = false;
+        }
+
+      }, 50);
+    }
+
+
+  }
 
 
   /****************************************************************************************************************************

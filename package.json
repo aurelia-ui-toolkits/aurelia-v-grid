@@ -1,6 +1,6 @@
 {
   "name": "aurelia-v-grid",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "registry": "github",
   "description": "Simple data grid for Aurelia",
   "keywords": [
@@ -35,7 +35,7 @@
       "lib": "dist/amd"
     },
     "dependencies": {
-      "aurelia-framework": "npm:aurelia-framework@^1.0.0-rc.1.0.1"
+      "aurelia-framework": "npm:aurelia-framework@^1.0.0-rc.1.0.6"
     },
     "devDependencies": {
       "aurelia-pal": "npm:aurelia-pal@^1.0.0-rc.1.0.0",
@@ -128,7 +128,7 @@
         "aurelia-v-grid/vGrid/styles/v-grid-pager.css",
         "aurelia-v-grid/vGrid/styles/v-grid-sorticon.css",
         "aurelia-v-grid/vGrid/styles/v-grid-optional.css"
-        ]
+      ]
     },
     "documentation": {
       "links": [

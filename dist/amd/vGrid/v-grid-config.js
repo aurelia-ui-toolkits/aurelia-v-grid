@@ -115,7 +115,7 @@ define(["exports"], function (exports) {
       this.attHidePagerInfo = false;
       this.attCustomPager = null;
       this.attLanguage = {};
-
+      this.attOnlyCustom = false;
       this.repeater = false;
       this.repeatRowTemplate = null;
 
