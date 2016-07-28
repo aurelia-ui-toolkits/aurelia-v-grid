@@ -1,6 +1,6 @@
 {
   "name": "aurelia-v-grid",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "registry": "github",
   "description": "Simple data grid for Aurelia",
   "keywords": [

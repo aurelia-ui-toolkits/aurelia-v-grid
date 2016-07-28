@@ -9,7 +9,7 @@ export class ConfigBuilder {
     './vGrid/v-grid-element-footer-pager',
     './vGrid/v-grid-element-row-repeat',
     './vGrid/v-grid-element-col-config',
-    './vGrid/v-grid.js',
+    './vGrid/v-grid',
     './vGrid/v-grid-attributes-filter',
     './vGrid/v-grid-attributes-sort',
     './vGrid/v-grid-attributes-selection',
@@ -31,24 +31,6 @@ export function configure(aurelia: Aurelia, configCallback?: (builder: ConfigBui
   }
 
   aurelia.globalResources(builder.globalResources);
-}
-
-export function configure(config) {
-  config.globalResources(
-    './v-grid-element-footer-pager',
-    './v-grid-element-row-repeat',
-    './v-grid-element-col-config',
-    './v-grid',
-    './v-grid-attributes-filter',
-    './v-grid-attributes-sort',
-    './v-grid-attributes-selection',
-    './v-grid-attributes-image',
-    './v-grid-attributes-key-move',
-    './v-grid-attributes-contextmenu',
-    './v-grid-attributes-observe-field',
-    './v-grid-attributes-dragDropCol',
-    './v-grid-attributes-resize-col'
-  );
 }
 
 export function configure(config) {
