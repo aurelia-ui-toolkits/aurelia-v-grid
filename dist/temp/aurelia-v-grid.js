@@ -11,6 +11,7 @@ var _dec, _dec2, _class2, _dec3, _dec4, _class4, _dec5, _dec6, _class6, _dec7, _
 
 exports.configure = configure;
 exports.configure = configure;
+exports.configure = configure;
 
 var _aureliaFramework = require('aurelia-framework');
 
@@ -77,6 +78,10 @@ function configure(aurelia, configCallback) {
   }
 
   aurelia.globalResources(builder.globalResources);
+}
+
+function configure(config) {
+  config.globalResources('./v-grid-element-footer-pager', './v-grid-element-row-repeat', './v-grid-element-col-config', './v-grid', './v-grid-attributes-filter', './v-grid-attributes-sort', './v-grid-attributes-selection', './v-grid-attributes-image', './v-grid-attributes-key-move', './v-grid-attributes-contextmenu', './v-grid-attributes-observe-field', './v-grid-attributes-dragDropCol', './v-grid-attributes-resize-col');
 }
 
 function configure(config) {
