@@ -25,6 +25,7 @@ declare module 'aurelia-v-grid' {
   }
   export function configure(aurelia: Aurelia, configCallback?: ((builder: ConfigBuilder) => void)): any;
   export function configure(config: any): any;
+  export function configure(config: any): any;
   
   /*****************************************************************************************************************
    *    ContextMenu
