@@ -4114,6 +4114,8 @@ export class VGridGenerator {
         this.vGridScrollEvents.onScrollbarScrolling();
       }
 
+      this.updateGridScrollbars();
+
     });
 
 
