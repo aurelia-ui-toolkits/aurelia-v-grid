@@ -611,6 +611,8 @@ define(["exports", "aurelia-framework"], function (exports, _aureliaFramework) {
 
           _this2.vGridScrollEvents.onScrollbarScrolling();
         }
+
+        _this2.updateGridScrollbars();
       });
     };
 

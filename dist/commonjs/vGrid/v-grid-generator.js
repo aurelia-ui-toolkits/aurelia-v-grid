@@ -592,6 +592,8 @@ var VGridGenerator = exports.VGridGenerator = function () {
 
         _this2.vGridScrollEvents.onScrollbarScrolling();
       }
+
+      _this2.updateGridScrollbars();
     });
   };
 

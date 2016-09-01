@@ -615,6 +615,8 @@ System.register(["aurelia-framework"], function (_export, _context) {
 
               _this2.vGridScrollEvents.onScrollbarScrolling();
             }
+
+            _this2.updateGridScrollbars();
           });
         };
 

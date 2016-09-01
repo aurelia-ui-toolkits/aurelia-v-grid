@@ -3190,6 +3190,8 @@ var VGridGenerator = exports.VGridGenerator = function () {
 
         _this30.vGridScrollEvents.onScrollbarScrolling();
       }
+
+      _this30.updateGridScrollbars();
     });
   };
 
