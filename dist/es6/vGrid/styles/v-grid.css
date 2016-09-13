@@ -78,26 +78,10 @@
   position: absolute;
   border-bottom: 1px solid rgb(230, 230, 230);
   overflow: hidden;
-  background-color: inherit;
+
 }
 
-.vGrid-row-alt {
-  background-color: rgb(247, 247, 247) !important;
-}
 
-.vGrid-row-even {
-  background-color: rgb(255, 255, 255) !important;
-}
-
-.vGrid-row-selected {
-  box-shadow: none;
-  background-color: rgb(203, 195, 203) !important;
-}
-
-.vGrid-row-selected .vGrid-row-col {
-  box-shadow: none;
-  background-color: rgb(203, 195, 203) !important;
-}
 
 
 /*using element*/
@@ -115,7 +99,6 @@ v-grid-row-col {
   white-space: nowrap;
   text-overflow: ellipsis;
   border-right: 1px solid rgb(230, 230, 230);
-  background-color: inherit;
   float: left;
   position: relative;
   overflow: hidden;
@@ -142,4 +125,23 @@ v-grid-header-col {
   background-color: inherit;
   position: relative;
   border-right: 1px solid rgb(230, 230, 230);
+}
+
+
+.vGrid-row-alt {
+  background-color: rgb(247, 247, 247);
+}
+
+.vGrid-row-even {
+  background-color: rgb(255, 255, 255);
+}
+
+.vGrid-row-selected {
+  box-shadow: none;
+  background-color: rgb(203, 195, 203);
+}
+
+.vGrid-row-selected .vGrid-row-col {
+  box-shadow: none;
+  background-color: rgb(203, 195, 203);
 }
