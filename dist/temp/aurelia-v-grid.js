@@ -3,13 +3,12 @@
 exports.__esModule = true;
 exports.VGrid = exports.VGridSort = exports.VGridSelection = exports.VGridScrollEvents = exports.VGridObservables = exports.VGridMarkupGenerator = exports.VGridGenerator = exports.VGridFilter = exports.VGridElementRowRepeat = exports.VGridElementFooterPager = exports.VGridElementColConfig = exports.VGridCtx = exports.Contextmenu = exports.VGridConfig = exports.vGridAttributesSort = exports.vGridAttributesSelection = exports.vGridAttributesResizeCol = exports.vGridAttributesObserveField = exports.vGridAttributesKeyMove = exports.vGridAttributesImageFix = exports.vGridAttributesFilter = exports.vGridDragDropCol = exports.ContextRowMenu = exports.VGridHeaderMenu = exports.ConfigBuilder = undefined;
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _dec, _dec2, _class2, _dec3, _dec4, _class4, _dec5, _dec6, _class6, _dec7, _dec8, _class7, _dec9, _dec10, _class8, _dec11, _dec12, _class9, _dec13, _dec14, _class10, _dec15, _dec16, _class11, _dec17, _dec18, _class12, _dec19, _dec20, _class13, _dec21, _dec22, _dec23, _dec24, _dec25, _dec26, _dec27, _dec28, _dec29, _dec30, _dec31, _dec32, _dec33, _dec34, _class15, _desc, _value, _class16, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _dec35, _dec36, _class18, _dec37, _dec38, _dec39, _dec40, _class20, _dec41, _dec42, _dec43, _dec44, _dec45, _dec46, _dec47, _dec48, _dec49, _dec50, _dec51, _dec52, _dec53, _dec54, _dec55, _dec56, _dec57, _dec58, _desc2, _value2, _class25, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _descriptor18, _descriptor19, _descriptor20, _descriptor21, _descriptor22, _descriptor23, _descriptor24, _descriptor25, _descriptor26, _descriptor27, _descriptor28, _descriptor29, _class26, _temp3;
 
-exports.configure = configure;
 exports.configure = configure;
 
 var _aureliaFramework = require('aurelia-framework');
@@ -77,10 +76,6 @@ function configure(aurelia, configCallback) {
   }
 
   aurelia.globalResources(builder.globalResources);
-}
-
-function configure(config) {
-  config.globalResources('vGrid/v-grid-element-footer-pager', 'vGrid/v-grid-element-row-repeat', 'vGrid/v-grid-element-col-config', 'vGrid/v-grid', 'vGrid/v-grid-attributes-filter', 'vGrid/v-grid-attributes-sort', 'vGrid/v-grid-attributes-selection', 'vGrid/v-grid-attributes-image', 'vGrid/v-grid-attributes-key-move', 'vGrid/v-grid-attributes-contextmenu', 'vGrid/v-grid-attributes-observe-field', 'vGrid/v-grid-attributes-dragDropCol', 'vGrid/v-grid-attributes-resize-col');
 }
 
 var VGridHeaderMenu = exports.VGridHeaderMenu = (_dec = (0, _aureliaFramework.customAttribute)('v-header-menu'), _dec2 = (0, _aureliaFramework.inject)(Element, VGrid), _dec(_class2 = _dec2(_class2 = function (_Contextmenu) {
@@ -4443,7 +4438,7 @@ var VGrid = exports.VGrid = (_dec41 = (0, _aureliaFramework.bindable)({ attribut
   }
 
   VGrid.prototype.raiseEvent = function raiseEvent(name) {
-    var data = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+    var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
     var event = new CustomEvent(name, {
       detail: data,

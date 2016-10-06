@@ -33,7 +33,7 @@ export function configure(aurelia: Aurelia, configCallback?: (builder: ConfigBui
   aurelia.globalResources(builder.globalResources);
 }
 
-export function configure(config) {
+/*export function configure(config) {
   config.globalResources(
     'vGrid/v-grid-element-footer-pager',
     'vGrid/v-grid-element-row-repeat',
@@ -50,7 +50,7 @@ export function configure(config) {
     'vGrid/v-grid-attributes-resize-col'
   );
 }
-
+*/
 /*****************************************************************************************************************
  *    ContextMenu
  *    This is where I create all the <v-grid> attributes, and set then to vGridConfig

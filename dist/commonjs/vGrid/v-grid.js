@@ -148,7 +148,7 @@ var VGrid = exports.VGrid = (_dec = (0, _aureliaFramework.bindable)({ attribute:
   }
 
   VGrid.prototype.raiseEvent = function raiseEvent(name) {
-    var data = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+    var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
     var event = new CustomEvent(name, {
       detail: data,
