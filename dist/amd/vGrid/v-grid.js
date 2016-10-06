@@ -133,7 +133,7 @@ define(['exports', 'aurelia-framework', './v-grid-generator', './v-grid-filter',
     }
 
     VGrid.prototype.raiseEvent = function raiseEvent(name) {
-      var data = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+      var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
       var event = new CustomEvent(name, {
         detail: data,

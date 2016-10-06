@@ -1,4 +1,4 @@
-export function configure(config) {
+/*export function configure(config) {
   config.globalResources(
     'vGrid/v-grid-element-footer-pager',
     'vGrid/v-grid-element-row-repeat',
@@ -15,3 +15,4 @@ export function configure(config) {
     'vGrid/v-grid-attributes-resize-col'
   );
 }
+*/
