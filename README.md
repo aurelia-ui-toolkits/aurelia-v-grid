@@ -8,3 +8,4 @@ Conversations about aurelia-v-grid
 <br>
 [Demo](http://aurelia-ui-toolkits.github.io/demo-v-grid)
 <br><br><br>
+[Exprimental repo here (grouping/pinned columns left/right + a lot of breaking changes)](https://github.com/vegarringdal/vGrid)
