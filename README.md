@@ -8,7 +8,9 @@ Conversations about aurelia-v-grid
 <br>
 [Demo](http://aurelia-ui-toolkits.github.io/demo-v-grid)
 <br><br><br>
-#Why havent there been any updates / fixes lately
+
+# Why havent there been any updates / fixes lately
+
 <br>
 15 Januar. 2017:
 
@@ -26,6 +28,4 @@ Reasons for rebuild:
 * wanted grouping
 * wanted locked columns
 * some parts was to messy, and Ive learned some new tricks I wanted to use/try (still learing)
-
-
 
